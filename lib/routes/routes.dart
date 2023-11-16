@@ -1,0 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:olisipo_manager/dashboard.dart';
+import 'package:olisipo_manager/ajudasCusto/ajudasCusto.dart';
+import 'package:olisipo_manager/ajudasCusto/viaturaPropria.dart';
+import 'package:olisipo_manager/calendario/ferias.dart';
+import 'package:olisipo_manager/calendario/horas.dart';
+import 'package:olisipo_manager/dadosPessoais/curriculum.dart';
+import 'package:olisipo_manager/dadosPessoais/dadosPessoais.dart';
+import 'package:olisipo_manager/login/login.dart';
+import 'package:olisipo_manager/registo/registo.dart';
