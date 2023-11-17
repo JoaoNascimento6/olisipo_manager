@@ -1,7 +1,12 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const LoginPage());
+  runApp(const MaterialApp(
+    home: LoginPage(),
+  ));
 }
 
 class LoginPage extends StatelessWidget {
@@ -9,11 +14,11 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
-      child: Scaffold(
+      home: Scaffold(
         body: ListView(
           children: [
             Login(),
@@ -29,154 +34,134 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: 100),
         Container(
-          width: 375,
-          height: 812,
-          clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-          ),
-          child: Stack(
+          width: 343,
+          height: 36,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Positioned(
-                left: 16,
-                top: 60,
-                child: Container(
-                  width: 343,
-                  height: 36,
-                  padding: const EdgeInsets.only(left: 133, right: 129),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Login',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 16,
-                top: 128,
-                child: Container(
-                  width: 343,
-                  height: 50,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 16,
-                        top: 16,
-                        child: Text(
-                          'Email',
-                          style: TextStyle(
-                            color: Color(0xFFBDBDBD),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 16,
-                top: 194,
-                child: Container(
-                  width: 343,
-                  height: 50,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 16,
-                        top: 16,
-                        child: Text(
-                          'Password',
-                          style: TextStyle(
-                            color: Color(0xFFBDBDBD),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 267,
-                        top: 16,
-                        child: Text(
-                          'Mostrar',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color: Color(0xFF32D700),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 16,
-                top: 411,
-                child: Container(
-                  height: 51,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF32D700),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Login',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 82,
-                top: 478,
-                child: Text(
-                  'Esqueceu a sua password?',
-                  style: TextStyle(
-                    color: Color(0xFF32D700),
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                  ),
+              Text(
+                'Login',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
+          ),
+        ),
+        SizedBox(height: 30),
+        // Email TextField with rounded border
+        Container(
+          width: 343,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 230, 230, 230),
+            borderRadius: BorderRadius.circular(17),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 10), // Move 10 pixels to the right
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: 'Email',
+                labelStyle: TextStyle(
+                  color: Color.fromARGB(255, 125, 125, 125),
+                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w500,
+                ),
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+        // Password TextField with rounded border
+        Container(
+          width: 343,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 230, 230, 230),
+            borderRadius: BorderRadius.circular(17),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 10), // Move 10 pixels to the right
+            child: Stack(
+              children: [
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 125, 125, 125),
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ),
+                Positioned(
+                  right: 10, // Align to the right
+                  top: 16,
+                  child: Text(
+                    'Mostrar',
+                    style: TextStyle(
+                      color: Color(0xFF32D700),
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 100),
+        Container(
+          height: 51,
+          padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 12),
+          decoration: ShapeDecoration(
+            color: Color(0xFF32D700),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Login',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 20),
+        Text(
+          'Esqueceu a sua password?',
+          style: TextStyle(
+            color: Color(0xFF32D700),
+            fontSize: 16,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w600,
           ),
         ),
       ],

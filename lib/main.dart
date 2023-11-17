@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:olisipo_manager/login/login.dart';
+//import 'package:olisipo_manager/login/login.dart';
+import 'package:olisipo_manager/registo/registo.dart';
 //import 'package:olisipo_manager/routes/routes.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: LoginPage(), // Include this line
+          child: registoPage(), // Include this line
         ),
       ),
     );
