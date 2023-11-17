@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:olisipo_manager/routes/routes.dart';
+import 'package:olisipo_manager/login/login.dart';
+//import 'package:olisipo_manager/routes/routes.dart';
 
 void main() {
   runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text('Hello World!'),
+          child: const LoginPage(), // Include this line
         ),
       ),
     );
