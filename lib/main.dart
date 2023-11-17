@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: const LoginPage(), // Include this line
+          child: LoginPage(), // Include this line
         ),
       ),
     );
