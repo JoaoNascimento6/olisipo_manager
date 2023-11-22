@@ -1,23 +1,25 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-//import 'package:olisipo_manager/login/login.dart';
-import 'package:olisipo_manager/registo/registo.dart';
-//import 'package:olisipo_manager/routes/routes.dart';
+import 'package:olisipo_manager/RoutePrincipal.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: registoPage(), // Include this line
-        ),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromRGBO(33, 150, 243, 1)),
+        useMaterial3: true,
       ),
+      home: const Routeprincipal(title: 'Olisipo Manager'),
     );
   }
 }

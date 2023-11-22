@@ -2,32 +2,45 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+//import 'package:******/basededados.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: LoginPage(),
-  ));
-}
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key, required this.title});
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final String title;
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
-      ),
-      home: Scaffold(
-        body: ListView(
-          children: [
-            Login(),
-          ],
-        ),
-      ),
-    );
-  }
+  State<LoginPage> createState() => _MyHomePageState();
 }
+
+class _MyHomePageState extends State<LoginPage> {
+  //var bd = Basededados();
+  //void insere_registo() {
+  //bd.apagaTudo();
+  //bd.criatabela();
+  /*bd.inserirvalor(
+        tlog.text, tpas.text, temail.text, tdata.text, tnat.text, tnac.text);
+   */
+
+/*
+ final tlog = TextEditingController();
+  final tpas = TextEditingController();
+  final temail = TextEditingController();
+  final tdata = TextEditingController();
+  final tnat = TextEditingController();
+  final tnac = TextEditingController();*/
+/*
+  @override
+  void dispose() // m´etodo de dispose()
+  {
+    tlog.dispose();
+    tpas.dispose();
+    temail.dispose();
+    tdata.dispose();
+    tnat.dispose();
+    tnac.dispose();
+    super.dispose();
+  }*/
 
   @override
   Widget build(BuildContext context) {
