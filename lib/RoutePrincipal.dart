@@ -55,9 +55,57 @@ class _MyHomePageState extends State<Routeprincipal> {
               },
             ),
             ListTile(
+              title: const Text('parcerias'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.parcerias);
+              },
+            ),
+            ListTile(
+              title: const Text('parceria individual'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.parceriaIndividual);
+              },
+            ),
+            ListTile(
               title: const Text('reuniao'),
               onTap: () {
                 Navigator.pushNamed(context, AppRoutes.reuniao);
+              },
+            ),
+            ListTile(
+              title: const Text('Ajudas de Custo'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.ajudasCusto);
+              },
+            ),
+            ListTile(
+              title: const Text('Ajudas Viatura Propria'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.viaturaPropria);
+              },
+            ),
+            ListTile(
+              title: const Text('Marcação de Ferias'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.ferias);
+              },
+            ),
+            ListTile(
+              title: const Text('Marcação de Horas'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.horas);
+              },
+            ),
+            ListTile(
+              title: const Text('Curriculum'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.curriculum);
+              },
+            ),
+            ListTile(
+              title: const Text('Dados Pessoais'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.dadosPessoais);
               },
             ),
           ],
