@@ -48,6 +48,18 @@ class _MyHomePageState extends State<Routeprincipal> {
                 Navigator.pushNamed(context, AppRoutes.registo);
               },
             ),
+            ListTile(
+              title: const Text('dashboard'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.dashboard);
+              },
+            ),
+            ListTile(
+              title: const Text('reuniao'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.reuniao);
+              },
+            ),
           ],
         ),
       ),

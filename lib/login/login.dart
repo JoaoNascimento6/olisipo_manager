@@ -7,10 +7,10 @@ class LoginPage extends StatefulWidget {
   final String title;
 
   @override
-  State<LoginPage> createState() => _MyHomePageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MyHomePageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
