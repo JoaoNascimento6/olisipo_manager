@@ -1,14 +1,12 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:olisipo_manager/RoutePrincipal.dart';
+import 'package:olisipo_manager/routes/routes.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,8 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: Color.fromRGBO(33, 150, 243, 1)),
         useMaterial3: true,
       ),
-      home: const Routeprincipal(title: 'Olisipo Manager'),
+      initialRoute: AppRoutes.RoutePrincipal, // Defina a rota inicial
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }

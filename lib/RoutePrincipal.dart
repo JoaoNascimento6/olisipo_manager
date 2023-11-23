@@ -1,6 +1,6 @@
 // ignore_for_file: unused_import, prefer_const_constructors, non_constant_identifier_names
 import 'package:flutter/material.dart';
-import 'package:olisipo_manager/login/login.dart';
+import 'package:olisipo_manager/routes/routes.dart';
 
 class Routeprincipal extends StatefulWidget {
   const Routeprincipal({super.key, required this.title});
@@ -39,16 +39,18 @@ class _MyHomePageState extends State<Routeprincipal> {
             ListTile(
               title: const Text('Login'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginPage(title: 'LoginPage')),
-                );
+                Navigator.pushNamed(context, AppRoutes.login);
+              },
+            ),
+            ListTile(
+              title: const Text('Registo'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.registo);
               },
             ),
           ],
         ),
       ),
-    ); //body: Meuwiw(els: ['1', '2', '3', '45555']));
+    );
   }
 }
