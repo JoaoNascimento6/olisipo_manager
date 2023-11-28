@@ -33,6 +33,33 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                   ))
             ],
           ),
+          Container(
+            height: 51,
+            padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 12),
+            decoration: ShapeDecoration(
+              color: Color(0xFF32D700),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Login',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Stack(
             children: [
               Container(

@@ -23,7 +23,6 @@ class AppRoutes {
   static const String reuniao = '/reuniao';
   static const String parcerias = '/parcerias';
   static const String parceriaIndividual = '/parceriaindividual';
-
   static const String ajudasCusto = '/ajudasCusto';
   static const String viaturaPropria = '/viaturaPropria';
   static const String ferias = '/ferias';

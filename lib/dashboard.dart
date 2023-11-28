@@ -16,238 +16,84 @@ class _DashboardPageState extends State<DashboardPage> {
         appBar: AppBar(
           title: Text('Olisipo Manager'),
         ),
-        body: Column(
-          children: [
-            Column(
-              children: [
-                Text("Olisipo",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                    ))
-              ],
-            ),
-            Row(
-              children: [],
-            ),
-            Stack(
-              children: [
-                Image.asset(
-                  "assets/Image Block.png",
-                  width: 297,
-                  height: 211,
-                ),
-                Text("Notícias",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                    )),
-                Text("Olá Carlos!",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    )),
-                Stack(
-                  children: [
-                    Image.asset(
-                      "assets/Image Block.png",
-                      width: 62,
-                      height: 211,
-                    )
-                  ],
-                ),
-                Stack(
-                  children: [
-                    Image.asset(
-                      "assets/Image Block.png",
-                      width: 62,
-                      height: 211,
-                    )
-                  ],
-                ),
-                Text("8m ago",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    )),
-                Text("Noticia nº1",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    )),
-                Text(
-                    "He'll want to use your yacht, and I don't want this thing smelling   like fish...",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    )),
-                Stack(
-                  children: [
-                    Image.asset(
-                      "assets/BG.png",
-                      width: 126,
-                      height: 31,
+        body: Container(
+          margin: const EdgeInsets.symmetric(vertical: 20),
+          height: 300,
+          child: ListView(
+            // This next line does the trick.
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              Stack(
+                children: [
+                  Container(
+                    width: 300,
+                    height: 211,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: AssetImage('images/imagem1.jpg'),
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
-                    Image.asset(
-                      "assets/control 2.png",
-                      width: 19,
-                      height: 19,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 16,
+                    child: SizedBox(
+                      width: 148.93,
+                      height: 16.45,
+                      child: Opacity(
+                        opacity: 0.90,
+                        child: Text(
+                          'Noticia nº1',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
+                          ),
+                        ),
+                      ),
                     ),
-                    Text("Pesquisar",
-                        style: TextStyle(
-                          fontSize: 10.075801849365234,
-                          fontWeight: FontWeight.w500,
-                        ))
-                  ],
+                  ),
+                ],
+              ),
+              Container(
+                width: 300,
+                height: 211,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: AssetImage('images/imagem1.jpg'),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-                Stack(
-                  children: [
-                    Image.asset(
-                      "assets/BG.png",
-                      width: 48,
-                      height: 23,
-                    ),
-                    Image.asset(
-                      "assets/BG.png",
-                      width: 58,
-                      height: 23,
-                    ),
-                    Image.asset(
-                      "assets/BG.png",
-                      width: 58,
-                      height: 23,
-                    ),
-                    Image.asset(
-                      "assets/BG.png",
-                      width: 105,
-                      height: 23,
-                    ),
-                    Image.asset(
-                      "assets/BG.png",
-                      width: 27,
-                      height: 23,
-                    ),
-                    Text("Cursos",
-                        style: TextStyle(
-                          fontSize: 9.284126281738281,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    Text("Inovação",
-                        style: TextStyle(
-                          fontSize: 9.284126281738281,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    Text("Formação",
-                        style: TextStyle(
-                          fontSize: 9.284126281738281,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    Text("Inteligência Artificial",
-                        style: TextStyle(
-                          fontSize: 9.284126281738281,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    Text("RH",
-                        style: TextStyle(
-                          fontSize: 9.284126281738281,
-                          fontWeight: FontWeight.w600,
-                        ))
-                  ],
-                )
-              ],
-            ),
-            Image.asset(
-              "assets/Ellipse 1.png",
-              width: 8,
-              height: 8,
-            ),
-            Image.asset(
-              "assets/Ellipse 2.png",
-              width: 8,
-              height: 8,
-            ),
-            Image.asset(
-              "assets/Ellipse 3.png",
-              width: 8,
-              height: 8,
-            ),
-            Row(
-              children: [],
-            ),
-            Container(
-              width: 342,
-              height: 0,
-            ),
-            Stack(
-              children: [
-                Container(
-                  width: 343,
-                  height: 217,
+              ),
+              Container(
+                width: 300,
+                height: 211,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: AssetImage('images/imagem1.jpg'),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-                Container(
-                  width: 343,
-                  height: 40,
+              ),
+              Container(
+                width: 300,
+                height: 211,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: AssetImage('images/imagem1.jpg'),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-                Container(
-                  width: 342,
-                  height: 0,
-                ),
-                Container(
-                  width: 342,
-                  height: 0,
-                ),
-                Container(
-                  width: 342,
-                  height: 0,
-                ),
-                Text("Estado das Submissões",
-                    style: TextStyle(
-                      fontSize: 16.49831771850586,
-                      fontWeight: FontWeight.w600,
-                    )),
-                Text("Férias - 07/01 | 14/01",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300,
-                    )),
-                Text("Ajudas de Custo - 11/08 ",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300,
-                    )),
-                Text("Viatura Própria - 22/12",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300,
-                    )),
-                Text("Reunião - 02/01",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300,
-                    )),
-                Text("Por Validar",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    )),
-                Text("Recusado",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    )),
-                Text("Aceite",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    )),
-                Text("Por Validar",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ))
-              ],
-            )
-          ],
+              ),
+            ],
+          ),
         ));
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 
 class DadosPessoaisPage extends StatefulWidget {
@@ -20,12 +22,6 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           width: 375,
           height: 812,
           clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-          ),
           child: Stack(
             children: [
               Positioned(
