@@ -5,14 +5,14 @@ class Meuwiw extends StatelessWidget {
 
   final List<(String, String)> els;
 
+//lsita uma imagem e o respetivo texto
   @override
   Widget build(BuildContext context) {
-    
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       itemCount: els.length,
       itemBuilder: (BuildContext context, int index) {
-        var (img,txt)=els[index];
+        var (img, txt) = els[index];
         return Container(
           height: 50,
           child: Row(
