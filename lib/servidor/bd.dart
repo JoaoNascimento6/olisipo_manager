@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 //import 'package:collection/collection.dart'; // ´Enecess´ario adicionar a respetiva dependencia
-import 'package:path/path.dart'; // ´Enecess´ario adicionar a respetiva dependencia
+import 'package:path/path.dart'; // É necessário adicionar a respetiva dependencia
 
 class Basededados {
   static const nomebd = "bdadm.db";

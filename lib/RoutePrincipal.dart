@@ -108,6 +108,25 @@ class _MyHomePageState extends State<Routeprincipal> {
                 Navigator.pushNamed(context, AppRoutes.dadosPessoais);
               },
             ),
+            /*ListTile(
+              title: const Text('Apagar'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Papagar(title: 'Apagar')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Listar Users'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>ListarUsers()),
+                );
+              },
+            ),*/
           ],
         ),
       ),
