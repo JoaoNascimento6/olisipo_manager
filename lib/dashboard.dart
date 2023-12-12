@@ -88,12 +88,6 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              width: 300,
-              height: 250,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.black),
-            ),
           ],
         ),
       ),
