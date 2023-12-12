@@ -1,9 +1,23 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
 
 class RegistoPage extends StatelessWidget {
-  const RegistoPage({super.key, required this.title});
+  RegistoPage({Key? key, required this.title}) : super(key: key);
+
   final String title;
+
+  var bd = Basededados();
+
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final nomeController = TextEditingController();
+
+  void insereRegisto() {
+    bd.inserirvalor(
+        nomeController.text, passwordController.text, emailController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +49,7 @@ class RegistoPage extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     left: 10), // Move 10 pixels to the right
                 child: TextField(
+                  controller: nomeController,
                   decoration: InputDecoration(
                     labelText: 'Nome',
                     labelStyle: TextStyle(
@@ -61,6 +76,7 @@ class RegistoPage extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     left: 10), // Move 10 pixels to the right
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: TextStyle(
@@ -90,6 +106,7 @@ class RegistoPage extends StatelessWidget {
                   children: [
                     TextField(
                       obscureText: true,
+                      controller: passwordController,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         labelStyle: TextStyle(
@@ -129,22 +146,23 @@ class RegistoPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Registar',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
+              child: ElevatedButton(
+                onPressed: insereRegisto,
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF32D700), // Green color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Rounded borders
                   ),
-                ],
+                ),
+                child: const Text(
+                  'Registar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
           ],

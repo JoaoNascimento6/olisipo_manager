@@ -47,10 +47,10 @@ Drop TABLE pessoas
   }
 
 //---------------------------------------
-  Future<void> inserirvalor(nom, pass, email, datanasci, natu, naci) async {
+  Future<void> inserirvalor(nom, pass, email) async {
     Database db = await basededados;
     await db.rawInsert(
-        'insert into pessoas(nome,password,email,datanasci,naturalidade,nacionalidade) values("$nom","$pass","$email","$datanasci","$natu","$naci")');
+        'insert into pessoas(nome,password,email,datanasci,naturalidade,nacionalidade) values("$nom","$pass","$email"');
   }
 
   Future<void> deletePessoa(id) async {
@@ -65,6 +65,20 @@ Drop TABLE pessoas
     resultado.forEach((linha) {
       print(linha);
     });
+  }
+
+  Future<List<Map<String, String>>> Login() async {
+    List<Map<String, String>> users = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select email, password from pessoas');
+    resultado.forEach((linha) {
+      users.add({
+        'email': linha['email'].toString(),
+        'password': linha['password'].toString(),
+      });
+    });
+    return users;
   }
 
   Future<List<String>> consulta() async {

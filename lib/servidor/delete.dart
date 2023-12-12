@@ -2,7 +2,7 @@
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 import 'package:flutter/material.dart';
-import 'package:olisipo_manager/servidor/bd.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
 
 class Delete extends StatelessWidget {
   var bd = Basededados();

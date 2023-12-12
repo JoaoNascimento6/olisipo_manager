@@ -1,9 +1,21 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key, required this.title});
+  LoginPage({super.key, required this.title});
+
   final String title;
+
+  var bd = Basededados();
+
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+
+  void fazlogin() {
+    bd.Login();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +49,7 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     left: 10), // Move 10 pixels to the right
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     labelStyle: TextStyle(
@@ -66,6 +79,7 @@ class LoginPage extends StatelessWidget {
                   children: [
                     TextField(
                       obscureText: true,
+                      controller: passwordController,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         labelStyle: TextStyle(
@@ -105,22 +119,23 @@ class LoginPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Login',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
+              child: ElevatedButton(
+                onPressed: fazlogin,
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF32D700), // Green color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Rounded borders
                   ),
-                ],
+                ),
+                child: const Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: 20),
