@@ -10,7 +10,6 @@ import 'package:olisipo_manager/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/login/login.dart';
 import 'package:olisipo_manager/RoutePrincipal.dart';
-import 'package:olisipo_manager/registo/registo.dart';
 import 'package:olisipo_manager/marcacaoReuniao/reuniao.dart';
 import 'package:olisipo_manager/parcerias/parcerias.dart';
 import 'package:olisipo_manager/parcerias/parceriaIndividual.dart';
@@ -35,10 +34,6 @@ class AppRoutes {
       case login:
         return MaterialPageRoute(
           builder: (_) => LoginPage(title: 'Olisipo Manager'),
-        );
-      case registo:
-        return MaterialPageRoute(
-          builder: (_) => RegistoPage(title: 'Olisipo Manager'),
         );
       case dashboard:
         return MaterialPageRoute(
