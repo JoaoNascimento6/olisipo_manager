@@ -2,6 +2,7 @@
 
 import 'package:olisipo_manager/ajudasCusto/ajudasCusto.dart';
 import 'package:olisipo_manager/ajudasCusto/viaturaPropria.dart';
+import 'package:olisipo_manager/ajudasCusto/tabbar_custos.dart';
 import 'package:olisipo_manager/calendario/ferias.dart';
 import 'package:olisipo_manager/calendario/horas.dart';
 import 'package:olisipo_manager/dadosPessoais/curriculum.dart';
@@ -29,6 +30,7 @@ class AppRoutes {
   static const String horas = '/horas';
   static const String curriculum = '/curriculum';
   static const String dadosPessoais = '/dadosPessoais';
+  static const String tabbar_custos = '/tabbarcustos';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -52,6 +54,10 @@ class AppRoutes {
       case viaturaPropria:
         return MaterialPageRoute(
           builder: (_) => ViaturaPropriaPage(title: 'Ajudas Viatura Propria'),
+        );
+      case tabbar_custos:
+        return MaterialPageRoute(
+          builder: (_) => TabBarApp(title: 'Tabbar Custos'),
         );
       case ferias:
         return MaterialPageRoute(
