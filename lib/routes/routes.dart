@@ -12,7 +12,8 @@ import 'package:olisipo_manager/login/login.dart';
 import 'package:olisipo_manager/RoutePrincipal.dart';
 import 'package:olisipo_manager/registo/registo.dart';
 import 'package:olisipo_manager/marcacaoReuniao/reuniao.dart';
-import 'package:olisipo_manager/parcerias/parcerias.dart';
+
+import 'package:olisipo_manager/parcerias/metodoListarParcerias.dart';
 import 'package:olisipo_manager/parcerias/parceriaIndividual.dart';
 
 class AppRoutes {
@@ -72,8 +73,9 @@ class AppRoutes {
 
       case parcerias:
         return MaterialPageRoute(
-          builder: (_) => ParceriasPage(title: 'Olisipo Manager'),
+          builder: (_) => ListarParcerias(),
         );
+
       case parceriaIndividual:
         return MaterialPageRoute(
           builder: (_) => ParceriaIndividualPage(title: 'Olisipo Manager'),

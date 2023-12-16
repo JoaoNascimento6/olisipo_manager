@@ -13,13 +13,13 @@ class Servidor {
     return prods;
   }
 
-  Future<List<(String, String)>> listaProdutosImg() async {
-    List<(String, String)> prods = [];
+  Future<List<(int,String, String)>> listaProdutosImg() async {
+    List<(int,String, String)> prods = [];
     var result = await http.get(Uri.parse(url));
     var lista = jsonDecode(result.body)['products'];
     lista.forEach((linha) {
       prods.add(
-        (linha['thumbnail'].toString(), linha['title'].toString())
+        (linha['id'],linha['thumbnail'].toString(), linha['title'].toString())
       );
     });
     return prods;
