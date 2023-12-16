@@ -214,33 +214,15 @@ class _MyHomePageState extends State<Routeprincipal> {
               },
             ),
             ListTile(
-              title: const Text('Ajudas de Custo'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.ajudasCusto);
-              },
-            ),
-            ListTile(
-              title: const Text('Ajudas Viatura Propria'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.viaturaPropria);
-              },
-            ),
-            ListTile(
-              title: const Text('Tabbar'),
+              title: const Text('Tabbar Despesas e Custos'),
               onTap: () {
                 Navigator.pushNamed(context, AppRoutes.tabbar_custos);
               },
             ),
             ListTile(
-              title: const Text('Marcação de Ferias'),
+              title: const Text('Tabbar Horas e Férias'),
               onTap: () {
-                Navigator.pushNamed(context, AppRoutes.ferias);
-              },
-            ),
-            ListTile(
-              title: const Text('Marcação de Horas'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.horas);
+                Navigator.pushNamed(context, AppRoutes.tabbar_calendario);
               },
             ),
             ListTile(

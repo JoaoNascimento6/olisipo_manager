@@ -226,40 +226,45 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                 ),
               ),
             ),
-            Positioned(
-              left: 25,
-              top: 480,
-              child: Container(
-                width: screenWidth - 60,
-                height: 49,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF32D700),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Enviar',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
+            Stack(
+              children: [
+                Positioned(
+                  left: 25,
+                  top: 480,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Adicione a ação desejada ao pressionar o botão aqui
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
                       ),
                     ),
-                  ],
+                    child: Ink(
+                      width: MediaQuery.of(context).size.width - 60,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: const Color(0xFF32D700),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Enviar',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),

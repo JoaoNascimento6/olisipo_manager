@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 class FeriasPage extends StatefulWidget {
   const FeriasPage({Key? key, required this.title}) : super(key: key);
@@ -11,319 +13,249 @@ class FeriasPage extends StatefulWidget {
 }
 
 class _FeriasPageState extends State<FeriasPage> {
+  late DateTime _selectedDay;
+  late DateTime? _rangeStart;
+  late DateTime? _rangeEnd;
+  late CalendarFormat _calendarFormat;
+  late RangeSelectionMode _rangeSelectionMode;
+
+  TextEditingController _startDateController = TextEditingController();
+  TextEditingController _endDateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final now = DateTime.now();
+    _selectedDay = now;
+    _rangeStart = now;
+    _rangeEnd = now;
+    _calendarFormat = CalendarFormat.month;
+    _rangeSelectionMode = RangeSelectionMode.toggledOn;
+
+    _startDateController.text = '';
+    _endDateController.text = '';
+  }
+
+  void _onDaySelected(DateTime selectedDay, DateTime? focusedDay) {
+    final DateTime today = DateTime.now();
+
+    setState(() {
+      _selectedDay = selectedDay;
+      _rangeStart = focusedDay ?? selectedDay;
+      _rangeEnd = focusedDay ?? selectedDay;
+
+      _startDateController.text = DateFormat('dd/MM/yyyy').format(_rangeStart!);
+      _endDateController.text = DateFormat('dd/MM/yyyy').format(_rangeEnd!);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Olisipo Manager'),
-        ),
-        body: Container(
-          width: 375,
-          height: 812,
-          clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
+      body: Container(
+        width: 375,
+        height: 812,
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
           ),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 40,
-                top: 527,
-                child: Container(
-                  width: 164,
-                  height: 68,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 164,
-                          height: 68,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 0,
-                                top: 0,
-                                child: Container(
-                                  width: 164,
-                                  height: 29,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Data de Começo:',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 13.27,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w500,
-                                          height: 0,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 32,
-                                        child: Text(
-                                          '07/01',
-                                          textAlign: TextAlign.right,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 11.61,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 7,
-                                        height: 7,
-                                        decoration: ShapeDecoration(
-                                          color: Color(0xFF32D700),
-                                          shape: OvalBorder(),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 39,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                              width: 0.83,
-                                              strokeAlign:
-                                                  BorderSide.strokeAlignCenter,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 175,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                              width: 0.83,
-                                              strokeAlign:
-                                                  BorderSide.strokeAlignCenter,
-                                              color: Color(0xFF32D700),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 25,
-                                        height: 25,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: 0,
-                                top: 39,
-                                child: Container(
-                                  width: 164,
-                                  height: 29,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Data de Fim:',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 13.27,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w500,
-                                          height: 0,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 32,
-                                        child: Text(
-                                          '14/01',
-                                          textAlign: TextAlign.right,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 11.61,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 7,
-                                        height: 7,
-                                        decoration: ShapeDecoration(
-                                          color: Color(0xFF32D700),
-                                          shape: OvalBorder(),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 39,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                              width: 0.83,
-                                              strokeAlign:
-                                                  BorderSide.strokeAlignCenter,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 175,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                              width: 0.83,
-                                              strokeAlign:
-                                                  BorderSide.strokeAlignCenter,
-                                              color: Color(0xFF32D700),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 25,
-                                        height: 25,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 25,
+              top: 10,
+              child: Container(
+                width: screenWidth - 50,
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TableCalendar(
+                      calendarFormat: _calendarFormat,
+                      focusedDay: _selectedDay,
+                      firstDay: DateTime.now().subtract(Duration(days: 365)),
+                      lastDay: DateTime.now().add(Duration(days: 365)),
+                      selectedDayPredicate: (day) {
+                        return isSameDay(_selectedDay, day);
+                      },
+                      rangeStartDay: _rangeStart,
+                      rangeEndDay: _rangeEnd,
+                      rangeSelectionMode: _rangeSelectionMode,
+                      onDaySelected: _onDaySelected,
+                      onRangeSelected: (start, end, focusedDay) {
+                        setState(() {
+                          _rangeStart = start;
+                          _rangeEnd = end;
+                          _selectedDay = focusedDay;
+                        });
+                      },
+                      enabledDayPredicate: (day) {
+                        final DateTime today = DateTime.now();
+                        final DateTime startDateRestriction =
+                            today.add(Duration(days: 7));
+
+                        return !day.isBefore(startDateRestriction);
+                      },
+                      availableCalendarFormats: const {
+                        CalendarFormat.month: 'Mês',
+                      },
+                      onPageChanged: (focusedDay) {
+                        _rangeStart = focusedDay;
+                        _rangeEnd = focusedDay;
+                        _selectedDay = focusedDay;
+                      },
+                      headerStyle: HeaderStyle(
+                        titleCentered: true,
+                      ),
+                      onFormatChanged: (format) {
+                        if (_calendarFormat != format) {
+                          setState(() {
+                            _calendarFormat = format;
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: 25,
+              top: 450,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: screenWidth - 100,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.green,
+                          width: 1.0,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  width: 375,
-                  height: 140,
-                  decoration: BoxDecoration(color: Color(0xFF32D700)),
-                ),
-              ),
-              Positioned(
-                left: 335,
-                top: 73,
-                child: Transform(
-                  transform: Matrix4.identity()
-                    ..translate(0.0, 0.0)
-                    ..rotateZ(3.14),
-                  child: Container(
-                    width: 296,
-                    height: 43,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                    child: Row(
                       children: [
-                        Transform(
-                          transform: Matrix4.identity()
-                            ..translate(0.0, 0.0)
-                            ..rotateZ(3.14),
-                          child: Text(
-                            'Horas',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFFBDBDBD),
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
+                        SizedBox(width: 16),
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: const Color(0xFF32D700),
                           ),
                         ),
-                        Transform(
-                          transform: Matrix4.identity()
-                            ..translate(0.0, 0.0)
-                            ..rotateZ(3.14),
-                          child: Text(
-                            'Férias',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF32D700),
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                              height: 0,
+                        SizedBox(width: 8),
+                        Text(
+                          'Data de Início:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 8),
+                        SizedBox(
+                          width: screenWidth - 250,
+                          child: TextFormField(
+                            controller: _endDateController,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'DD/MM/AAAA',
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ),
-              Positioned(
-                left: 100,
-                top: 669,
-                child: Container(
-                  height: 49,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF32D700),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Enviar Férias',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
+                  Container(
+                    width: screenWidth - 100,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.green,
+                          width: 1.0,
                         ),
                       ),
-                    ],
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 16),
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: const Color(0xFF32D700),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'Data de Fim:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 8),
+                        SizedBox(
+                          width: screenWidth - 250,
+                          child: TextFormField(
+                            controller: _endDateController,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'DD/MM/AAAA',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Stack(
+              children: [
+                Positioned(
+                  left: 25,
+                  top: 575,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Adicione a ação desejada ao pressionar o botão aqui
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                    child: Ink(
+                      width: MediaQuery.of(context).size.width - 60,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: const Color(0xFF32D700),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Enviar',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                left: 26,
-                top: 159,
-                child: Container(
-                  width: 322,
-                  height: 345,
-                  decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
-                ),
-              ),
-            ],
-          ),
-        ));
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

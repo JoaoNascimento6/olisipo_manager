@@ -3,6 +3,7 @@
 import 'package:olisipo_manager/ajudasCusto/ajudasCusto.dart';
 import 'package:olisipo_manager/ajudasCusto/viaturaPropria.dart';
 import 'package:olisipo_manager/ajudasCusto/tabbar_custos.dart';
+import 'package:olisipo_manager/calendario/tabbar_calendario.dart';
 import 'package:olisipo_manager/calendario/ferias.dart';
 import 'package:olisipo_manager/calendario/horas.dart';
 import 'package:olisipo_manager/dadosPessoais/curriculum.dart';
@@ -31,6 +32,7 @@ class AppRoutes {
   static const String curriculum = '/curriculum';
   static const String dadosPessoais = '/dadosPessoais';
   static const String tabbar_custos = '/tabbarcustos';
+  static const String tabbar_calendario = '/tabbarcalendario';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -57,7 +59,11 @@ class AppRoutes {
         );
       case tabbar_custos:
         return MaterialPageRoute(
-          builder: (_) => TabBarApp(title: 'Tabbar Custos'),
+          builder: (_) => TabBarGestaoCustos(title: 'Tabbar Custos'),
+        );
+      case tabbar_calendario:
+        return MaterialPageRoute(
+          builder: (_) => TabBarHorasFerias(title: 'Tabbar Calendario'),
         );
       case ferias:
         return MaterialPageRoute(
@@ -75,7 +81,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => DadosPessoaisPage(title: 'Dados Pessoais'),
         );
-
       case parcerias:
         return MaterialPageRoute(
           builder: (_) => ParceriasPage(title: 'Olisipo Manager'),

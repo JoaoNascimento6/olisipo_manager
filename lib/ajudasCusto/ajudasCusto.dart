@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AjudasCustoPage extends StatefulWidget {
   const AjudasCustoPage({Key? key, required this.title}) : super(key: key);
@@ -16,18 +15,6 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
   final TextEditingController descritivoController = TextEditingController();
   final TextEditingController faturaController = TextEditingController();
   String? filePath;
-
-  Future<void> _tirarFoto() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    if (pickedFile != null) {
-      setState(() {
-        filePath = pickedFile.path;
-      });
-      // filePath contém o caminho da imagem tirada, você pode usá-lo para exibir ou enviar a imagem posteriormente
-    }
-  }
 
   @override
   void dispose() {
@@ -155,48 +142,52 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        _tirarFoto();
-                      },
-                      child: Text('Tirar Foto da Fatura'),
+                      onPressed: () {},
+                      child: Text('Selecionar Fatura'),
                     ),
                   ],
                 ),
               ),
             ),
-            Positioned(
-              left: 25,
-              top: 480,
-              child: Container(
-                width: screenWidth - 60,
-                height: 55,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF32D700),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Enviar',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
+            Stack(
+              children: [
+                Positioned(
+                  left: 25,
+                  top: 480,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Adicione a ação desejada ao pressionar o botão aqui
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
                       ),
                     ),
-                  ],
+                    child: Ink(
+                      width: MediaQuery.of(context).size.width - 60,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: const Color(0xFF32D700),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Enviar',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),

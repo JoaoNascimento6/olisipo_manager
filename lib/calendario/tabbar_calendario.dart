@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'ajudasCusto.dart';
-import 'viaturaPropria.dart';
+import 'horas.dart';
+import 'ferias.dart';
 
 class TabBarApp extends StatelessWidget {
-  const TabBarApp({super.key, required String title});
+  const TabBarApp({Key? key, required String title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +13,8 @@ class TabBarApp extends StatelessWidget {
   }
 }
 
-class TabBarGestaoCustos extends StatelessWidget {
-  const TabBarGestaoCustos({super.key, required String title});
+class TabBarHorasFerias extends StatelessWidget {
+  const TabBarHorasFerias({Key? key, required String title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,23 +29,29 @@ class TabBarGestaoCustos extends StatelessWidget {
             tabs: <Widget>[
               Tab(
                 child: Text(
-                  'Viatura Própria',
+                  'Horas',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
               Tab(
                 child: Text(
-                  'Ajudas de Custo',
+                  'Férias',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: <Widget>[
-            ViaturaPropriaPage(title: 'Despesas'),
-            AjudasCustoPage(title: 'Ajudas de Custo'),
+            HorasPage(title: 'Horas'),
+            SingleChildScrollView(
+              child: Container(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height),
+                child: FeriasPage(title: 'Férias'),
+              ),
+            ),
           ],
         ),
       ),
