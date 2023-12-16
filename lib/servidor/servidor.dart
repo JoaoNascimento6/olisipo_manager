@@ -13,7 +13,7 @@ class Servidor {
     return prods;
   }
 
-  Future<List<(int,String, String)>> listaProdutosImg() async {
+  Future<List<(int,String, String)>> listarParceriasServer() async {
     List<(int,String, String)> prods = [];
     var result = await http.get(Uri.parse(url));
     var lista = jsonDecode(result.body)['products'];

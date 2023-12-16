@@ -91,4 +91,68 @@ Drop TABLE pessoas
     });
     return uts;
   }
+
+Future<void> CriarTabelaTipoParcerias() async {
+  Database db = await basededados;
+  await db.execute('''
+    CREATE TABLE tipo_parceria (
+      id_tipo_parceria INTEGER PRIMARY KEY AUTOINCREMENT,
+      tipo_parceria INTEGER
+    )
+  ''');
+}
+
+Future<void> CriarTabelaParcerias() async {
+  Database db = await basededados;
+  await db.execute('''
+    CREATE TABLE parcerias (
+      id_parceria INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_tipo_parceria INTEGER,
+      nome_parceria TEXT,
+      descricao_parceria TEXT,
+      beneficios_parceria TEXT,
+      imagem_parceria TEXT,
+      parceria_publicada BOOL,
+      FOREIGN KEY (id_tipo_parceria) REFERENCES tipo_parceria(id_tipo_parceria)
+    )
+  ''');
+}
+
+
+
+Future<void> inserirParceria(String nomeParceria, int idTipoParceria, String descricaoParceria, String beneficiosParceria, String imagemParceria, bool parceriaPublicada) async {
+  Database db = await basededados;
+  await db.rawInsert('''
+    INSERT INTO parcerias (
+      nome_parceria,
+      id_tipo_parceria,
+      descricao_parceria,
+      beneficios_parceria,
+      imagem_parceria,
+      parceria_publicada
+    ) VALUES (
+      "$nomeParceria",
+      $idTipoParceria,
+      "$descricaoParceria",
+      "$beneficiosParceria",
+      "$imagemParceria",
+      ${parceriaPublicada ? 1 : 0}
+    )
+  ''');
+  print(nomeParceria);
+}
+
+
+
+  Future<List<String>> AdicionarParceriasBD() async {
+    List<String> uts = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select nome from pessoas');
+    resultado.forEach((linha) {
+      uts.add(linha['nome'].toString());
+    });
+    return uts;
+  }
+
 }

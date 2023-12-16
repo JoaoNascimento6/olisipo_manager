@@ -16,7 +16,7 @@ class ListarParcerias extends StatelessWidget {
         title: Text('Parcerias'), // Texto no topo da barra verde
       ),
       body: FutureBuilder<List<(int, String, String)>>(
-        future: se.listaProdutosImg(),
+        future: se.listarParceriasServer(),
         builder: (BuildContext context,
             AsyncSnapshot<List<(int, String, String)>> snapshot) {
           List<Widget> children;
