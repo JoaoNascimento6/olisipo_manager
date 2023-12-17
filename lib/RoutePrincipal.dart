@@ -226,17 +226,12 @@ class _MyHomePageState extends State<Routeprincipal> {
               },
             ),
             ListTile(
-              title: const Text('Curriculum'),
+              title: const Text('Tabbar Dados Pessoais'),
               onTap: () {
-                Navigator.pushNamed(context, AppRoutes.curriculum);
+                Navigator.pushNamed(context, AppRoutes.tabbar_dadospessoais);
               },
             ),
-            ListTile(
-              title: const Text('Dados Pessoais'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.dadosPessoais);
-              },
-            ),
+
             /*ListTile(
                 title: const Text('Apagar'),
                 onTap: () {

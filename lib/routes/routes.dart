@@ -6,6 +6,7 @@ import 'package:olisipo_manager/ajudasCusto/tabbar_custos.dart';
 import 'package:olisipo_manager/calendario/tabbar_calendario.dart';
 import 'package:olisipo_manager/calendario/ferias.dart';
 import 'package:olisipo_manager/calendario/horas.dart';
+import 'package:olisipo_manager/dadosPessoais/tabbar_dadospessoais.dart';
 import 'package:olisipo_manager/dadosPessoais/curriculum.dart';
 import 'package:olisipo_manager/dadosPessoais/dadosPessoais.dart';
 import 'package:olisipo_manager/dashboard.dart';
@@ -33,6 +34,7 @@ class AppRoutes {
   static const String dadosPessoais = '/dadosPessoais';
   static const String tabbar_custos = '/tabbarcustos';
   static const String tabbar_calendario = '/tabbarcalendario';
+  static const String tabbar_dadospessoais = '/tabbardadospessoais';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -72,6 +74,10 @@ class AppRoutes {
       case horas:
         return MaterialPageRoute(
           builder: (_) => HorasPage(title: 'Marcação de Horas'),
+        );
+      case tabbar_dadospessoais:
+        return MaterialPageRoute(
+          builder: (_) => TabBarDadosPessoais(title: 'TabBar DadosPessoais'),
         );
       case curriculum:
         return MaterialPageRoute(
