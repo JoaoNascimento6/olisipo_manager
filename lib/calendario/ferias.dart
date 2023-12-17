@@ -54,15 +54,8 @@ class _FeriasPageState extends State<FeriasPage> {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        width: 375,
+        width: screenWidth,
         height: 812,
-        clipBehavior: Clip.antiAlias,
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
         child: Stack(
           children: [
             Positioned(

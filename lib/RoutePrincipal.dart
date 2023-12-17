@@ -2,6 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/routes/routes.dart';
 import 'login/login.dart';
+import 'calendario/tabbar_calendario.dart';
+import 'ajudasCusto/tabbar_custos.dart';
+import 'dadosPessoais/tabbar_dadospessoais.dart';
+import 'parcerias/parcerias.dart';
+import 'dashboard.dart';
 
 class Routeprincipal extends StatefulWidget {
   const Routeprincipal({super.key, required this.title});
@@ -26,19 +31,20 @@ class _MyHomePageState extends State<Routeprincipal> {
       _selectedIndex = index;
       switch (_selectedIndex) {
         case 0:
-          _currentPage = LoginPage(title: 'Login');
+          _currentPage = DashboardPage(title: 'Home');
           break;
         case 1:
-          _currentPage = LoginPage(title: 'Login');
+          _currentPage = TabBarHorasFerias(title: 'Tabbar Horas/Férias');
           break;
         case 2:
-          _currentPage = LoginPage(title: 'Login');
+          _currentPage =
+              TabBarGestaoCustos(title: 'Tabbar Viatura/AjudasCusto');
           break;
         case 3:
-          _currentPage = LoginPage(title: 'Login');
+          _currentPage = ParceriasPage(title: 'Parcerias');
           break;
         case 4:
-          _currentPage = LoginPage(title: 'Login');
+          _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais');
           break;
         default:
           _currentPage = LoginPage(title: 'Login');
@@ -49,13 +55,15 @@ class _MyHomePageState extends State<Routeprincipal> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
+      extendBody: true,
       bottomNavigationBar: Container(
-        margin: EdgeInsets.only(left: 30, right: 30, bottom: 30),
+        margin: EdgeInsets.only(left: 30, right: 30, bottom: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
           boxShadow: [
@@ -85,88 +93,71 @@ class _MyHomePageState extends State<Routeprincipal> {
                 label: 'Horas/Férias',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.attach_money), // Ícone para a opção de Custos
+                icon: Icon(Icons.attach_money),
                 label: 'Custos',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.people), // Ícone para a opção de Parcerias
+                icon: Icon(Icons.people),
                 label: 'Parcerias',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person), // Ícone para a opção de Perfil
+                icon: Icon(Icons.person),
                 label: 'Perfil',
               ),
             ],
           ),
         ),
       ),
-      body: <Widget>[
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child:
-                  _currentPage, // Substitua esta linha pelo conteúdo da variável _currentPage
-            ),
-          ),
-        ),
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Tab 2',
+      body: Container(
+        width: screenWidth,
+        child: <Widget>[
+          Card(
+            margin: EdgeInsets.all(0),
+            shadowColor: Colors.transparent,
+            child: SizedBox.expand(
+              child: Center(
+                child: _currentPage,
               ),
             ),
           ),
-        ),
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Tab 3',
+          Card(
+            margin: EdgeInsets.all(0),
+            shadowColor: Colors.transparent,
+            child: SizedBox.expand(
+              child: Center(
+                child: _currentPage,
               ),
             ),
           ),
-        ),
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Tab 3',
+          Card(
+            margin: EdgeInsets.all(0),
+            shadowColor: Colors.transparent,
+            child: SizedBox.expand(
+              child: Center(
+                child: _currentPage,
               ),
             ),
           ),
-        ),
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Tab 3',
+          Card(
+            margin: EdgeInsets.all(0),
+            shadowColor: Colors.transparent,
+            child: SizedBox.expand(
+              child: Center(
+                child: _currentPage,
               ),
             ),
           ),
-        ),
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Tab 3',
+          Card(
+            margin: EdgeInsets.all(0),
+            shadowColor: Colors.transparent,
+            child: SizedBox.expand(
+              child: Center(
+                child: _currentPage,
               ),
             ),
           ),
-        ),
-      ][_selectedIndex],
+        ][_selectedIndex],
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -213,44 +204,6 @@ class _MyHomePageState extends State<Routeprincipal> {
                 Navigator.pushNamed(context, AppRoutes.reuniao);
               },
             ),
-            ListTile(
-              title: const Text('Tabbar Despesas e Custos'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.tabbar_custos);
-              },
-            ),
-            ListTile(
-              title: const Text('Tabbar Horas e Férias'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.tabbar_calendario);
-              },
-            ),
-            ListTile(
-              title: const Text('Tabbar Dados Pessoais'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.tabbar_dadospessoais);
-              },
-            ),
-
-            /*ListTile(
-                title: const Text('Apagar'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Papagar(title: 'Apagar')),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Listar Users'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>ListarUsers()),
-                  );
-                },
-              ),*/
           ],
         ),
       ),

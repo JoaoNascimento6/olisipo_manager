@@ -20,13 +20,6 @@ class _CurriculumPageState extends State<CurriculumPage> {
           padding: const EdgeInsets.all(20.0),
           child: Container(
             width: screenWidth * 0.9,
-            clipBehavior: Clip.antiAlias,
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
             child: Stack(
               children: [
                 Positioned(

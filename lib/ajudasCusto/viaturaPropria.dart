@@ -49,13 +49,6 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
       body: Container(
         width: screenWidth,
         height: MediaQuery.of(context).size.height,
-        clipBehavior: Clip.antiAlias,
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
         child: Stack(
           children: [
             Positioned(
