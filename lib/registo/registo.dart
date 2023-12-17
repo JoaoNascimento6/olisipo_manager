@@ -1,117 +1,173 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: registoPage(),
-  ));
-}
+class RegistoPage extends StatelessWidget {
+  RegistoPage({Key? key, required this.title}) : super(key: key);
 
-class registoPage extends StatelessWidget {
-  const registoPage({Key? key}) : super(key: key);
+  final String title;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: ListView(
-          children: [
-            Registo(),
-          ],
-        ),
-      ),
-    );
+  var bd = Basededados();
+
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+  final nomeController = TextEditingController();
+
+  void insereRegisto() {
+    bd.inserirvalor(
+        nomeController.text, passwordController.text, emailController.text);
   }
-}
 
-class Registo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 50),
-        Text(
-          "Nome",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
-        SizedBox(height: 20),
-        Text(
-          "Email",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
-        SizedBox(height: 20),
-        Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Olisipo Manager'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Password",
+              'Registo',
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
                 color: Colors.black,
-              ),
-            ),
-            Text(
-              "Mostrar",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 20),
-        Text(
-          "Criar Conta",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        SizedBox(height: 20),
-        Text(
-          "Esqueceu a sua password?",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
-        ),
-        SizedBox(height: 20),
-        Column(
-          children: [
-            Text(
-              "Login",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-            Text(
-              "Criar Conta",
-              style: TextStyle(
                 fontSize: 30,
+                fontFamily: 'Inter',
                 fontWeight: FontWeight.w600,
-                color: Colors.black,
+              ),
+            ),
+            Container(
+              width: 343,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 230, 230, 230),
+                borderRadius: BorderRadius.circular(17),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 10), // Move 10 pixels to the right
+                child: TextField(
+                  controller: nomeController,
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 125, 125, 125),
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 30),
+            // Email TextField with rounded border
+            Container(
+              width: 343,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 230, 230, 230),
+                borderRadius: BorderRadius.circular(17),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 10), // Move 10 pixels to the right
+                child: TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 125, 125, 125),
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: 20),
+            // Password TextField with rounded border
             Container(
-              width: 16.6,
-              height: 0,
+              width: 343,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 230, 230, 230),
+                borderRadius: BorderRadius.circular(17),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 10), // Move 10 pixels to the right
+                child: Stack(
+                  children: [
+                    TextField(
+                      obscureText: true,
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(
+                          color: Color.fromARGB(255, 125, 125, 125),
+                          fontSize: 16,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                    Positioned(
+                      right: 10, // Align to the right
+                      top: 16,
+                      child: Text(
+                        'Mostrar',
+                        style: TextStyle(
+                          color: Color(0xFF32D700),
+                          fontSize: 16,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 100),
+            Container(
+              height: 51,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 100, vertical: 12),
+              decoration: ShapeDecoration(
+                color: Color(0xFF32D700),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: ElevatedButton(
+                onPressed: insereRegisto,
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF32D700), // Green color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Rounded borders
+                  ),
+                ),
+                child: const Text(
+                  'Registar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }

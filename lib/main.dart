@@ -1,23 +1,25 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-//import 'package:olisipo_manager/login/login.dart';
-import 'package:olisipo_manager/registo/registo.dart';
-//import 'package:olisipo_manager/routes/routes.dart';
+import 'package:olisipo_manager/routes/routes.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: registoPage(), // Include this line
-        ),
+    return MaterialApp(
+      title: 'Portal do Colabordor - Olisipo',
+      theme: ThemeData(
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromRGBO(33, 150, 243, 1)),
+        useMaterial3: true,
       ),
+      initialRoute: AppRoutes.RoutePrincipal, // Defina a rota inicial
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }
