@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 
 class ViaturaPropriaPage extends StatefulWidget {
@@ -12,243 +10,257 @@ class ViaturaPropriaPage extends StatefulWidget {
 }
 
 class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
+  final TextEditingController kmController = TextEditingController();
+  final TextEditingController porigemController = TextEditingController();
+  final TextEditingController psaidaController = TextEditingController();
+  final TextEditingController dataController = TextEditingController();
+
+  @override
+  void dispose() {
+    kmController.dispose();
+    porigemController.dispose();
+    psaidaController.dispose();
+    dataController.dispose();
+    super.dispose();
+  }
+
+  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (pickedDate != null && pickedDate != selectedDate) {
+      setState(() {
+        selectedDate = pickedDate;
+        dataController.text =
+            '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Olisipo Manager'),
-        ),
-        body: Container(
-          width: 375,
-          height: 812,
-          clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+      body: Container(
+        width: screenWidth,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 25,
+              top: 30,
+              child: Text(
+                'Envie as despesas que teve com a sua viatura própria ',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
             ),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  width: 375,
-                  height: 140,
-                  decoration: BoxDecoration(color: Color(0xFF32D700)),
+            Positioned(
+              left: 25,
+              top: 70,
+              child: Container(
+                width: screenWidth - 50,
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Kilómetros',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 101, 101, 101),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(153, 238, 238, 238),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: TextField(
+                          controller: kmController,
+                          decoration: InputDecoration(
+                            hintText: 'Escreva a quantidade de kilómetro...',
+                            hintStyle: TextStyle(
+                              color: const Color(0xFFBDBDBD),
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 14),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Ponto de Origem',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 101, 101, 101),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(153, 238, 238, 238),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: TextField(
+                          controller: porigemController,
+                          decoration: InputDecoration(
+                            hintText: 'Escreva o ponto de origem...',
+                            hintStyle: TextStyle(
+                              color: const Color(0xFFBDBDBD),
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 14),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Ponto de Saída',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 101, 101, 101),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(153, 238, 238, 238),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: TextField(
+                          controller: psaidaController,
+                          decoration: InputDecoration(
+                            hintText: 'Escreva o ponto de saída...',
+                            hintStyle: TextStyle(
+                              color: const Color(0xFFBDBDBD),
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w500,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 14),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Data da Deslocação',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 101, 101, 101),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: InkWell(
+                        onTap: () {
+                          _selectDate(
+                              context); // Chamando a função para selecionar a data
+                        },
+                        child: Container(
+                          width: 140,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(153, 238, 238, 238),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 14),
+                            child: Text(
+                              '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                              style: TextStyle(
+                                color: const Color(0xFFBDBDBD),
+                                fontSize: 16,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Positioned(
-                left: 28,
-                top: 168,
-                child: Text(
-                  'Envie as despesas que teve com a sua viatura própria ',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 100,
-                top: 668,
-                child: Container(
-                  height: 49,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF32D700),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
+            ),
+            Stack(
+              children: [
+                Positioned(
+                  left: 25,
+                  top: 480,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Adicione a ação desejada ao pressionar o botão aqui
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                    child: Ink(
+                      width: MediaQuery.of(context).size.width - 60,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: const Color(0xFF32D700),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Enviar',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Enviar',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-              Positioned(
-                left: 39,
-                top: 73,
-                child: Container(
-                  width: 296,
-                  height: 43,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Ajudas de Custo',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFFBDBDBD),
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
-                      ),
-                      Text(
-                        'Viatura Própria',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF32D700),
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 21,
-                top: 208,
-                child: Container(
-                  width: 326,
-                  height: 325,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 18,
-                        top: 124,
-                        child: Text(
-                          'Escreva o ponto de origem...',
-                          style: TextStyle(
-                            color: Color(0xFFBDBDBD),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 18,
-                        top: 39,
-                        child: Text(
-                          'Escreva a quantidade de kilometro...',
-                          style: TextStyle(
-                            color: Color(0xFFBDBDBD),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 18,
-                        top: 209,
-                        child: Text(
-                          'Escreva o ponto de chegada...',
-                          style: TextStyle(
-                            color: Color(0xFFBDBDBD),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 18,
-                        top: 294,
-                        child: Text(
-                          'DD/MM/AAAA',
-                          style: TextStyle(
-                            color: Color(0xFFBDBDBD),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 7,
-                        top: 85,
-                        child: Text(
-                          'Ponto de Origem',
-                          style: TextStyle(
-                            color: Color(0xFF727272),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 7,
-                        top: 0,
-                        child: Text(
-                          'Kilometros',
-                          style: TextStyle(
-                            color: Color(0xFF727272),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 7,
-                        top: 170,
-                        child: Text(
-                          'Ponto de Chegada',
-                          style: TextStyle(
-                            color: Color(0xFF727272),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 7,
-                        top: 255,
-                        child: Text(
-                          'Data da Deslocação',
-                          style: TextStyle(
-                            color: Color(0xFF727272),
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ));
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

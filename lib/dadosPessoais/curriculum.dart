@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 
 class CurriculumPage extends StatefulWidget {
@@ -13,446 +12,302 @@ class CurriculumPage extends StatefulWidget {
 class _CurriculumPageState extends State<CurriculumPage> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Olisipo Manager'),
-        ),
-        body: Container(
-          width: 375,
-          height: 812,
-          clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 16,
-                top: 516,
-                child: Container(
-                  width: 343,
-                  height: 281,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFFF6F6F6),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 47,
-                top: 535,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Estágio na Deloitte',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+            width: screenWidth * 0.9,
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Curriculo',
+                                style: TextStyle(
+                                  color: Color(0xFF727272),
+                                  fontSize: 16,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                  height: 0,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 3),
-                            Text(
-                              'Desenvolvimento de websites na\nDeloitte',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w300,
-                                height: 0,
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Text(
-                              'Estágio',
-                              style: TextStyle(
-                                color: Color(0xFF727272),
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Container(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                              Row(
                                 children: [
                                   Text(
-                                    'Comprovativo',
+                                    'Faz o upload do teu currículo:',
                                     style: TextStyle(
-                                      color: Color(0xFF32D700),
+                                      color: Colors.black,
                                       fontSize: 16,
                                       fontFamily: 'Inter',
                                       fontWeight: FontWeight.w300,
-                                      height: 0,
                                     ),
                                   ),
-                                  const SizedBox(width: 3),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 47,
-                top: 670,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Participação no Hackaton',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Text(
-                              'Participação no 4º Hackaton com\ntema sobre IA e educação ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w300,
-                                height: 0,
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Text(
-                              'Certificado',
-                              style: TextStyle(
-                                color: Color(0xFF727272),
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Container(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Comprovativo',
-                                    style: TextStyle(
-                                      color: Color(0xFF32D700),
-                                      fontSize: 16,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w300,
-                                      height: 0,
-                                    ),
+                                  IconButton(
+                                    onPressed: () {
+                                      // Lógica para o botão de upload
+                                    },
+                                    icon: Icon(Icons.upload),
+                                    color: Color(0xFF32D700),
                                   ),
-                                  const SizedBox(width: 3),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: -1,
-                top: 0,
-                child: Container(
-                  width: 376,
-                  height: 201,
-                  decoration: BoxDecoration(color: Color(0xFF32D700)),
-                ),
-              ),
-              Positioned(
-                left: 16,
-                top: 285,
-                child: Container(
-                  width: 343,
-                  height: 50,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 211.75,
-                        top: 13.62,
-                        child: Text(
-                          'Currículo',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFF32D700),
-                            fontSize: 13.62,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
+                            ],
                           ),
                         ),
-                      ),
-                      Positioned(
-                        left: 47.99,
-                        top: 13.62,
-                        child: Text(
-                          'Dados Pessoais',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFFC4C4C4),
-                            fontSize: 13.62,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 16,
-                top: 350,
-                child: Container(
-                  width: 343,
-                  height: 102,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFFF6F6F6),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                left: 47,
-                top: 379,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Curriculo',
-                              style: TextStyle(
-                                color: Color(0xFF727272),
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Text(
-                              'Faz o upload do teu currículo:',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w300,
-                                height: 0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 30,
-                top: 486,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Column(
+                Positioned(
+                  left: 0,
+                  top: 90,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      children: [
+                        Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Informações Profissionais',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF727272),
-                                fontSize: 16,
+                                fontSize: 20,
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            _showModalInfoProfissional(
+                                context); // Função para abrir o showModalBottomSheet
+                          },
+                          child:
+                              Icon(Icons.add, color: const Color(0xFF32D700)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  top: 140,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Estágio na Deloitte',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  'Desenvolvimento de websites na\nDeloitte',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  'Estágio',
+                                  style: TextStyle(
+                                    color: Color(0xFF727272),
+                                    fontSize: 16,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                TextButton.icon(
+                                  onPressed: () {
+                                    // Adicione a lógica para o botão de download
+                                  },
+                                  icon: Icon(
+                                    Icons.download,
+                                    color: Color(0xFF32D700),
+                                  ),
+                                  label: Text(
+                                    'Comprovativo',
+                                    style: TextStyle(
+                                      color: Color(0xFF32D700),
+                                      fontSize: 16,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showModalInfoProfissional(BuildContext context) {
+    TextEditingController tituloController = TextEditingController();
+    TextEditingController descricaoController = TextEditingController();
+    TextEditingController tipoController = TextEditingController();
+
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 1000,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    'Adicionar Informações',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: tituloController,
+                  onTap: () {
+                    if (tituloController.text == 'Insira o título') {
+                      tituloController.clear();
+                    }
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Insira o título',
+                    labelText: 'Título',
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: descricaoController,
+                  onTap: () {
+                    if (descricaoController.text == 'Insira a descrição') {
+                      descricaoController.clear();
+                    }
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Insira a descrição',
+                    labelText: 'Descrição',
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: tipoController,
+                  onTap: () {
+                    if (tipoController.text == 'Insira o tipo') {
+                      tipoController.clear();
+                    }
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Insira o tipo',
+                    labelText: 'Tipo',
+                  ),
+                ),
+                SizedBox(height: 15),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // Lógica para o botão de documento comprovativo
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white, // Cor de fundo branca
+                        alignment: Alignment
+                            .centerLeft, // Alinhar o conteúdo à esquerda
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            Icon(Icons.upload,
+                                color: Colors.green), // Ícone verde
+                            SizedBox(
+                                width:
+                                    8), // Espaçamento entre o ícone e o texto
+                            Text(
+                              'Documento Comprovativo',
+                              style: TextStyle(
+                                color: Colors.green, // Cor verde para o texto
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 282,
-                top: 398,
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                  child: Stack(children: []),
-                ),
-              ),
-              Positioned(
-                left: 235,
-                top: 494.97,
-                child: Transform(
-                  transform: Matrix4.identity()
-                    ..translate(0.0, 0.0)
-                    ..rotateZ(-0.79),
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(),
-                    child: Stack(children: []),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 16,
-                top: 60,
-                child: Container(
-                  width: 343,
-                  height: 26,
-                  padding: const EdgeInsets.only(top: 8, left: 289),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Logout',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
+                    ),
+                    SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Lógica para o botão adicionar
+                      },
+                      child: Text('Adicionar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color(0xFF32D700), // Cor de fundo verde
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-              Positioned(
-                left: 112,
-                top: 67,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Perfil Olisipo',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                        ),
-                      ),
-                      const SizedBox(height: 7),
-                      Container(
-                        width: 129,
-                        height: 129,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                "https://via.placeholder.com/129x129"),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            side:
-                                BorderSide(width: 5, color: Color(0x33AAFFB2)),
-                            borderRadius: BorderRadius.circular(91),
-                          ),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x3DFFFFFF),
-                              blurRadius: 3,
-                              offset: Offset(1, 1),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 7),
-                      Text(
-                        'Carlos',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ));
+        );
+      },
+    );
   }
 }
