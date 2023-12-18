@@ -5,7 +5,7 @@ import 'login/login.dart';
 import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
-import 'parcerias/parcerias.dart';
+import 'parcerias/metodoListarParcerias.dart';
 import 'dashboard.dart';
 
 class Routeprincipal extends StatefulWidget {
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<Routeprincipal> {
               TabBarGestaoCustos(title: 'Tabbar Viatura/AjudasCusto');
           break;
         case 3:
-          _currentPage = ParceriasPage(title: 'Parcerias');
+          _currentPage = ListarParcerias();
           break;
         case 4:
           _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais');
