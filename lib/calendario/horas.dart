@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../servidor/servidor.dart';
 
 class HorasPage extends StatefulWidget {
   const HorasPage({Key? key, required this.title}) : super(key: key);
@@ -16,6 +17,8 @@ class _HorasPageState extends State<HorasPage> {
   late DateTime? _rangeEnd;
   late CalendarFormat _calendarFormat;
   late RangeSelectionMode _rangeSelectionMode;
+
+  var se = Servidor();
 
   @override
   void initState() {
@@ -152,8 +155,37 @@ class _HorasPageState extends State<HorasPage> {
                   left: 25,
                   top: 525,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Adicione a ação desejada ao pressionar o botão aqui
+                    onPressed: () async {
+                      try {
+                        se.inserirHoras(
+                          1,
+                          '2023-12-18',
+                          'Novembro',
+                          "11:00:00",
+                          false,
+                          2023,
+                        );
+                      } catch (e) {
+                        print('Erro ao enviar horas: $e');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Erro ao enviar horas'),
+                              content: Text(
+                                  'Ocorreu um erro ao enviar a submissão de horas.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,

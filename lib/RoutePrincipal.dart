@@ -77,8 +77,8 @@ class _MyHomePageState extends State<Routeprincipal> {
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 5,
+              spreadRadius: 3,
+              blurRadius: 7,
               offset: Offset(0, 3),
             ),
           ],
