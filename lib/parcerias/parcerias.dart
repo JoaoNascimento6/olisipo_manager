@@ -7,11 +7,11 @@ class ParceriasPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: 10), // Adicione espaçamento no topo
-          ListView.builder(
+    return Column(
+      children: [
+        SizedBox(height: 10), // Adicione espaçamento no topo
+        Expanded(
+          child: ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: (els.length / 3).ceil(),
@@ -76,9 +76,9 @@ class ParceriasPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 10), // Adicione espaçamento na parte inferior
-        ],
-      ),
+        ),
+        SizedBox(height: 10), // Adicione espaçamento na parte inferior
+      ],
     );
   }
 }
