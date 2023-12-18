@@ -7,6 +7,7 @@ import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
 import 'parcerias/metodoListarParcerias.dart';
 import 'dashboard.dart';
+import './servidor/servidor.dart';
 
 class Routeprincipal extends StatefulWidget {
   const Routeprincipal({super.key, required this.title});
@@ -24,6 +25,13 @@ class _MyHomePageState extends State<Routeprincipal> {
       bd.consulta();
     }
   */
+  var se = Servidor();
+
+  @override
+  void initState() {
+    se.listarParceriasServer();
+  }
+
   Widget _currentPage = Center(child: Text('Placeholder'));
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
