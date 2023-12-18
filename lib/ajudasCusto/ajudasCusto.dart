@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import '../servidor/servidor.dart';
 
 class AjudasCustoPage extends StatefulWidget {
   const AjudasCustoPage({Key? key, required this.title}) : super(key: key);
@@ -15,6 +16,8 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
   final TextEditingController descritivoController = TextEditingController();
   final TextEditingController faturaController = TextEditingController();
   String? filePath;
+
+  var se = Servidor();
 
   @override
   void dispose() {
@@ -148,8 +151,37 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                   left: 25,
                   top: 480,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Adicione a ação desejada ao pressionar o botão aqui
+                    onPressed: () async {
+                      try {
+                        se.inserirAjudaCusto(
+                          1,
+                          double.parse(valorController.text),
+                          descritivoController.text,
+                          //faturaController.text, meter a fatura a ir buscar um ficheiro ou a tirar foto
+                          'fatura.pdf',
+                          false,
+                        );
+                      } catch (e) {
+                        print('Erro ao enviar ajudas de custo: $e');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Erro ao enviar ajudas de custo'),
+                              content: Text(
+                                  'Ocorreu um erro ao enviar a ajuda de custo.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,

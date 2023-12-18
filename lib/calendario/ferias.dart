@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import '../servidor/servidor.dart';
 
 class FeriasPage extends StatefulWidget {
   const FeriasPage({Key? key, required this.title}) : super(key: key);
@@ -21,6 +22,8 @@ class _FeriasPageState extends State<FeriasPage> {
 
   TextEditingController _startDateController = TextEditingController();
   TextEditingController _endDateController = TextEditingController();
+
+  var se = Servidor();
 
   @override
   void initState() {
@@ -213,8 +216,36 @@ class _FeriasPageState extends State<FeriasPage> {
                   left: 25,
                   top: 575,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Adicione a ação desejada ao pressionar o botão aqui
+                    onPressed: () async {
+                      try {
+                        se.inserirFerias(
+                          1,
+                          '2023-12-20',
+                          '2023-12-25',
+                          '2023-12-15',
+                          false,
+                        );
+                      } catch (e) {
+                        print('Erro ao enviar féris: $e');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Erro ao enviar férias'),
+                              content: Text(
+                                  'Ocorreu um erro ao enviar a submissão de férias.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,

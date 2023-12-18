@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../servidor/servidor.dart';
 
 class ViaturaPropriaPage extends StatefulWidget {
   const ViaturaPropriaPage({Key? key, required this.title}) : super(key: key);
@@ -14,6 +15,8 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
   final TextEditingController porigemController = TextEditingController();
   final TextEditingController psaidaController = TextEditingController();
   final TextEditingController dataController = TextEditingController();
+
+  var se = Servidor();
 
   @override
   void dispose() {
@@ -190,8 +193,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: InkWell(
                         onTap: () {
-                          _selectDate(
-                              context); // Chamando a função para selecionar a data
+                          _selectDate(context);
                         },
                         child: Container(
                           width: 140,
@@ -225,8 +227,37 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                   left: 25,
                   top: 480,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Adicione a ação desejada ao pressionar o botão aqui
+                    onPressed: () async {
+                      try {
+                        await se.inserirDespesasViaturaPropria(
+                          1,
+                          double.parse(kmController.text),
+                          dataController.text,
+                          porigemController.text,
+                          psaidaController.text,
+                          false,
+                        );
+                      } catch (e) {
+                        print('Erro ao enviar despesas: $e');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Erro ao enviar despesas'),
+                              content: Text(
+                                  'Ocorreu um erro ao enviar as despesas de viatura própria.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../servidor/servidor.dart';
 
 class CurriculumPage extends StatefulWidget {
   const CurriculumPage({Key? key, required this.title}) : super(key: key);
@@ -10,6 +11,8 @@ class CurriculumPage extends StatefulWidget {
 }
 
 class _CurriculumPageState extends State<CurriculumPage> {
+  var se = Servidor();
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -292,8 +295,38 @@ class _CurriculumPageState extends State<CurriculumPage> {
                     ),
                     SizedBox(height: 8),
                     ElevatedButton(
-                      onPressed: () {
-                        // Lógica para o botão adicionar
+                      onPressed: () async {
+                        try {
+                          se.inserirInformacaoProfissional(
+                            1,
+                            'Estágio na Findmore Solutions',
+                            'Dynamics 365',
+                            'diploma.pdf',
+                            'Diploma',
+                          );
+                        } catch (e) {
+                          print(
+                              'Erro ao adicionar uma informação profissional: $e');
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                    'Erro ao adicionar uma informação profissional'),
+                                content: Text(
+                                    'Ocorreu um erro ao adicionar uma informação profissional.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       child: Text('Adicionar'),
                       style: ElevatedButton.styleFrom(
