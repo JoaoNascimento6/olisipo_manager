@@ -9,11 +9,10 @@ class ListarParcerias extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    se.url = "https://dummyjson.com/products";
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF32D700), // Cor da barra verde
-        title: Text('Parcerias'), // Texto no topo da barra verde
+        backgroundColor: Color(0xFF32D700),
+        title: Text('Parcerias'),
       ),
       body: FutureBuilder<List<(int, String, String)>>(
         future: se.listarParceriasServer(),
@@ -25,8 +24,10 @@ class ListarParcerias extends StatelessWidget {
             children = <Widget>[
               for (int i = 0; i < products.length; i += 3)
                 SizedBox(
-                  height: 160, // Ajuste a altura conforme necessário
-                  child: ParceriasPage(els: products.sublist(i, i + 3)),
+                  height: 160,
+                  child: ParceriasPage(
+                    els: products.sublist(i, i + 3 > products.length ? products.length : i + 3),
+                  ),
                 ),
             ];
           } else if (snapshot.hasError) {
@@ -35,11 +36,9 @@ class ListarParcerias extends StatelessWidget {
             children = const <Widget>[CircularProgressIndicator()];
           }
           return Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: children,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: children,
             ),
           );
         },
