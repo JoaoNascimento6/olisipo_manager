@@ -1,81 +1,106 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 
-class ParceriaIndividualPage extends StatefulWidget {
-  const ParceriaIndividualPage({Key? key, required this.title})
-      : super(key: key);
+class DetalhesParceriaPage extends StatelessWidget {
+  final int id;
+  final String imagem;
+  final String descricao;
+  final String nome;
+  final String beneficios;
 
-  final String title;
+  DetalhesParceriaPage({
+    required this.id,
+    required this.imagem,
+    required this.nome,
+    required this.beneficios,
+    required this.descricao,
+  });
 
-  @override
-  State<ParceriaIndividualPage> createState() => _ParceriaIndividualPageState();
-}
-
-class _ParceriaIndividualPageState extends State<ParceriaIndividualPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Olisipo Manager'),
+        title: Text(
+          nome,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.green,
+            size: 30.0,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        toolbarHeight: 100.0,
+        titleSpacing: 0.0,
+        backgroundColor: Colors.white,
+        elevation: 4.0,
       ),
-      body: Column(
-        children: [
-          Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "FitnessUP",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w600,
-                ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.network(
+                      imagem,
+                      height: 250,
+                      width: 350,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: Text(
+                      'Descrição:',
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: Text(
+                      descricao,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: Text(
+                      'Benefícios:',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  // Mapeia cada parágrafo de benefícios
+                  ...beneficios
+                      .split('. ')
+                      .map((paragraph) => Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              '• $paragraph',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ))
+                      .toList(),
+                ],
               ),
             ],
           ),
-          Column(
-            children: [
-              // Adicione seus widgets aqui conforme necessário
-            ],
-          ),
-          Image.asset(
-            "assets/Image Block.png",
-            width: 297,
-            height: 211,
-          ),
-          Text(
-            "Lorem sunt magna et consequat\n\n"
-            "Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\n"
-            "Benefícios:\n\n"
-            "Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\n"
-            "Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.\n\n"
-            "Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur.",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          Container(
-            width: 375,
-            height: 43,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0x00d9d9d9), Color(0x99000000)],
-              ),
-            ),
-          ),
-          Image.asset(
-            "assets/Back.png",
-            width: 22.000001907348633,
-            height: 25.999998092651367,
-          ),
-          Row(
-            children: [
-              // Adicione seus widgets aqui conforme necessário
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

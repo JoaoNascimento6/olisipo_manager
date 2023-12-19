@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'parceriaIndividual.dart';
 
 class ParceriasPage extends StatelessWidget {
   ParceriasPage({Key? key, required this.els}) : super(key: key);
 
-  final List<(int, String, String)> els;
+  final List<(int, String, String,String,String)> els;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +24,23 @@ class ParceriasPage extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(endIndex - startIndex, (i) {
-                  var (id, img, txt) = els[startIndex + i];
+                  var (id, img, nome,desc,benef) = els[startIndex + i];
                   return ElevatedButton(
                     onPressed: () {
                       // Adicione aqui a lógica que deseja executar ao clicar no botão
-                      print('Botão clicado: $txt + $id');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetalhesParceriaPage(
+                            id: id,
+                            imagem: img,
+                            nome: nome,
+                            descricao:desc,
+                            beneficios:benef
+                          ),
+                        ),
+                      );
+                      print('Botão clicado:  $nome + $id + $desc + $benef');
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
@@ -62,7 +75,7 @@ class ParceriasPage extends StatelessWidget {
                         Positioned(
                           bottom: 0,
                           child: Text(
-                            '$txt',
+                            '$nome',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

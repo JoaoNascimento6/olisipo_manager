@@ -93,10 +93,7 @@ class AppRoutes {
           builder: (_) => ListarParcerias(),
         );
 
-      case parceriaIndividual:
-        return MaterialPageRoute(
-          builder: (_) => ParceriaIndividualPage(title: 'Olisipo Manager'),
-        );
+      
       case reuniao:
         return MaterialPageRoute(
           builder: (_) => ReuniaoPage(title: 'Olisipo Manager'),

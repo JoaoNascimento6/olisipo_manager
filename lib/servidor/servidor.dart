@@ -13,16 +13,19 @@ class Servidor {
     return prods;
   }
 
-  Future<List<(int, String, String)>> listarParceriasServer() async {
+  Future<List<(int, String, String,String,String)>> listarParceriasServer() async {
     url = 'https://backend-olisipo-portal.onrender.com/parcerias';
-    List<(int, String, String)> prods = [];
+    List<(int, String, String,String,String)> prods = [];
     var result = await http.get(Uri.parse(url));
     var lista = jsonDecode(result.body)['data'];
     lista.forEach((linha) {
       prods.add((
         linha['id_parceria'],
         linha['imagem_parceria'].toString(),
-        linha['nome_parceria'].toString()
+        linha['nome_parceria'].toString(),
+        linha['descricao_parceria'].toString(),
+        linha['beneficios_parceria'].toString()
+
       ));
     });
 
