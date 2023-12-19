@@ -40,9 +40,13 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
         selectedDate = pickedDate;
         dataController.text =
             '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}';
+        dataSelecionada =
+            '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}';
       });
     }
   }
+
+  String dataSelecionada = 'Selecione...';
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +212,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 14),
                               child: Text(
-                                '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
+                                dataSelecionada,
                                 style: TextStyle(
                                   color: const Color(0xFFBDBDBD),
                                   fontSize: 16,

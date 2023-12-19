@@ -88,6 +88,39 @@ class _HorasPageState extends State<HorasPage> {
                     });
                   }
                 },
+                calendarBuilders: CalendarBuilders(
+                  selectedBuilder: (context, date, events) {
+                    return Container(
+                      margin: const EdgeInsets.all(4.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color:
+                            Colors.green, // Cor de fundo para data selecionada
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        date.day.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    );
+                  },
+                ),
+                calendarStyle: CalendarStyle(
+                  selectedDecoration: BoxDecoration(
+                    color: Colors.green, // Cor de fundo para data selecionada
+                    shape: BoxShape.circle,
+                  ),
+                  rangeStartDecoration: BoxDecoration(
+                    color: Colors.green, // Cor para o início do intervalo
+                    shape: BoxShape.circle,
+                  ),
+                  rangeEndDecoration: BoxDecoration(
+                    color: Colors.green, // Cor para o fim do intervalo
+                    shape: BoxShape.circle,
+                  ),
+                  rangeHighlightColor: Colors.green
+                      .withOpacity(0.2), // Cor para destacar o intervalo
+                ),
               ),
               SizedBox(height: 20),
               Container(
