@@ -299,10 +299,10 @@ class _CurriculumPageState extends State<CurriculumPage> {
                         try {
                           se.inserirInformacaoProfissional(
                             1,
-                            'Estágio na Findmore Solutions',
-                            'Dynamics 365',
+                            tituloController.text,
+                            descricaoController.text,
                             'diploma.pdf',
-                            'Diploma',
+                            tipoController.text,
                           );
                         } catch (e) {
                           print(
