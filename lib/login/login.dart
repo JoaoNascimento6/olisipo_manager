@@ -1,23 +1,24 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/basededados.dart';
+import 'package:olisipo_manager/servidor/servidor.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key, required this.title});
 
-  final String title;
+  final List<(String, String)> title;
 
   var bd = Basededados();
-
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
+  
+  var se = Servidor();
+  se.url = '';
+  se.fazlogin(emailController,passwordController);
 
-  void fazlogin() {
-    bd.Login();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, int index) {
+     
+  
     return Scaffold(
       appBar: AppBar(
         title: Text('Olisipo Manager'),
