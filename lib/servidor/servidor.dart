@@ -167,4 +167,31 @@ class Servidor {
       throw Exception('Falha ao inserir informação profissional');
     }
   }
+
+  Future<void> inserirReuniao(
+    String dataReuniao,
+    String motivoReuniao,
+    String horasReuniao,
+  ) async {
+    var url = '$baseURL/reuniao/create';
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'data_reuniao_param': dataReuniao,
+        'motivo_param': motivoReuniao,
+        'horas_param': horasReuniao,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Informação profissional inserida com sucesso!');
+    } else {
+      print('Erro ao inserir informação profissional: ${response.statusCode}');
+      throw Exception('Falha ao inserir informação profissional');
+    }
+  }
 }
