@@ -14,13 +14,13 @@ class ListarParcerias extends StatelessWidget {
         backgroundColor: Color(0xFF32D700),
         title: Text('Parcerias'),
       ),
-      body: FutureBuilder<List<(int, String, String)>>(
+      body: FutureBuilder<List<(int, String, String,String,String)>>(
         future: se.listarParceriasServer(),
         builder: (BuildContext context,
-            AsyncSnapshot<List<(int, String, String)>> snapshot) {
+            AsyncSnapshot<List<(int, String, String,String,String)>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            List<(int, String, String)> products = snapshot.data!;
+            List<(int, String, String,String,String)> products = snapshot.data!;
             children = <Widget>[
               for (int i = 0; i < products.length; i += 3)
                 SizedBox(

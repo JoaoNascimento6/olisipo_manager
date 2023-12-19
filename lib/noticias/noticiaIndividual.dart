@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class DetalhesParceriaPage extends StatelessWidget {
   final int id;
   final String imagem;
-  final String descricao;
-  final String nome;
-  final String beneficios;
+  final String titulo;
+  final String subtitulo;
+  final String corpo;
 
   DetalhesParceriaPage({
     required this.id,
     required this.imagem,
-    required this.nome,
-    required this.beneficios,
-    required this.descricao,
+    required this.titulo,
+    required this.subtitulo,
+    required this.corpo,
   });
 
   @override
@@ -20,7 +20,7 @@ class DetalhesParceriaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          nome,
+          titulo,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
         ),
         centerTitle: true,
@@ -67,35 +67,18 @@ class DetalhesParceriaPage extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(bottom: 15),
                     child: Text(
-                      'Descrição:',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      subtitulo,
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(bottom: 15),
                     child: Text(
-                      descricao,
+                      corpo,
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Text(
-                      'Benefícios:',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  // Mapeia cada parágrafo de benefícios
-                  ...beneficios
-                      .split('. ')
-                      .map((paragraph) => Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              '• $paragraph',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ))
-                      .toList(),
                 ],
               ),
             ],
