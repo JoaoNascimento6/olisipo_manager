@@ -1,7 +1,7 @@
 // ignore_for_file: unused_import, prefer_const_constructors, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/routes/routes.dart';
-import 'login/login.dart';
+//import 'login/login.dart';
 import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
@@ -54,9 +54,9 @@ class _MyHomePageState extends State<Routeprincipal> {
         case 4:
           _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais');
           break;
-        default:
+        /*default:
           _currentPage = LoginPage(title: 'Login');
-          break;
+          break;*/
       }
     });
   }
@@ -176,12 +176,12 @@ class _MyHomePageState extends State<Routeprincipal> {
               ),
               child: Text('Olisipo'),
             ),
-            ListTile(
+            /*ListTile(
               title: const Text('Login'),
               onTap: () {
                 Navigator.pushNamed(context, AppRoutes.login);
               },
-            ),
+            ),*/
             ListTile(
               title: const Text('Registo'),
               onTap: () {

@@ -38,8 +38,8 @@ class AppRoutes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case login:
-      /*return MaterialPageRoute(
+      /*case login:
+      return MaterialPageRoute(
           builder: (_) => LoginPage(title: 'Olisipo Manager'),
         );*/
       case dashboard:
