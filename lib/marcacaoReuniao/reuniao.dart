@@ -55,6 +55,10 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF32D700),
+        title: Text('Reunião'),
+      ),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
@@ -63,7 +67,6 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 20),
                 TableCalendar(
                   calendarFormat: _calendarFormat,
                   focusedDay: _selectedDay,

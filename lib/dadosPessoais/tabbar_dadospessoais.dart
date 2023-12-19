@@ -62,11 +62,12 @@ class HeaderDadosPessoais extends StatelessWidget
                   fontWeight: FontWeight.w600,
                 ),
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
         Positioned(
-          top: 30,
+          top: 20,
           right: 8,
           child: ElevatedButton(
             onPressed: () {
