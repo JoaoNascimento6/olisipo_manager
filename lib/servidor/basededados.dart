@@ -91,4 +91,94 @@ Drop TABLE pessoas
     });
     return uts;
   }
+
+  Future<void> CriarTabelaTipoParcerias() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE tipo_parceria (
+      id_tipo_parceria INTEGER PRIMARY KEY AUTOINCREMENT,
+      tipo_parceria TEXT
+    )
+  ''');
+  }
+
+  Future<void> InsertTipoParceria(tipo_parceria) async {
+    Database db = await basededados;
+    for (final tiposParcerias in tipo_parceria) {
+      await db.rawInsert(
+          'insert into tipo_parceria(tipo_parceria) values("$tiposParcerias")');
+      print(tiposParcerias);
+    }
+  }
+
+  Future<List<String>> MostrarTipoParcerias() async {
+    List<String> uts = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select tipo_parceria from tipo_parceria');
+    resultado.forEach((linha) {
+      uts.add(linha['tipo_parceria'].toString());
+    });
+    return uts;
+  }
+
+  Future<void> CriarTabelaParcerias() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE parcerias (
+      id_parceria INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_tipo_parceria INTEGER,
+      nome_parceria TEXT,
+      descricao_parceria TEXT,
+      beneficios_parceria TEXT,
+      imagem_parceria TEXT,
+      parceria_publicada BOOL,
+      FOREIGN KEY (id_tipo_parceria) REFERENCES tipo_parceria(id_tipo_parceria)
+    )
+  ''');
+  }
+
+  Future<void> inserirParceria(List<dynamic> parceriaData) async {
+    Database db = await basededados;
+
+    for (final data in parceriaData) {
+      await db.rawInsert('''
+      INSERT INTO parcerias (
+        nome_parceria,
+        id_tipo_parceria,
+        descricao_parceria,
+        beneficios_parceria,
+        imagem_parceria,
+        parceria_publicada
+      ) VALUES (
+        "${data['nomeParceria']}",
+        ${data['idTipoParceria']},
+        "${data['descricaoParceria']}",
+        "${data['beneficiosParceria']}",
+        "${data['imagemParceria']}",
+        ${data['parceriaPublicada'] ? 1 : 0}
+      )
+    ''');
+      print(data['nomeParceria']);
+    }
+  }
+
+  Future<List<List<dynamic>>> MostrarParcerias() async {
+    List<List<dynamic>> uts = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado = await db.rawQuery(
+        'select nome_parceria, id_tipo_parceria, descricao_parceria, beneficios_parceria, imagem_parceria, parceria_publicada from parcerias');
+    resultado.forEach((linha) {
+      List<dynamic> parceria = [
+        linha['nome_parceria'].toString(),
+        linha['id_tipo_parceria'],
+        linha['descricao_parceria'].toString(),
+        linha['beneficios_parceria'].toString(),
+        linha['imagem_parceria'].toString(),
+        linha['parceria_publicada'],
+      ];
+      uts.add(parceria);
+    });
+    return uts;
+  }
 }
