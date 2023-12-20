@@ -6,6 +6,7 @@ class DetalhesParceriaPage extends StatelessWidget {
   final String descricao;
   final String nome;
   final String beneficios;
+  final String tipo;
 
   DetalhesParceriaPage({
     required this.id,
@@ -13,6 +14,7 @@ class DetalhesParceriaPage extends StatelessWidget {
     required this.nome,
     required this.beneficios,
     required this.descricao,
+    required this.tipo,
   });
 
   @override

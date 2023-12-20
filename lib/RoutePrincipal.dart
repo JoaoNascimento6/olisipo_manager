@@ -5,8 +5,12 @@ import 'package:olisipo_manager/routes/routes.dart';
 import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
+
+import 'parcerias/parcerias.dart';
+
 import 'parcerias/metodoListarParcerias.dart';
 import '/metodoListarNoticias.dart';
+
 import 'dashboard.dart';
 import './servidor/servidor.dart';
 import 'marcacaoReuniao/reuniao.dart';
@@ -32,6 +36,7 @@ class _MyHomePageState extends State<Routeprincipal> {
   @override
   void initState() {
     se.listarParceriasServer();
+    se.listarTipoParceria();
   }
 
   Widget _currentPage = Center(child: Text('Placeholder'));
@@ -51,7 +56,7 @@ class _MyHomePageState extends State<Routeprincipal> {
               TabBarGestaoCustos(title: 'Tabbar Viatura/AjudasCusto');
           break;
         case 3:
-          _currentPage = ListarParcerias();
+          _currentPage = ParceriasPage();
           break;
         case 4:
           _currentPage = ReuniaoPage(title: 'Reunião');

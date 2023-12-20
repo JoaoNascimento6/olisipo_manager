@@ -15,23 +15,35 @@ class Servidor {
     return prods;
   }
 
-  Future<List<(int, String, String, String, String)>>
+
+
+  Future<(List<(int, String, String, String, String, String)>,List<String>)>
       listarParceriasServer() async {
     url = 'https://backend-olisipo-portal.onrender.com/parcerias';
-    List<(int, String, String, String, String)> prods = [];
+    List<(int, String, String, String, String, String)> parcerias = [];
+    List<String> TipoParcerias = [];
     var result = await http.get(Uri.parse(url));
-    var lista = jsonDecode(result.body)['data'];
-    lista.forEach((linha) {
-      prods.add((
+
+    var lista1 = jsonDecode(result.body)['data1'];
+    lista1.forEach((linha) {
+      parcerias.add((
         linha['id_parceria'],
         linha['imagem_parceria'].toString(),
         linha['nome_parceria'].toString(),
         linha['descricao_parceria'].toString(),
-        linha['beneficios_parceria'].toString()
+
+        linha['beneficios_parceria'].toString(),
+        linha['tipo_parceria'].toString()
+
       ));
     });
 
-    return prods;
+    var lista2 = jsonDecode(result.body)['data2'];
+    lista2.forEach((linha) {
+      TipoParcerias.add((linha['tipo_parceria'].toString()));
+    });
+
+    return (parcerias,TipoParcerias);
   }
 
   Future<List<(String, String)>> listaUsers() async {
