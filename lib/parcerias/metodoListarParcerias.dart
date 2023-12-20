@@ -24,7 +24,7 @@ class ListarParcerias extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(endIndex - startIndex, (i) {
-                  var (id, img, nome,desc,benef,tipo) = els[startIndex + i];
+                    var (id, img, nome,desc,benef,tipo) = els[startIndex + i];
                   return ElevatedButton(
                     onPressed: () {
                       // Adicione aqui a lógica que deseja executar ao clicar no botão
