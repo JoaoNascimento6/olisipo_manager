@@ -88,12 +88,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => DadosPessoaisPage(title: 'Dados Pessoais'),
         );
-      case parcerias:
-        return MaterialPageRoute(
-          builder: (_) => ListarParcerias(),
-        );
 
-      
       case reuniao:
         return MaterialPageRoute(
           builder: (_) => ReuniaoPage(title: 'Olisipo Manager'),
