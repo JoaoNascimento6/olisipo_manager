@@ -36,7 +36,7 @@ class _MyHomePageState extends State<Routeprincipal> {
   @override
   void initState() {
     se.listarParceriasServer();
-    se.listarTipoParceria();
+
   }
 
   Widget _currentPage = Center(child: Text('Placeholder'));

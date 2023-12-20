@@ -31,7 +31,6 @@ class Servidor {
         linha['imagem_parceria'].toString(),
         linha['nome_parceria'].toString(),
         linha['descricao_parceria'].toString(),
-
         linha['beneficios_parceria'].toString(),
         linha['tipo_parceria'].toString()
 
