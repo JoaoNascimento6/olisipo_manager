@@ -103,8 +103,7 @@ class _CurriculumPageState extends State<CurriculumPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            _showModalInfoProfissional(
-                                context); // Função para abrir o showModalBottomSheet
+                            _showModalInfoProfissional(context);
                           },
                           child:
                               Icon(Icons.add, color: const Color(0xFF32D700)),

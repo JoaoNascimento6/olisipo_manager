@@ -30,11 +30,15 @@ class _MyHomePageState extends State<Routeprincipal> {
 
   @override
   void initState() {
+    super.initState();
     se.listarParceriasServer();
+    _selectedIndex = 0;
+    _currentPage = DashboardPage(title: 'Home');
   }
 
   Widget _currentPage = Center(child: Text('Placeholder'));
   int _selectedIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -58,9 +62,6 @@ class _MyHomePageState extends State<Routeprincipal> {
         case 5:
           _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais');
           break;
-        /*default:
-          _currentPage = LoginPage(title: 'Login');
-          break;*/
       }
     });
   }
@@ -102,7 +103,7 @@ class _MyHomePageState extends State<Routeprincipal> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.access_time),
-                label: 'Horas/Férias',
+                label: 'Calendário',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.attach_money),
@@ -203,18 +204,6 @@ class _MyHomePageState extends State<Routeprincipal> {
               title: const Text('Registo'),
               onTap: () {
                 Navigator.pushNamed(context, AppRoutes.registo);
-              },
-            ),
-            ListTile(
-              title: const Text('dashboard'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.dashboard);
-              },
-            ),
-            ListTile(
-              title: const Text('reuniao'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.reuniao);
               },
             ),
           ],

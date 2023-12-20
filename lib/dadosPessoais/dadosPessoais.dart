@@ -117,7 +117,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Adicione aqui a lógica para lidar com o clique no botão
+                        _showModalRecibosVencimento(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -291,6 +291,101 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               ),
         const SizedBox(height: 5),
       ],
+    );
+  }
+
+  void _showModalRecibosVencimento(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 1000,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    'Recibos de Vencimento',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        // Lógica para o botão de documento comprovativo
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white, // Cor de fundo branca
+                        alignment: Alignment
+                            .centerLeft, // Alinhar o conteúdo à esquerda
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            Icon(Icons.upload,
+                                color: Colors.green), // Ícone verde
+                            SizedBox(
+                                width:
+                                    8), // Espaçamento entre o ícone e o texto
+                            Text(
+                              'Documento Comprovativo',
+                              style: TextStyle(
+                                color: Colors.green, // Cor verde para o texto
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {} catch (e) {
+                          print(
+                              'Erro ao adicionar uma informação profissional: $e');
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                    'Erro ao adicionar uma informação profissional'),
+                                content: Text(
+                                    'Ocorreu um erro ao adicionar uma informação profissional.'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                      child: Text('Adicionar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color(0xFF32D700), // Cor de fundo verde
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
