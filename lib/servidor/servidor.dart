@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Servidor {
-  var baseURL = 'http://192.168.1.93:3000';
+  var baseURL = 'http://192.168.1.8:3000';
   var url;
   Future<List<String>> listaProdutos() async {
     List<String> prods = [];
@@ -15,16 +15,7 @@ class Servidor {
     return prods;
   }
 
-  Future<List<String>> listarTipoParceria() async {
-    url = 'https://backend-olisipo-portal.onrender.com/tipoparceria';
-    List<String> tiposParcerias = [];
-    var result = await http.get(Uri.parse(url));
-    var lista = jsonDecode(result.body)['data'];
-    lista.forEach((linha) {
-      tiposParcerias.add(linha['tipo_parceria'].toString());
-    });
-    return tiposParcerias;
-  }
+
 
   Future<(List<(int, String, String, String, String, String)>,List<String>)>
       listarParceriasServer() async {
@@ -40,8 +31,10 @@ class Servidor {
         linha['imagem_parceria'].toString(),
         linha['nome_parceria'].toString(),
         linha['descricao_parceria'].toString(),
+
         linha['beneficios_parceria'].toString(),
         linha['tipo_parceria'].toString()
+
       ));
     });
 
@@ -159,6 +152,13 @@ class Servidor {
         'confirmacao_ferias_param': confirmacaoFerias,
       }),
     );
+
+    if (response.statusCode == 200) {
+      print('Férias inseridas com sucesso!');
+    } else {
+      print('Erro ao Férias: ${response.statusCode}');
+      throw Exception('Falha ao inserir informação profissional');
+    }
   }
 
   Future<void> inserirInformacaoProfissional(int idPessoa, String titulo,
@@ -185,5 +185,52 @@ class Servidor {
       print('Erro ao inserir informação profissional: ${response.statusCode}');
       throw Exception('Falha ao inserir informação profissional');
     }
+  }
+
+  Future<void> inserirReuniao(
+    String dataReuniao,
+    String motivoReuniao,
+    String horasReuniao,
+  ) async {
+    var url = '$baseURL/reuniao/create';
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'data_reuniao_param': dataReuniao,
+        'motivo_param': motivoReuniao,
+        'horas_param': horasReuniao,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Informação profissional inserida com sucesso!');
+    } else {
+      print('Erro ao inserir informação profissional: ${response.statusCode}');
+      throw Exception('Falha ao inserir informação profissional');
+    }
+  }
+
+  Future<List<(int, String, String, String, String, String, String)>>
+      listardashboardServer() async {
+    url = 'https://backend-olisipo-portal.onrender.com/noticias';
+    List<(int, String, String, String, String, String, String)> nts = [];
+    var result = await http.get(Uri.parse(url));
+    var lista = jsonDecode(result.body)['data'];
+    lista.forEach((linha) {
+      nts.add((
+        linha['id_noticia'],
+        linha['id_tipo_noticia'].toString(),
+        linha['titulo_noticia'].toString(),
+        linha['subtitulo_noticia'].toString(),
+        linha['corpo_noticia'].toString(),
+        linha['imagem_noticia'],
+        linha['tipo_noticia'].toString()
+      ));
+    });
+    return nts;
   }
 }

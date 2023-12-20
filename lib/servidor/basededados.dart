@@ -182,4 +182,24 @@ Future<List<String>> MostrarTipoParcerias() async {
     });
     return uts;
   }
+
+  Future<List<List<dynamic>>> MostrarNoticias() async {
+    List<List<dynamic>> nts = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado = await db.rawQuery(
+        'select id_noticia, id_tipo_noticia, titulo_noticia, subtitulo_noticia, corpo_noticia, imagem_noticia,tipo_noticia from noticias');
+    resultado.forEach((linha) {
+      List<dynamic> noticia = [
+        linha['id_noticia'].toString(),
+        linha['id_tipo_noticia'],
+        linha['titulo_noticia'].toString(),
+        linha['subtitulo_noticia'].toString(),
+        linha['corpo_noticia'].toString(),
+        linha['imagem_noticia'],
+        linha['tipo_noticia'].toString()
+      ];
+      nts.add(noticia);
+    });
+    return nts;
+  }
 }

@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+import '../servidor/servidor.dart';
 
 class ReuniaoPage extends StatefulWidget {
   const ReuniaoPage({Key? key, required this.title}) : super(key: key);
@@ -12,174 +12,276 @@ class ReuniaoPage extends StatefulWidget {
 }
 
 class _ReuniaoPageState extends State<ReuniaoPage> {
+  late DateTime _selectedDay;
+  late CalendarFormat _calendarFormat;
+
+  TextEditingController motivoController = TextEditingController();
+  TextEditingController diaController = TextEditingController();
+  TextEditingController horaController = TextEditingController();
+
+  var se = Servidor();
+  late String selectedTime = 'Selecione';
+
+  @override
+  void initState() {
+    super.initState();
+    final now = DateTime.now();
+    _selectedDay = now.add(Duration(days: 1));
+    _calendarFormat = CalendarFormat.month;
+    selectedTime = 'Selecione';
+  }
+
+  void _onDaySelected(DateTime selectedDay, DateTime? focusedDay) {
+    setState(() {
+      _selectedDay = selectedDay;
+      diaController.text = selectedDay.toString();
+    });
+  }
+
+  List<String> _generateTimeItems() {
+    List<String> timeItems = ['Selecione'];
+    for (int hour = 9; hour <= 17; hour++) {
+      for (int minute = 0; minute < 60; minute += 30) {
+        String hourStr = hour.toString().padLeft(2, '0');
+        String minuteStr = minute.toString().padLeft(2, '0');
+        timeItems.add('$hourStr:$minuteStr');
+      }
+    }
+    return timeItems;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Olisipo Manager'),
+        backgroundColor: Color(0xFF32D700),
+        title: Text('Reunião'),
       ),
-      body: Column(
-        children: [
-          Container(
-              width: 375,
-              height: 140,
-              decoration: BoxDecoration(color: Color(0xff32d700))),
-          Column(
-            children: [
-              Text("",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w400,
-                  ))
-            ],
-          ),
-          Container(
-            height: 51,
-            padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 12),
-            decoration: ShapeDecoration(
-              color: Color(0xFF32D700),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            width: screenWidth,
+            padding: EdgeInsets.all(25),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Login',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
+                TableCalendar(
+                  calendarFormat: _calendarFormat,
+                  focusedDay: _selectedDay,
+                  firstDay: DateTime.now().add(Duration(days: 1)),
+                  lastDay: DateTime.now().add(Duration(days: 365)),
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+                  onDaySelected: _onDaySelected,
+                  availableCalendarFormats: const {
+                    CalendarFormat.month: 'Mês',
+                  },
+                  headerStyle: HeaderStyle(
+                    titleCentered: true,
+                  ),
+                  onFormatChanged: (format) {
+                    if (_calendarFormat != format) {
+                      setState(() {
+                        _calendarFormat = format;
+                      });
+                    }
+                  },
+                  calendarBuilders: CalendarBuilders(
+                    selectedBuilder: (context, date, events) {
+                      return Container(
+                        margin: const EdgeInsets.all(4.0),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors
+                              .green, // Cor de fundo para data selecionada
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          date.day.toString(),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: 30),
+                Container(
+                  width: screenWidth - 50,
+                  padding: EdgeInsets.only(left: 10),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.green,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF32D700),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Horário',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15),
+                DropdownButton<String>(
+                  padding: EdgeInsets.only(left: 35),
+                  hint: Text('Horário'),
+                  value: selectedTime,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedTime = newValue!;
+                      horaController.text = selectedTime;
+                    });
+                  },
+                  items: _generateTimeItems().map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Center(
+                        child: Text(
+                          value,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  width: screenWidth - 50,
+                  padding: EdgeInsets.only(left: 10),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.green,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF32D700),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Motivo',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(153, 238, 238, 238),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: TextFormField(
+                    controller: motivoController,
+                    maxLines: null,
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                      hintText: 'Escreva o motivo da reunião...',
+                      hintStyle: TextStyle(
+                        color: const Color(0xFFBDBDBD),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 14),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      se.inserirReuniao(
+                        diaController.text,
+                        motivoController.text,
+                        horaController.text,
+                      );
+                    } catch (e) {
+                      print('Erro ao criar reunião: $e');
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Erro ao criar reunião'),
+                            content:
+                                Text('Ocorreu um erro ao uma criar reunião.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                  ),
+                  child: Ink(
+                    width: screenWidth - 60,
+                    height: 52,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: const Color(0xFF32D700),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Marcar Reunião',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Stack(
-            children: [
-              Container(
-                width: 328,
-                height: 560,
-              ),
-              Container(
-                width: 288,
-                height: 64.72361755371094,
-              ),
-              Text("Escreva o motivo da reunião...",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  )),
-              Stack(
-                children: [
-                  Column(
-                    children: [
-                      "Horário",
-                      "Motivo",
-                      "09:00",
-                      "14:00",
-                      "10:00",
-                      "15:00",
-                      "11:00",
-                      "16:00",
-                      "12:00",
-                      "17:00",
-                      "13:00",
-                      "18:00"
-                    ]
-                        .map((text) => Text(
-                              text,
-                              style: TextStyle(
-                                fontSize: 13.2720308303833,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Stack(
-            children: ["Dom.", "2ª", "3ª", "4ª", "5ª", "6ª", "Sáb."]
-                .map((day) => Text(
-                      day,
-                      style: TextStyle(
-                        fontSize: 11.61302661895752,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ))
-                .toList(),
-          ),
-          Column(
-            children: [
-              // Utilize um loop para criar os stacks de dias
-              for (var i = 0; i < 7; i++)
-                Stack(
-                  children: [
-                    Text(
-                      (i + 1).toString(),
-                      style: TextStyle(
-                        fontSize: 11.61302661895752,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              Text(
-                "Janeiro",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Image.asset(
-                "assets/Back.png",
-                width: 9.518181800842285,
-                height: 11,
-              ),
-              Image.asset(
-                "assets/Back.png",
-                width: 9.518181800842285,
-                height: 11,
-              ),
-              Column(
-                children: [
-                  Text(
-                    "Marcar Reunião",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            children: [],
-          ),
-          Container(
-            width: 306,
-            height: 251,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: Color(0xfff6f6f6),
-            ),
-          ),
-          Text(
-            "Marcação de Reunião",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

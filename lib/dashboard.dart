@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import './noticias/noticiaIndividual.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key, required this.title});
-  final String title;
+  DashboardPage({Key? key, required this.els}) : super(key: key);
+  final List<(int, String, String, String, String, String, String)> els;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

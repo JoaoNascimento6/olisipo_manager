@@ -11,16 +11,15 @@ import 'package:olisipo_manager/dadosPessoais/curriculum.dart';
 import 'package:olisipo_manager/dadosPessoais/dadosPessoais.dart';
 import 'package:olisipo_manager/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:olisipo_manager/login/login.dart';
+//import 'package:olisipo_manager/login/login.dart';
 import 'package:olisipo_manager/RoutePrincipal.dart';
-import 'package:olisipo_manager/registo/registo.dart';
 import 'package:olisipo_manager/marcacaoReuniao/reuniao.dart';
 
 import 'package:olisipo_manager/parcerias/metodoListarParcerias.dart';
 import 'package:olisipo_manager/parcerias/parceriaIndividual.dart';
 
 class AppRoutes {
-  static const String login = '/login';
+  //static const String login = '/login';
   static const String RoutePrincipal = '/RoutePrincipal';
   static const String registo = '/registo';
   static const String dashboard = '/dashboard';
@@ -39,19 +38,15 @@ class AppRoutes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case login:
-        return MaterialPageRoute(
+      /*case login:
+      return MaterialPageRoute(
           builder: (_) => LoginPage(title: 'Olisipo Manager'),
-        );
-      case registo:
+        );*/
+      /*case dashboard:
         return MaterialPageRoute(
-          builder: (_) => RegistoPage(title: 'Olisipo Manager'),
+          builder: (_) => DashboardPage(),
         );
-      case dashboard:
-        return MaterialPageRoute(
-          builder: (_) => DashboardPage(title: 'Olisipo Manager'),
-        );
-
+        */
       case ajudasCusto:
         return MaterialPageRoute(
           builder: (_) => AjudasCustoPage(title: 'Ajudas de Custo'),

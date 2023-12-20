@@ -1,13 +1,19 @@
 // ignore_for_file: unused_import, prefer_const_constructors, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/routes/routes.dart';
-import 'login/login.dart';
+//import 'login/login.dart';
 import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
+
 import 'parcerias/parcerias.dart';
+
+import 'parcerias/metodoListarParcerias.dart';
+import '/metodoListarNoticias.dart';
+
 import 'dashboard.dart';
 import './servidor/servidor.dart';
+import 'marcacaoReuniao/reuniao.dart';
 
 class Routeprincipal extends StatefulWidget {
   const Routeprincipal({super.key, required this.title});
@@ -40,7 +46,7 @@ class _MyHomePageState extends State<Routeprincipal> {
       _selectedIndex = index;
       switch (_selectedIndex) {
         case 0:
-          _currentPage = DashboardPage(title: 'Home');
+          _currentPage = ListarNoticias();
           break;
         case 1:
           _currentPage = TabBarHorasFerias(title: 'Tabbar Horas/Férias');
@@ -53,11 +59,14 @@ class _MyHomePageState extends State<Routeprincipal> {
           _currentPage = ParceriasPage();
           break;
         case 4:
+          _currentPage = ReuniaoPage(title: 'Reunião');
+          break;
+        case 5:
           _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais');
           break;
-        default:
+        /*default:
           _currentPage = LoginPage(title: 'Login');
-          break;
+          break;*/
       }
     });
   }
@@ -66,10 +75,10 @@ class _MyHomePageState extends State<Routeprincipal> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
-      ),
+      ),*/
       extendBody: true,
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(left: 30, right: 30, bottom: 20),
@@ -106,8 +115,12 @@ class _MyHomePageState extends State<Routeprincipal> {
                 label: 'Custos',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.people),
+                icon: Icon(Icons.handshake_outlined),
                 label: 'Parcerias',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.people),
+                label: 'Reunião',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
@@ -165,6 +178,15 @@ class _MyHomePageState extends State<Routeprincipal> {
               ),
             ),
           ),
+          Card(
+            margin: EdgeInsets.all(0),
+            shadowColor: Colors.transparent,
+            child: SizedBox.expand(
+              child: Center(
+                child: _currentPage,
+              ),
+            ),
+          ),
         ][_selectedIndex],
       ),
       drawer: Drawer(
@@ -177,42 +199,12 @@ class _MyHomePageState extends State<Routeprincipal> {
               ),
               child: Text('Olisipo'),
             ),
-            ListTile(
+            /*ListTile(
               title: const Text('Login'),
               onTap: () {
                 Navigator.pushNamed(context, AppRoutes.login);
               },
-            ),
-            ListTile(
-              title: const Text('Registo'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.registo);
-              },
-            ),
-            ListTile(
-              title: const Text('dashboard'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.dashboard);
-              },
-            ),
-            ListTile(
-              title: const Text('parcerias'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.parcerias);
-              },
-            ),
-            ListTile(
-              title: const Text('parceria individual'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.parceriaIndividual);
-              },
-            ),
-            ListTile(
-              title: const Text('reuniao'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.reuniao);
-              },
-            ),
+            ),*/
           ],
         ),
       ),
