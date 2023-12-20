@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'parceriaIndividual.dart';
+
+import 'package:olisipo_manager/servidor/servidor.dart';
+import 'parcerias.dart';
+
 
 class ListarParcerias extends StatelessWidget {
   ListarParcerias({Key? key, required this.els}) : super(key: key);
@@ -8,6 +13,7 @@ class ListarParcerias extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         SizedBox(height: 10), // Adicione espaçamento no topo
@@ -93,6 +99,7 @@ class ListarParcerias extends StatelessWidget {
         ),
         SizedBox(height: 10), // Adicione espaçamento na parte inferior
       ],
+
     );
   }
 }
