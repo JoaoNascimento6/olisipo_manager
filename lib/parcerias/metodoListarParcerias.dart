@@ -1,51 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:olisipo_manager/servidor/metodoListarUsers.dart';
-import 'package:olisipo_manager/servidor/servidor.dart';
 
+import 'parceriaIndividual.dart';
+
+import 'package:olisipo_manager/servidor/servidor.dart';
 import 'parcerias.dart';
 
+
 class ListarParcerias extends StatelessWidget {
-  var se = Servidor();
+  ListarParcerias({Key? key, required this.els}) : super(key: key);
+
+  final List<(int, String, String,String,String,String)> els;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF32D700),
-        title: Text('Parcerias'),
-      ),
-      body: FutureBuilder<List<(int, String, String, String, String)>>(
-        future: se.listarParceriasServer(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<(int, String, String, String, String)>>
-                snapshot) {
-          List<Widget> children;
-          if (snapshot.hasData) {
-            List<(int, String, String, String, String)> products =
-                snapshot.data!;
-            children = <Widget>[
-              for (int i = 0; i < products.length; i += 3)
-                SizedBox(
-                  height: 160,
-                  child: ParceriasPage(
-                    els: products.sublist(
-                        i, i + 3 > products.length ? products.length : i + 3),
-                  ),
-                ),
-            ];
-          } else if (snapshot.hasError) {
-            children = <Widget>[Text('Erro ao carregar dados.')];
-          } else {
-            children = const <Widget>[CircularProgressIndicator()];
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: children,
-            ),
-          );
-        },
-      ),
+
+    return Column(
+      children: [
+        SizedBox(height: 10), // Adicione espaçamento no topo
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: (els.length / 3).ceil(),
+            itemBuilder: (BuildContext context, int index) {
+              int startIndex = index * 3;
+              int endIndex = (index + 1) * 3;
+              endIndex = endIndex > els.length ? els.length : endIndex;
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(endIndex - startIndex, (i) {
+                  var (id, img, nome,desc,benef,tipo) = els[startIndex + i];
+                  return ElevatedButton(
+                    onPressed: () {
+                      // Adicione aqui a lógica que deseja executar ao clicar no botão
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetalhesParceriaPage(
+                            id: id,
+                            imagem: img,
+                            nome: nome,
+                            descricao:desc,
+                            beneficios:benef,
+                            tipo:tipo
+                          ),
+                        ),
+                      );
+                      print('Botão clicado:  $nome + $tipo + $id + $desc + $benef');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.network(
+                            img,
+                            height: 110,
+                            width: 110,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Container(
+                          height: 110, // Ajuste conforme necessário
+                          width: 110, // Ajuste conforme necessário
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.7),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Text(
+                            '$nome',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              );
+            },
+          ),
+        ),
+        SizedBox(height: 10), // Adicione espaçamento na parte inferior
+      ],
+
     );
   }
 }
+
+
