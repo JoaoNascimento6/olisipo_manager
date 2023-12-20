@@ -20,7 +20,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
   TextEditingController horaController = TextEditingController();
 
   var se = Servidor();
-  late String selectedTime = '09:00';
+  late String selectedTime = 'Selecione';
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
     final now = DateTime.now();
     _selectedDay = now.add(Duration(days: 1));
     _calendarFormat = CalendarFormat.month;
-    selectedTime = '09:00';
+    selectedTime = 'Selecione';
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime? focusedDay) {
@@ -39,7 +39,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
   }
 
   List<String> _generateTimeItems() {
-    List<String> timeItems = [];
+    List<String> timeItems = ['Selecione'];
     for (int hour = 9; hour <= 17; hour++) {
       for (int minute = 0; minute < 60; minute += 30) {
         String hourStr = hour.toString().padLeft(2, '0');
@@ -89,6 +89,23 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                       });
                     }
                   },
+                  calendarBuilders: CalendarBuilders(
+                    selectedBuilder: (context, date, events) {
+                      return Container(
+                        margin: const EdgeInsets.all(4.0),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors
+                              .green, // Cor de fundo para data selecionada
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          date.day.toString(),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(height: 30),
                 Container(
@@ -125,6 +142,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                 ),
                 SizedBox(height: 15),
                 DropdownButton<String>(
+                  padding: EdgeInsets.only(left: 35),
                   hint: Text('Horário'),
                   value: selectedTime,
                   onChanged: (String? newValue) {
@@ -133,11 +151,15 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                       horaController.text = selectedTime;
                     });
                   },
-                  items: _generateTimeItems()
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: _generateTimeItems().map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Center(
+                        child: Text(
+                          value,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     );
                   }).toList(),
                 ),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Servidor {
-  var baseURL = 'http://192.168.1.93:3000';
+  var baseURL = 'http://192.168.1.8:3000';
   var url;
   Future<List<String>> listaProdutos() async {
     List<String> prods = [];
@@ -140,6 +140,13 @@ class Servidor {
         'confirmacao_ferias_param': confirmacaoFerias,
       }),
     );
+
+    if (response.statusCode == 200) {
+      print('Férias inseridas com sucesso!');
+    } else {
+      print('Erro ao Férias: ${response.statusCode}');
+      throw Exception('Falha ao inserir informação profissional');
+    }
   }
 
   Future<void> inserirInformacaoProfissional(int idPessoa, String titulo,
