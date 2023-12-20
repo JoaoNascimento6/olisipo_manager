@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
 import 'package:olisipo_manager/servidor/servidor.dart';
 import 'dashboard.dart';
 
 class ListarNoticias extends StatelessWidget {
-  var se = Servidor();
+  var bd = Basededados();
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +14,15 @@ class ListarNoticias extends StatelessWidget {
         title: Text('noticias'),
       ),
       body: FutureBuilder<
-          List<(int, String, String, String, String, String, String)>>(
-        future: se.listardashboardServer(),
+          List<(int, String, String, String, String, String, String, Bool)>>(
+        future: bd.MostrarNoticias()),
         builder: (BuildContext context,
             AsyncSnapshot<
-                    List<(int, String, String, String, String, String, String)>>
+                    List<(int, String, String, String, String, String, String, String)>>
                 snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            List<(int, String, String, String, String, String, String)>
+            List<(int, String, String, String, String, String, String, Bool)>
                 noticias = snapshot.data!;
             children = <Widget>[
               for (int i = 0; i < noticias.length; i += 3)
@@ -46,6 +47,6 @@ class ListarNoticias extends StatelessWidget {
           );
         },
       ),
-    );
+    );~~
   }
 }

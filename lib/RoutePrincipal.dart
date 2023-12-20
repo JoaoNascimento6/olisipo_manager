@@ -32,6 +32,7 @@ class _MyHomePageState extends State<Routeprincipal> {
   @override
   void initState() {
     se.listarParceriasServer();
+    //se.listardashboardServer();
   }
 
   Widget _currentPage = Center(child: Text('Placeholder'));
