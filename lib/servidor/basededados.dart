@@ -109,23 +109,22 @@ Drop TABLE pessoas
   Future<void> InsertTipoParceria(tipoParc) async {
     Database db = await basededados;
     for (final tiposParcerias in tipoParc) {
-      await db.rawInsert('insert into tipo_parceria(tipo_parceria) values("$tipoParc")');
+      await db.rawInsert(
+          'insert into tipo_parceria(tipo_parceria) values("$tipoParc")');
       print(tiposParcerias);
     }
   }
 
-Future<List<String>> MostrarTipoParcerias() async {
+  Future<List<String>> MostrarTipoParcerias() async {
     List<String> uts = [];
     Database db = await basededados;
-    List<Map<String, Object?>> resultado =
-        await db.rawQuery('select id_tipo_parceria, tipo_parceria from tipo_parceria');
+    List<Map<String, Object?>> resultado = await db
+        .rawQuery('select id_tipo_parceria, tipo_parceria from tipo_parceria');
     resultado.forEach((linha) {
       uts.add(linha['tipo_parceria'].toString());
     });
     return uts;
   }
-
-
 
   Future<void> CriarTabelaParcerias() async {
     Database db = await basededados;
