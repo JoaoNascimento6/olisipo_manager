@@ -15,9 +15,10 @@ class Servidor {
     return prods;
   }
 
-  Future<List<(int, String, String,String,String)>> listarParceriasServer() async {
+  Future<List<(int, String, String, String, String)>>
+      listarParceriasServer() async {
     url = 'https://backend-olisipo-portal.onrender.com/parcerias';
-    List<(int, String, String,String,String)> prods = [];
+    List<(int, String, String, String, String)> prods = [];
     var result = await http.get(Uri.parse(url));
     var lista = jsonDecode(result.body)['data'];
     lista.forEach((linha) {
@@ -27,7 +28,6 @@ class Servidor {
         linha['nome_parceria'].toString(),
         linha['descricao_parceria'].toString(),
         linha['beneficios_parceria'].toString()
-
       ));
     });
 
@@ -193,5 +193,25 @@ class Servidor {
       print('Erro ao inserir informação profissional: ${response.statusCode}');
       throw Exception('Falha ao inserir informação profissional');
     }
+  }
+
+  Future<List<(int, String, String, String, String, String, String)>>
+      listardashboardServer() async {
+    url = 'https://backend-olisipo-portal.onrender.com/noticias';
+    List<(int, String, String, String, String, String, String)> nts = [];
+    var result = await http.get(Uri.parse(url));
+    var lista = jsonDecode(result.body)['data'];
+    lista.forEach((linha) {
+      nts.add((
+        linha['id_noticia'],
+        linha['id_tipo_noticia'].toString(),
+        linha['titulo_noticia'].toString(),
+        linha['subtitulo_noticia'].toString(),
+        linha['corpo_noticia'].toString(),
+        linha['imagem_noticia'],
+        linha['tipo_noticia'].toString()
+      ));
+    });
+    return nts;
   }
 }

@@ -6,6 +6,7 @@ import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
 import 'parcerias/metodoListarParcerias.dart';
+import '/metodoListarNoticias.dart';
 import 'dashboard.dart';
 import './servidor/servidor.dart';
 import 'marcacaoReuniao/reuniao.dart';
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<Routeprincipal> {
       _selectedIndex = index;
       switch (_selectedIndex) {
         case 0:
-          _currentPage = DashboardPage(title: 'Home');
+          _currentPage = ListarNoticias();
           break;
         case 1:
           _currentPage = TabBarHorasFerias(title: 'Tabbar Horas/Férias');
@@ -199,24 +200,6 @@ class _MyHomePageState extends State<Routeprincipal> {
                 Navigator.pushNamed(context, AppRoutes.login);
               },
             ),*/
-            ListTile(
-              title: const Text('Registo'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.registo);
-              },
-            ),
-            ListTile(
-              title: const Text('dashboard'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.dashboard);
-              },
-            ),
-            ListTile(
-              title: const Text('reuniao'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.reuniao);
-              },
-            ),
           ],
         ),
       ),

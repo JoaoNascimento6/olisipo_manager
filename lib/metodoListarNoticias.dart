@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/servidor.dart';
-import 'parcerias.dart';
+import 'dashboard.dart';
 
-class ListarParcerias extends StatelessWidget {
+class ListarNoticias extends StatelessWidget {
   var se = Servidor();
 
   @override
@@ -10,24 +10,26 @@ class ListarParcerias extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF32D700),
-        title: Text('Parcerias'),
+        title: Text('noticias'),
       ),
-      body: FutureBuilder<List<(int, String, String, String, String)>>(
-        future: se.listarParceriasServer(),
+      body: FutureBuilder<
+          List<(int, String, String, String, String, String, String)>>(
+        future: se.listardashboardServer(),
         builder: (BuildContext context,
-            AsyncSnapshot<List<(int, String, String, String, String)>>
+            AsyncSnapshot<
+                    List<(int, String, String, String, String, String, String)>>
                 snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
-            List<(int, String, String, String, String)> products =
-                snapshot.data!;
+            List<(int, String, String, String, String, String, String)>
+                noticias = snapshot.data!;
             children = <Widget>[
-              for (int i = 0; i < products.length; i += 3)
+              for (int i = 0; i < noticias.length; i += 3)
                 SizedBox(
                   height: 160,
-                  child: ParceriasPage(
-                    els: products.sublist(
-                        i, i + 3 > products.length ? products.length : i + 3),
+                  child: DashboardPage(
+                    els: noticias.sublist(
+                        i, i + 3 > noticias.length ? noticias.length : i + 3),
                   ),
                 ),
             ];

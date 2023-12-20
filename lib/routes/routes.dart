@@ -42,11 +42,11 @@ class AppRoutes {
       return MaterialPageRoute(
           builder: (_) => LoginPage(title: 'Olisipo Manager'),
         );*/
-      case dashboard:
+      /*case dashboard:
         return MaterialPageRoute(
-          builder: (_) => DashboardPage(title: 'Olisipo Manager'),
+          builder: (_) => DashboardPage(),
         );
-
+        */
       case ajudasCusto:
         return MaterialPageRoute(
           builder: (_) => AjudasCustoPage(title: 'Ajudas de Custo'),
