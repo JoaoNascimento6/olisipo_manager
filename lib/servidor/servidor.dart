@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -211,10 +213,11 @@ class Servidor {
     }
   }
 
-  Future<List<(int, String, String, String, String, String, String)>>
+// _____________________________________ NOTICIAS ___________________________________
+  Future<List<(int, String, String, String, String, String, String, Bool)>>
       listardashboardServer() async {
     url = 'https://backend-olisipo-portal.onrender.com/noticias';
-    List<(int, String, String, String, String, String, String)> nts = [];
+    List<(int, String, String, String, String, String, String, Bool)> nts = [];
     var result = await http.get(Uri.parse(url));
     var lista = jsonDecode(result.body)['data'];
     lista.forEach((linha) {
@@ -225,7 +228,8 @@ class Servidor {
         linha['subtitulo_noticia'].toString(),
         linha['corpo_noticia'].toString(),
         linha['imagem_noticia'],
-        linha['tipo_noticia'].toString()
+        linha['tipo_noticia'].toString(),
+        linha['noticia_publicada'],
       ));
     });
     return nts;
