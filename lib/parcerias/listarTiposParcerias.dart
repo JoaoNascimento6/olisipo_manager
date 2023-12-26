@@ -6,16 +6,13 @@ import 'metodoListarParcerias.dart';
 class ListarTipoParcerias extends StatelessWidget {
   final List<String> tiposDeParceria;
 
-
   ListarTipoParcerias({
     required this.tiposDeParceria,
-    
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -47,7 +44,6 @@ class ListarTipoParcerias extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-
         ],
       ),
     );

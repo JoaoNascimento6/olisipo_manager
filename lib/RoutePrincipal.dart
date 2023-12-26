@@ -32,8 +32,11 @@ class _MyHomePageState extends State<Routeprincipal> {
   void initState() {
     super.initState();
     se.listarParceriasServer();
+
+
     _selectedIndex = 0;
     _currentPage = DashboardPage(title: 'Home');
+
   }
 
   Widget _currentPage = Center(child: Text('Placeholder'));
