@@ -9,10 +9,13 @@ import 'parcerias.dart';
 class ListarParcerias extends StatelessWidget {
   ListarParcerias({Key? key, required this.els}) : super(key: key);
 
-  final List<(int, String, String,String,String,String)> els;
+  final List<(int, String, String,String,String,String,bool)> els;
 
   @override
   Widget build(BuildContext context) {
+
+
+
 
     return Column(
       children: [
@@ -30,7 +33,7 @@ class ListarParcerias extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(endIndex - startIndex, (i) {
-                    var (id, img, nome,desc,benef,tipo) = els[startIndex + i];
+                    var (id, img, nome,desc,benef,tipo,publ) = els[startIndex + i];
                   return ElevatedButton(
                     onPressed: () {
                       // Adicione aqui a lógica que deseja executar ao clicar no botão
@@ -43,7 +46,8 @@ class ListarParcerias extends StatelessWidget {
                             nome: nome,
                             descricao:desc,
                             beneficios:benef,
-                            tipo:tipo
+                            tipo:tipo,
+                            publicada:publ
                           ),
                         ),
                       );

@@ -16,12 +16,12 @@ class ParceriasPage extends StatelessWidget {
         title: Text('Parcerias'),
       ),
       body: FutureBuilder<
-          (List<(int, String, String, String, String, String)>, List<String>)>(
+          (List<(int, String, String, String, String, String,bool)>, List<String>)>(
         future: se.listarParceriasServer(),
         builder: (BuildContext context,
             AsyncSnapshot<
                     (
-                      List<(int, String, String, String, String, String)>,
+                      List<(int, String, String, String, String, String,bool)>,
                       List<String>
                     )>
                 snapshot) {

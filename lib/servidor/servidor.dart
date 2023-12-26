@@ -15,12 +15,10 @@ class Servidor {
     return prods;
   }
 
-
-
-  Future<(List<(int, String, String, String, String, String)>,List<String>)>
+  Future<(List<(int, String, String, String, String, String,bool)>, List<String>)>
       listarParceriasServer() async {
     url = 'https://backend-olisipo-portal.onrender.com/parcerias';
-    List<(int, String, String, String, String, String)> parcerias = [];
+    List<(int, String, String, String, String, String, bool)> parcerias = [];
     List<String> TipoParcerias = [];
     var result = await http.get(Uri.parse(url));
 
@@ -32,8 +30,8 @@ class Servidor {
         linha['nome_parceria'].toString(),
         linha['descricao_parceria'].toString(),
         linha['beneficios_parceria'].toString(),
-        linha['tipo_parceria'].toString()
-
+        linha['tipo_parceria'].toString(),
+        linha['parceria_publicada']
       ));
     });
 
@@ -42,7 +40,7 @@ class Servidor {
       TipoParcerias.add((linha['tipo_parceria'].toString()));
     });
 
-    return (parcerias,TipoParcerias);
+    return (parcerias, TipoParcerias);
   }
 
   Future<List<(String, String)>> listaUsers() async {
