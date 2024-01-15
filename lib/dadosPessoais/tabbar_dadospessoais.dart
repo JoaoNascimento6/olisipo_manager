@@ -119,7 +119,7 @@ class TabBarDadosPessoais extends StatelessWidget {
                 ),
                 Tab(
                   child: Text(
-                    'Curriculum',
+                    'Perfil Profissional',
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
@@ -140,7 +140,7 @@ class TabBarDadosPessoais extends StatelessWidget {
               child: Container(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height),
-                child: CurriculumPage(title: 'Curriculum'),
+                child: CurriculumPage(title: 'Informações Profissionais'),
               ),
             ),
           ],

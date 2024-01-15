@@ -130,7 +130,7 @@ class _CurriculumPageState extends State<CurriculumPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Estágio na Deloitte',
+                                  'Estágio na Olisipo',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
@@ -140,7 +140,7 @@ class _CurriculumPageState extends State<CurriculumPage> {
                                 ),
                                 const SizedBox(height: 3),
                                 Text(
-                                  'Desenvolvimento de websites na\nDeloitte',
+                                  'Desenvolvimento de websites na\nOlisipo',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
