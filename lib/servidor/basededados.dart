@@ -1,8 +1,11 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 //import 'package:collection/collection.dart'; // ´Enecess´ario adicionar a respetiva dependencia
 import 'package:path/path.dart'; // É necessário adicionar a respetiva dependencia
 
+// _____________________________________ Base de dados SQlite ____________________________________
 class Basededados {
   static const nomebd = "bdadm.db";
   final int versao = 1;
@@ -92,6 +95,7 @@ Drop TABLE pessoas
     return uts;
   }
 
+// _____________________________________ PARCERIAS ____________________________________
   Future<void> CriarTabelaTipoParcerias() async {
     Database db = await basededados;
     await db.execute('''
@@ -105,23 +109,22 @@ Drop TABLE pessoas
   Future<void> InsertTipoParceria(tipoParc) async {
     Database db = await basededados;
     for (final tiposParcerias in tipoParc) {
-      await db.rawInsert('insert into tipo_parceria(tipo_parceria) values("$tipoParc")');
+      await db.rawInsert(
+          'insert into tipo_parceria(tipo_parceria) values("$tipoParc")');
       print(tiposParcerias);
     }
   }
 
-Future<List<String>> MostrarTipoParcerias() async {
+  Future<List<String>> MostrarTipoParcerias() async {
     List<String> uts = [];
     Database db = await basededados;
-    List<Map<String, Object?>> resultado =
-        await db.rawQuery('select id_tipo_parceria, tipo_parceria from tipo_parceria');
+    List<Map<String, Object?>> resultado = await db
+        .rawQuery('select id_tipo_parceria, tipo_parceria from tipo_parceria');
     resultado.forEach((linha) {
       uts.add(linha['tipo_parceria'].toString());
     });
     return uts;
   }
-
-
 
   Future<void> CriarTabelaParcerias() async {
     Database db = await basededados;
@@ -182,4 +185,100 @@ Future<List<String>> MostrarTipoParcerias() async {
     });
     return uts;
   }
+
+
+  // _____________________________________ NOTICIAS ____________________________________
+
+  Future<List<List<dynamic>>> MostrarNoticias() async {
+    List<List<dynamic>> nts = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado = await db.rawQuery(
+        'select id_noticia, id_tipo_noticia, titulo_noticia, subtitulo_noticia, corpo_noticia, imagem_noticia,tipo_noticia,noticia_publicada from noticias');
+    resultado.forEach((linha) {
+      List<dynamic> noticia = [
+        linha['id_noticia'].toString(),
+        linha['id_tipo_noticia'],
+        linha['titulo_noticia'].toString(),
+        linha['subtitulo_noticia'].toString(),
+        linha['corpo_noticia'].toString(),
+        linha['imagem_noticia'],
+        linha['tipo_noticia'].toString(),
+        linha['noticia_publicada'],
+      ];
+      nts.add(noticia);
+    });
+    return nts;
+  }
+
+  Future<void> CriarTabelaNoticias() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE parcerias (
+      id_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
+      id_tipo_noticia INTEGER,
+      titulo_noticia TEXT,
+      subtitulo_noticia TEXT,
+      corpo_noticia TEXT,
+      imagem_noticia TEXT,
+      noticia_publicada BOOL,
+      FOREIGN KEY (id_tipo_noticia) REFERENCES tipo_noticia(id_tipo_noticia)
+    )
+  ''');
+  }
+
+  Future<void> inserirNoticias(List<dynamic> noticiaData) async {
+    Database db = await basededados;
+
+    for (final data in noticiaData) {
+      await db.rawInsert('''
+      INSERT INTO noticias (
+        titulo_noticia,
+        id_tipo_noticia,
+        subtitulo_noticia,
+        corpo_noticia,
+        imagem_noticia,
+        noticia_publicada
+      ) VALUES (
+        "${data['titulo_noticia']}",
+        ${data['id_tipo_noticia']},
+        "${data['subtitulo_noticia']}",
+        "${data['corpo_noticia']}",
+        "${data['imagem_noticia']}",
+        ${data['noticia_publicada'] ? 1 : 0}
+      )
+    ''');
+      print(data['titulo_noticia']);
+    }
+  }
+
+  Future<void> CriarTabelaTipoNoticia() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE tipo_parceria (
+      id_tipo_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
+      tipo_noticia TEXT
+    )
+  ''');
+  }
+
+  Future<void> InsertTipoNoticia(tipo_noticia) async {
+    Database db = await basededados;
+    for (final tiposnoticia in tipo_noticia) {
+      await db.rawInsert(
+          'insert into tipo_noticia(tipo_noticia) values("$tiposnoticia")');
+      print(tiposnoticia);
+    }
+  }
+
+  Future<List<String>> MostrarTipoNoticia() async {
+    List<String> uts = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select tipo_noticia from tipo_noticia');
+    resultado.forEach((linha) {
+      uts.add(linha['tipo_noticia'].toString());
+    });
+    return uts;
+  }
+
 }

@@ -5,12 +5,7 @@ import 'package:olisipo_manager/routes/routes.dart';
 import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
-
 import 'parcerias/parcerias.dart';
-
-import 'parcerias/metodoListarParcerias.dart';
-import '/metodoListarNoticias.dart';
-
 import 'dashboard.dart';
 import './servidor/servidor.dart';
 import 'marcacaoReuniao/reuniao.dart';
@@ -35,18 +30,21 @@ class _MyHomePageState extends State<Routeprincipal> {
 
   @override
   void initState() {
+    super.initState();
     se.listarParceriasServer();
-
+    _selectedIndex = 0;
+    //_currentPage = DashboardPage(title: 'Home');
   }
 
   Widget _currentPage = Center(child: Text('Placeholder'));
   int _selectedIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
       switch (_selectedIndex) {
         case 0:
-          _currentPage = ListarNoticias();
+          //_currentPage = DashboardPage(title: 'Home');
           break;
         case 1:
           _currentPage = TabBarHorasFerias(title: 'Tabbar Horas/Férias');
@@ -64,9 +62,6 @@ class _MyHomePageState extends State<Routeprincipal> {
         case 5:
           _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais');
           break;
-        /*default:
-          _currentPage = LoginPage(title: 'Login');
-          break;*/
       }
     });
   }
@@ -108,14 +103,14 @@ class _MyHomePageState extends State<Routeprincipal> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.access_time),
-                label: 'Horas/Férias',
+                label: 'Calendário',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.attach_money),
                 label: 'Custos',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.handshake_outlined),
+                icon: Icon(Icons.handshake),
                 label: 'Parcerias',
               ),
               BottomNavigationBarItem(
@@ -205,6 +200,12 @@ class _MyHomePageState extends State<Routeprincipal> {
                 Navigator.pushNamed(context, AppRoutes.login);
               },
             ),*/
+            ListTile(
+              title: const Text('Registo'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.registo);
+              },
+            ),
           ],
         ),
       ),

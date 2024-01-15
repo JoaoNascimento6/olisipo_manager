@@ -103,8 +103,7 @@ class _CurriculumPageState extends State<CurriculumPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            _showModalInfoProfissional(
-                                context); // Função para abrir o showModalBottomSheet
+                            _showModalInfoProfissional(context);
                           },
                           child:
                               Icon(Icons.add, color: const Color(0xFF32D700)),
@@ -131,7 +130,7 @@ class _CurriculumPageState extends State<CurriculumPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Estágio na Deloitte',
+                                  'Estágio na Olisipo',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
@@ -141,7 +140,7 @@ class _CurriculumPageState extends State<CurriculumPage> {
                                 ),
                                 const SizedBox(height: 3),
                                 Text(
-                                  'Desenvolvimento de websites na\nDeloitte',
+                                  'Desenvolvimento de websites na\nOlisipo',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
