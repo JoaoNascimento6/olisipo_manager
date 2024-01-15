@@ -278,6 +278,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                     ),
                   ),
                 ),
+                SizedBox(height: 90)
               ],
             ),
           ),

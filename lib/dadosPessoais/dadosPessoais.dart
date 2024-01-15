@@ -20,7 +20,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
   TextEditingController emailController =
       TextEditingController(text: 'carlosmed_olisipo@olisipo.pt');
   TextEditingController passwordController =
-      TextEditingController(text: '12345');
+      TextEditingController(text: '*****');
 
   @override
   void dispose() {

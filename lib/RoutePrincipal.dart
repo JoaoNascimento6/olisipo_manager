@@ -5,7 +5,7 @@ import 'package:olisipo_manager/routes/routes.dart';
 import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
-import 'parcerias/metodoListarParcerias.dart';
+import 'parcerias/parcerias.dart';
 import 'dashboard.dart';
 import './servidor/servidor.dart';
 import 'marcacaoReuniao/reuniao.dart';
@@ -32,11 +32,8 @@ class _MyHomePageState extends State<Routeprincipal> {
   void initState() {
     super.initState();
     se.listarParceriasServer();
-
-
     _selectedIndex = 0;
-    _currentPage = DashboardPage(title: 'Home');
-
+    //_currentPage = DashboardPage(title: 'Home');
   }
 
   Widget _currentPage = Center(child: Text('Placeholder'));
@@ -47,7 +44,7 @@ class _MyHomePageState extends State<Routeprincipal> {
       _selectedIndex = index;
       switch (_selectedIndex) {
         case 0:
-          _currentPage = DashboardPage(title: 'Home');
+          //_currentPage = DashboardPage(title: 'Home');
           break;
         case 1:
           _currentPage = TabBarHorasFerias(title: 'Tabbar Horas/Férias');
@@ -57,7 +54,7 @@ class _MyHomePageState extends State<Routeprincipal> {
               TabBarGestaoCustos(title: 'Tabbar Viatura/AjudasCusto');
           break;
         case 3:
-          _currentPage = ListarParcerias();
+          _currentPage = ParceriasPage();
           break;
         case 4:
           _currentPage = ReuniaoPage(title: 'Reunião');
@@ -113,7 +110,7 @@ class _MyHomePageState extends State<Routeprincipal> {
                 label: 'Custos',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.handshake_outlined),
+                icon: Icon(Icons.handshake),
                 label: 'Parcerias',
               ),
               BottomNavigationBarItem(

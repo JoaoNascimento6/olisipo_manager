@@ -13,7 +13,7 @@ class ViaturaPropriaPage extends StatefulWidget {
 class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
   final TextEditingController kmController = TextEditingController();
   final TextEditingController porigemController = TextEditingController();
-  final TextEditingController psaidaController = TextEditingController();
+  final TextEditingController pchegadaController = TextEditingController();
   final TextEditingController dataController = TextEditingController();
 
   var se = Servidor();
@@ -22,7 +22,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
   void dispose() {
     kmController.dispose();
     porigemController.dispose();
-    psaidaController.dispose();
+    pchegadaController.dispose();
     dataController.dispose();
     super.dispose();
   }
@@ -153,7 +153,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                         ),
                       ),
                       Text(
-                        'Ponto de Saída',
+                        'Ponto de Chegada',
                         style: TextStyle(
                           color: Color.fromARGB(255, 101, 101, 101),
                           fontSize: 16,
@@ -170,9 +170,9 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: TextField(
-                            controller: psaidaController,
+                            controller: pchegadaController,
                             decoration: InputDecoration(
-                              hintText: 'Escreva o ponto de saída...',
+                              hintText: 'Escreva o ponto de chegada...',
                               hintStyle: TextStyle(
                                 color: const Color(0xFFBDBDBD),
                                 fontSize: 16,
@@ -241,7 +241,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                             double.parse(kmController.text),
                             dataController.text,
                             porigemController.text,
-                            psaidaController.text,
+                            pchegadaController.text,
                             false,
                           );
                         } catch (e) {

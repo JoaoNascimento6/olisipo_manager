@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -17,14 +16,17 @@ class Servidor {
     return prods;
   }
 
-  Future<(List<(int, String, String, String, String, String,bool)>, List<String>)>
-      listarParceriasServer() async {
+  Future<
+      (
+        List<(int, String, String, String, String, String, bool)>,
+        List<String>
+      )> listarParceriasServer() async {
     url = 'https://backend-olisipo-portal.onrender.com/parcerias';
     List<(int, String, String, String, String, String, bool)> parcerias = [];
     List<String> TipoParcerias = [];
     var result = await http.get(Uri.parse(url));
 
-    var lista1 = jsonDecode(result.body)['data1'];
+    var lista1 = jsonDecode(result.body)['data'];
     lista1.forEach((linha) {
       parcerias.add((
         linha['id_parceria'],
@@ -36,7 +38,6 @@ class Servidor {
         linha['parceria_publicada']
       ));
     });
-
     var lista2 = jsonDecode(result.body)['data2'];
     lista2.forEach((linha) {
       TipoParcerias.add((linha['tipo_parceria'].toString()));
@@ -214,10 +215,10 @@ class Servidor {
   }
 
 // _____________________________________ NOTICIAS ___________________________________
-  Future<List<(int, String, String, String, String, String, String, Bool)>>
+  Future<List<(int, String, String, String, String, String, String, bool)>>
       listardashboardServer() async {
     url = 'https://backend-olisipo-portal.onrender.com/noticias';
-    List<(int, String, String, String, String, String, String, Bool)> nts = [];
+    List<(int, String, String, String, String, String, String, bool)> nts = [];
     var result = await http.get(Uri.parse(url));
     var lista = jsonDecode(result.body)['data'];
     lista.forEach((linha) {
