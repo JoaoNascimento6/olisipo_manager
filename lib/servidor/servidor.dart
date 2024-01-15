@@ -22,7 +22,7 @@ class Servidor {
     List<String> TipoParcerias = [];
     var result = await http.get(Uri.parse(url));
 
-    var lista1 = jsonDecode(result.body)['data1'];
+    var lista1 = jsonDecode(result.body)['data'];
     lista1.forEach((linha) {
       parcerias.add((
         linha['id_parceria'],
