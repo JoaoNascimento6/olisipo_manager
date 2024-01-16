@@ -325,24 +325,36 @@ class Servidor {
   }
 
 // _____________________________________ NOTICIAS ___________________________________
-  Future<List<(int, String, String, String, String, String, String, bool)>>
-      listardashboardServer() async {
+  Future<
+      (
+        List<(int, String, String, String, String, String, String, bool)>,
+        List<String>
+      )> listardashboardServer() async {
     url = 'https://backend-olisipo-portal.onrender.com/noticias';
-    List<(int, String, String, String, String, String, String, bool)> nts = [];
+    List<(int, String, String, String, String, String, String, bool)> noticias =
+        [];
+    List<String> TipoNoticias = [];
     var result = await http.get(Uri.parse(url));
-    var lista = jsonDecode(result.body)['data'];
-    lista.forEach((linha) {
-      nts.add((
+
+    var lista1 = jsonDecode(result.body)['data'];
+    lista1.forEach((linha) {
+      noticias.add((
         linha['id_noticia'],
+        linha['imagem_noticia'].toString(),
         linha['id_tipo_noticia'].toString(),
         linha['titulo_noticia'].toString(),
         linha['subtitulo_noticia'].toString(),
         linha['corpo_noticia'].toString(),
-        linha['imagem_noticia'],
         linha['tipo_noticia'].toString(),
-        linha['noticia_publicada'],
+        linha['noticia_publicada'] == true,
       ));
     });
-    return nts;
+
+    var lista2 = jsonDecode(result.body)['data1'];
+    lista2.forEach((linha) {
+      TipoNoticias.add((linha['tipo_noticia'].toString()));
+    });
+
+    return (noticias, TipoNoticias);
   }
 }

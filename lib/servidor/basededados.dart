@@ -163,6 +163,7 @@ Drop TABLE tipo_parceria
       ));
     });
 
+
     List<Map<String, Object?>> resultadoTipo =
         await db.rawQuery('select tipo_parceria from tipo_parceria');
     resultadoTipo.forEach((linha) {
@@ -171,6 +172,7 @@ Drop TABLE tipo_parceria
 
     return (parcerias, tipos);
   }
+
 
   // _____________________________________ NOTICIAS ____________________________________
 
@@ -271,6 +273,7 @@ Drop TABLE tipo_parceria
     });
     return uts;
   }
+
 
   //_______________ despesas Viatura propria
 
@@ -505,4 +508,5 @@ Drop TABLE tipo_parceria
     });
     return recibos;
   }
+
 }

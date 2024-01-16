@@ -17,10 +17,12 @@ class MyApp extends StatelessWidget {
     var se = Servidor();
 
     void criaTabela() {
+
       //bd.apagatabelaParcerias();
       //bd.CriarTabelaTipoParcerias();
       //bd.CriarTabelaParcerias();
       se.getDadosServidor();
+
     }
 
     criaTabela();
