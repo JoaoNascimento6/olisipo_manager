@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'noticiaIndividual.dart';
 import 'package:olisipo_manager/servidor/servidor.dart';
 
@@ -101,3 +101,4 @@ class ListarNoticias extends StatelessWidget {
     );
   }
 }
+ */

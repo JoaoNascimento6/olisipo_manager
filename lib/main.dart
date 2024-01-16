@@ -17,12 +17,18 @@ class MyApp extends StatelessWidget {
     var se = Servidor();
 
     void criaTabela() {
-
       //bd.apagatabelaParcerias();
+      //bd.CriarTabelaAjudas();
+      //bd.CriarTabelaDespesas();
+      //bd.CriarTabelaFerias();
+      //bd.CriarTabelaHoras();
+      //bd.CriarTabelaNoticias();
+      //bd.CriarTabelaTipoNoticia();
       //bd.CriarTabelaTipoParcerias();
       //bd.CriarTabelaParcerias();
+      //bd.CriarTabelaRecibos();
+      //bd.CriarTabelaReunioes();
       se.getDadosServidor();
-
     }
 
     criaTabela();

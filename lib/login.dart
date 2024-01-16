@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   bool showPassword = false;
 
   var se = Servidor();
-  //se.fazlogin(emailController,passwordController);
 
   @override
   Widget build(BuildContext context) {
@@ -118,9 +117,16 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 40),
             ElevatedButton(
-              onPressed: () {
-                if (emailController.text == "email" &&
-                    passwordController.text == "1234") {
+              onPressed: () async {
+                String? token = await se.login(
+                  emailController.text,
+                  passwordController.text,
+                );
+
+                if (token != null) {
+                  // Armazenar o token no SharedPreferences
+                  await se.saveToken(token);
+                  print(token);
                   Navigator.pushReplacementNamed(context, '/RoutePrincipal');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(

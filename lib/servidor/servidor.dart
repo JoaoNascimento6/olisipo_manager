@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'basededados.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Servidor {
-  var baseURL = 'http://192.168.1.8:3000';
+  var baseURL = 'https://backend-olisipo-portal.onrender.com';
   var url;
   Future<List<String>> listaProdutos() async {
     List<String> prods = [];
@@ -17,24 +18,11 @@ class Servidor {
     return prods;
   }
 
-  Future<
-      (
-        List<(String, String, String, String, String)>,
-        List<String>,
-        List<(int, String, String, String, String,String)>,
-        List<String>,
-        List<(int, String, String, String, String)>,
-        List<(String, String)>,
-        List<(String, String)>,
-        List<(String, String)>,
-        List<(String, String)>,
-        List<(String, String, String)>,
-        List<(int, String, String, String)>
-      )> getDadosServidor() async {
+  Future<void> getDadosServidor() async {
     url = 'https://backend-olisipo-portal.onrender.com/appmobile';
     List<(String, String, String, String, String)> parcerias = [];
     List<String> TipoParcerias = [];
-    List<(int, String, String, String, String,String)> noticias = [];
+    List<(int, String, String, String, String, String)> noticias = [];
     List<String> TipoNoticias = [];
     List<(int, String, String, String, String)> informacoesProfissionais = [];
     List<(String, String)> despesasViatura = [];
@@ -140,20 +128,6 @@ class Servidor {
     bd.inserirParceria(parcerias);
     bd.InsertTipoParceria(TipoParcerias);
     //bd.InsertDespesas(despesasViatura);
-
-    return (
-      parcerias,
-      TipoParcerias,
-      noticias,
-      TipoNoticias,
-      informacoesProfissionais,
-      despesasViatura,
-      ferias,
-      horas,
-      ajudas,
-      reunioes,
-      recibos
-    );
   }
 
   Future<List<(String, String)>> listaUsers() async {
@@ -167,21 +141,22 @@ class Servidor {
   }
 
   Future<void> inserirDespesasViaturaPropria(
-      int idPessoa,
+      String? token,
       double quilometros,
       String dataDeslocacao,
       String pontoOrigem,
       String pontoChegada,
       bool confirmacaoDespesas) async {
-    var url = '$baseURL/despesasviatura/create';
+    var url =
+        'https://backend-olisipo-portal.onrender.com/despesasviatura/create';
 
     var response = await http.post(
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
-        'id_pessoa_param': idPessoa,
         'quilometros_param': quilometros,
         'data_deslocacao_param': dataDeslocacao,
         'ponto_origem_param': pontoOrigem,
@@ -189,6 +164,13 @@ class Servidor {
         'confirmacao_despesas_param': confirmacaoDespesas,
       }),
     );
+
+    if (response.statusCode == 200) {
+      print('Despesas de Viatura Própria inseridas com sucesso!');
+    } else {
+      print('Erro em Despesas de Viatura Própria: ${response.statusCode}');
+      throw Exception('Falha ao inserir Despesas de Viatura Própria');
+    }
   }
 
   Future<void> inserirAjudaCusto(
@@ -343,37 +325,37 @@ class Servidor {
     }
   }
 
-// _____________________________________ NOTICIAS ___________________________________
-  Future<
-      (
-        List<(int, String, String, String, String, String, String, bool)>,
-        List<String>
-      )> listardashboardServer() async {
-    url = 'https://backend-olisipo-portal.onrender.com/noticias';
-    List<(int, String, String, String, String, String, String, bool)> noticias =
-        [];
-    List<String> TipoNoticias = [];
-    var result = await http.get(Uri.parse(url));
+  Future<String?> login(String emailLogin, String passLogin) async {
+    var url = '$baseURL/pessoas/login';
 
-    var lista1 = jsonDecode(result.body)['data'];
-    lista1.forEach((linha) {
-      noticias.add((
-        linha['id_noticia'],
-        linha['imagem_noticia'].toString(),
-        linha['id_tipo_noticia'].toString(),
-        linha['titulo_noticia'].toString(),
-        linha['subtitulo_noticia'].toString(),
-        linha['corpo_noticia'].toString(),
-        linha['tipo_noticia'].toString(),
-        linha['noticia_publicada'] == true,
-      ));
-    });
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email_param': emailLogin,
+        'pass_param': passLogin,
+      }),
+    );
 
-    var lista2 = jsonDecode(result.body)['data1'];
-    lista2.forEach((linha) {
-      TipoNoticias.add((linha['tipo_noticia'].toString()));
-    });
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseBody = json.decode(response.body);
+      String? token = responseBody['token'];
 
-    return (noticias, TipoNoticias);
+      return token;
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> saveToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token);
+  }
+
+  Future<String?> obterTokenLocalmente() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 }

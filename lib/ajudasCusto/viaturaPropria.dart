@@ -237,7 +237,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                       onPressed: () async {
                         try {
                           await se.inserirDespesasViaturaPropria(
-                            1,
+                            await se.obterTokenLocalmente(),
                             double.parse(kmController.text),
                             dataController.text,
                             porigemController.text,
