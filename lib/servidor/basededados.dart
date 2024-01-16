@@ -176,17 +176,16 @@ Drop TABLE tipo_parceria
 
   Future<
       (
-        List<(String, String, String, String, String, String)>,
+        List<(String, String, String, String, String)>,
         List<String>,
       )> MostrarNoticias() async {
-    List<(String, String, String, String, String, String)> noticias = [];
+    List<(String, String, String, String, String)> noticias = [];
     List<String> tipos = [];
     Database db = await basededados;
     List<Map<String, Object?>> resultado = await db.rawQuery(
         'select id_noticia, titulo_noticia, subtitulo_noticia, corpo_noticia, imagem_noticia,tipo_noticia from noticias');
     resultado.forEach((linha) {
       noticias.add((
-        linha['id_noticia'].toString(),
         linha['titulo_noticia'].toString(),
         linha['subtitulo_noticia'].toString(),
         linha['corpo_noticia'].toString(),
@@ -206,7 +205,7 @@ Drop TABLE tipo_parceria
   Future<void> CriarTabelaNoticias() async {
     Database db = await basededados;
     await db.execute('''
-    CREATE TABLE noticias (
+    CREATE TABLE IF NOT EXISTS noticias (
       id_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
       titulo_noticia TEXT,
       subtitulo_noticia TEXT,
@@ -220,6 +219,8 @@ Drop TABLE tipo_parceria
   Future<void> inserirNoticias(
       List<(String, String, String, String, String)> noticiaData) async {
     Database db = await basededados;
+
+    await db.delete('noticias');
 
     for (final (
           titulo_noticia,
@@ -245,7 +246,7 @@ Drop TABLE tipo_parceria
   Future<void> CriarTabelaTipoNoticia() async {
     Database db = await basededados;
     await db.execute('''
-    CREATE TABLE tipo_noticia(
+    CREATE TABLE IF NOT EXISTS tipo_noticia(
       id_tipo_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
       tipo_noticia TEXT
     )
@@ -271,6 +272,19 @@ Drop TABLE tipo_parceria
     });
     return uts;
   }
+
+  Future<void> apagatabelaNoticias() async {
+    Database db = await basededados;
+    await db.execute('Delete from tipo_noticia');
+  }
+
+  Future<void> apagatabelaTipoNoticias() async {
+    Database db = await basededados;
+    await db.execute('''
+Drop TABLE tipo_noticia
+''');
+  }
+
 
   //_______________ despesas Viatura propria
 
