@@ -1,103 +1,83 @@
 import 'package:flutter/material.dart';
 import 'noticiaIndividual.dart';
 import 'package:olisipo_manager/servidor/servidor.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
-class ListarNoticias extends StatelessWidget {
-  ListarNoticias({Key? key, required this.els}) : super(key: key);
-
-  final List<(int, String, String, String, String, String, String, bool)> els;
+class CarrosselNoticias extends StatelessWidget {
+  CarrosselNoticias({Key? key, required this.noticias}) : super(key: key);
+  final List<(String, String, String, String, String)> noticias;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 10),
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: (els.length / 3).ceil(),
-            itemBuilder: (BuildContext context, int index) {
-              int startIndex = index * 3;
-              int endIndex = (index + 1) * 3;
-              endIndex = endIndex > els.length ? els.length : endIndex;
+    return CarouselSlider.builder(
+      options: CarouselOptions(
+        height: 200.0,
+        enlargeCenterPage: true,
+      ),
+      itemCount: noticias.length,
+      itemBuilder: (BuildContext context, int index, int realIndex) {
+        var (img, tit, subt, corpo, tipo) = noticias[index];
 
-              List<Widget> items = List.generate(endIndex - startIndex, (i) {
-                return Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetalhesNoticiaPage(
-                            id: id,
-                            imagem: img,
-                            titulo: titulo,
-                            subtitulo: subtitulo,
-                            corpo: corpo,
-                            tipo: tipo,
-                            publicada: publicada,
-                          ),
-                        ),
-                      );
-                      print(
-                          'Botão clicado:  $titulo + $tipo + $id + $subtitulo + $corpo');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.network(
-                            img,
-                            height: 110,
-                            width: 110,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Container(
-                          height: 110, // Ajuste conforme necessário
-                          width: 110, // Ajuste conforme necessário
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.black.withOpacity(0.7),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: Text(
-                            '$titulo',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              });
-
-              return Column(
-                children: items,
-              );
-            },
+        return ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetalhesNoticiaPage(
+                  imagem: img,
+                  titulo: tit,
+                  subtitulo: subt,
+                  corpo: corpo,
+                  tipo: tipo,
+                ),
+              ),
+            );
+            print('Botão clicado:  $tit + $tipo + $subt + $corpo');
+          },
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
           ),
-        ),
-        SizedBox(height: 10), // Adicione espaçamento na parte inferior
-      ],
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.network(
+                  img,
+                  height: 110,
+                  width: 110,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Container(
+                height: 110, // Ajuste conforme necessário
+                width: 110, // Ajuste conforme necessário
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.7),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Text(
+                  '$tit',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

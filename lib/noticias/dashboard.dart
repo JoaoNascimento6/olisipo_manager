@@ -1,117 +1,134 @@
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+// ignore_for_file: prefer_const_constructors
 
-class DashboardPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
+import 'metodoListarNoticias.dart';
+
+class DashboardPage extends StatefulWidget {
+  @override
+  _DashboardPageState createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  var bd = Basededados();
+  String tipoSelecionado =
+      'Todos'; // Inicializa com 'Todos' para mostrar todas as notícias
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text("Olisipo"),
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 1ª secção
-              Text(
-                "Olá Carlos!",
-                style: TextStyle(fontSize: 18.0),
-              ),
-              Center(
-                child: Text(
-                  "Olisipo",
-                  style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-                ),
-              ),
+        title: Text("Olisipo"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: FutureBuilder<
+            (List<(String, String, String, String, String)>, List<String>)>(
+          future: bd.MostrarNoticias(),
+          builder: (BuildContext context,
+              AsyncSnapshot<
+                      (
+                        List<(String, String, String, String, String)>,
+                        List<String>
+                      )>
+                  snapshot) {
+            if (snapshot.hasData) {
+              var (noticias, tipos) = snapshot.data!;
 
-              // 2ª secção
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  "Notícias",
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildButton("Botão 1"),
-                  _buildButton("Botão 2"),
-                  _buildButton("Botão 3"),
-                  _buildButton("Botão 4"),
-                ],
-              ),
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 200.0,
-                  enlargeCenterPage: true,
-                ),
-                items: [
-                  _buildCarouselItem("Imagem 1", "Título 1", "Subtítulo 1"),
-                  _buildCarouselItem("Imagem 2", "Título 2", "Subtítulo 2"),
-                  _buildCarouselItem("Imagem 3", "Título 3", "Subtítulo 3"),
-                ],
-              ),
+                  // 1ª secção
+                  Text(
+                    "Olá Carlos!",
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                  Center(
+                    child: Text(
+                      "Olisipo",
+                      style: TextStyle(
+                          fontSize: 24.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  // 2ª secção
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Notícias",
+                          style: TextStyle(
+                              fontSize: 20.0, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        _buildTipoButtons(tipos),
+                      ],
+                    ),
+                  ),
 
-              // 3ª secção
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  "Estado das Submissões",
-                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-              ),
-              _buildRow("Texto 1", "Direita 1"),
-              _buildRow("Texto 2", "Direita 2"),
-              _buildRow("Texto 3", "Direita 3"),
-              _buildRow("Texto 4", "Direita 4"),
-              _buildRow("Texto 5", "Direita 5"),
-            ],
-          ),
+                  // Utiliza o CarrosselNoticias aqui
+                  CarrosselNoticias(
+                    noticias: tipoSelecionado == 'Todos'
+                        ? noticias
+                        : noticias
+                            .where((noticia) => noticia.$5 == tipoSelecionado)
+                            .toList(),
+                  ),
+
+                  // 3ª secção
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      "Estado das Submissões",
+                      style: TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  _buildRow("Texto 1", "Direita 1"),
+                  _buildRow("Texto 2", "Direita 2"),
+                  _buildRow("Texto 3", "Direita 3"),
+                  _buildRow("Texto 4", "Direita 4"),
+                  _buildRow("Texto 5", "Direita 5"),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Erro ao carregar dados.'),
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
       ),
     );
   }
 
-  Widget _buildButton(String text) {
-    return Container(
-      width: 80.0,
-      height: 40.0,
-      color: Colors.grey,
-      child: Center(
-        child: Text(text),
-      ),
-    );
-  }
-
-  Widget _buildCarouselItem(String imageUrl, String title, String subtitle) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(imageUrl,
-              height: 120.0, width: double.infinity, fit: BoxFit.cover),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-            ),
+  Widget _buildTipoButtons(List<String> tipos) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              tipoSelecionado = 'Todos';
+            });
+          },
+          child: Text('Todos'),
+        ),
+        for (var tipo in tipos)
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                tipoSelecionado = tipo;
+              });
+            },
+            child: Text(tipo),
           ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              subtitle,
-              style: TextStyle(fontSize: 14.0),
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 

@@ -21,7 +21,7 @@ class Servidor {
       (
         List<(String, String, String, String, String)>,
         List<String>,
-        List<(int, String, String, String, String,String)>,
+        List<(int, String, String, String, String, String)>,
         List<String>,
         List<(int, String, String, String, String)>,
         List<(String, String)>,
@@ -34,7 +34,7 @@ class Servidor {
     url = 'https://backend-olisipo-portal.onrender.com/appmobile';
     List<(String, String, String, String, String)> parcerias = [];
     List<String> TipoParcerias = [];
-    List<(int, String, String, String, String,String)> noticias = [];
+    List<(int, String, String, String, String, String)> noticias = [];
     List<String> TipoNoticias = [];
     List<(int, String, String, String, String)> informacoesProfissionais = [];
     List<(String, String)> despesasViatura = [];
@@ -322,39 +322,5 @@ class Servidor {
       print('Erro ao inserir informação profissional: ${response.statusCode}');
       throw Exception('Falha ao inserir informação profissional');
     }
-  }
-
-// _____________________________________ NOTICIAS ___________________________________
-  Future<
-      (
-        List<(int, String, String, String, String, String, String, bool)>,
-        List<String>
-      )> listardashboardServer() async {
-    url = 'https://backend-olisipo-portal.onrender.com/noticias';
-    List<(int, String, String, String, String, String, String, bool)> noticias =
-        [];
-    List<String> TipoNoticias = [];
-    var result = await http.get(Uri.parse(url));
-
-    var lista1 = jsonDecode(result.body)['data'];
-    lista1.forEach((linha) {
-      noticias.add((
-        linha['id_noticia'],
-        linha['imagem_noticia'].toString(),
-        linha['id_tipo_noticia'].toString(),
-        linha['titulo_noticia'].toString(),
-        linha['subtitulo_noticia'].toString(),
-        linha['corpo_noticia'].toString(),
-        linha['tipo_noticia'].toString(),
-        linha['noticia_publicada'] == true,
-      ));
-    });
-
-    var lista2 = jsonDecode(result.body)['data1'];
-    lista2.forEach((linha) {
-      TipoNoticias.add((linha['tipo_noticia'].toString()));
-    });
-
-    return (noticias, TipoNoticias);
   }
 }

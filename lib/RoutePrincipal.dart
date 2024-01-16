@@ -38,7 +38,7 @@ class _MyHomePageState extends State<Routeprincipal> {
     _selectedIndex = 0;
   }
 
-  Widget _currentPage = Center(child: Text('Placeholder'));
+  Widget _currentPage = DashboardPage();
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<Routeprincipal> {
       _selectedIndex = index;
       switch (_selectedIndex) {
         case 0:
-          //_currentPage = DashboardPage(title: 'Home');
+          _currentPage = DashboardPage();
           break;
         case 1:
           _currentPage = TabBarHorasFerias(title: 'Tabbar Horas/Férias');
