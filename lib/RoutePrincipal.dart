@@ -1,7 +1,6 @@
 // ignore_for_file: unused_import, prefer_const_constructors, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/routes/routes.dart';
-//import 'login/login.dart';
 import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
@@ -21,20 +20,12 @@ class Routeprincipal extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Routeprincipal> {
-  /*var bd = Basededados();
-
-    void consulta_registo() {
-      bd.consulta();
-    }
-  */
   var se = Servidor();
   var bd = Basededados();
 
   @override
   void initState() {
     super.initState();
-
-    //se.getDadosServidor();
     _selectedIndex = 0;
   }
 
@@ -185,31 +176,6 @@ class _MyHomePageState extends State<Routeprincipal> {
             ),
           ),
         ][_selectedIndex],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(33, 150, 243, 1),
-              ),
-              child: Text('Olisipo'),
-            ),
-            /*ListTile(
-              title: const Text('Login'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.login);
-              },
-            ),*/
-            ListTile(
-              title: const Text('Registo'),
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.registo);
-              },
-            ),
-          ],
-        ),
       ),
     );
   }

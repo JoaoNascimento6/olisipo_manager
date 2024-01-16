@@ -265,6 +265,7 @@ class _FeriasPageState extends State<FeriasPage> {
                               outputFormat.format(DateTime.now());
 
                           se.inserirFerias(
+                            await se.obterTokenLocalmente(),
                             1,
                             startDateFormatted,
                             endDateFormatted,
