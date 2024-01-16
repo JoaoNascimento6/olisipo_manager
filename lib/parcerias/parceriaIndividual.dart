@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 class DetalhesParceriaPage extends StatelessWidget {
-  final int id;
+  
   final String imagem;
   final String descricao;
   final String nome;
   final String beneficios;
   final String tipo;
-  final bool publicada;
+
 
   DetalhesParceriaPage({
-    required this.id,
+   
     required this.imagem,
     required this.nome,
     required this.beneficios,
     required this.descricao,
     required this.tipo,
-    required this.publicada,
+   
   });
 
   @override
