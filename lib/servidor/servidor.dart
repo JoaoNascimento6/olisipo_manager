@@ -108,7 +108,7 @@ class Servidor {
     int idPessoa,
     String dataRelatorio,
     String mes,
-    String horasEfetuadas,
+    int horasEfetuadas,
     bool confirmacaoRelatorio,
     int anoRelatorio,
   ) async {
@@ -126,6 +126,25 @@ class Servidor {
         'horas_efetuadas_param': horasEfetuadas,
         'confirmacao_relatorio_param': confirmacaoRelatorio,
         'ano_relatorio_param': anoRelatorio,
+      }),
+    );
+  }
+
+  Future<void> inserirFaltas(int idPessoa, String dataFalta, int horasFalta,
+      String justificacao, bool confirmacaoFaltas) async {
+    var url = '$baseURL/faltas/create';
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'id_pessoa': idPessoa,
+        'data_falta_param': dataFalta,
+        'horas_faltadas_param': horasFalta,
+        'justificacao_param': justificacao,
+        'confirmacao_faltas_param': confirmacaoFaltas,
       }),
     );
   }

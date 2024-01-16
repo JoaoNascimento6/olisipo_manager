@@ -11,7 +11,7 @@ import 'package:olisipo_manager/dadosPessoais/curriculum.dart';
 import 'package:olisipo_manager/dadosPessoais/dadosPessoais.dart';
 import 'package:olisipo_manager/dashboard.dart';
 import 'package:flutter/material.dart';
-//import 'package:olisipo_manager/login/login.dart';
+import 'package:olisipo_manager/login.dart';
 import 'package:olisipo_manager/RoutePrincipal.dart';
 import 'package:olisipo_manager/marcacaoReuniao/reuniao.dart';
 
@@ -35,9 +35,28 @@ class AppRoutes {
   static const String tabbar_custos = '/tabbarcustos';
   static const String tabbar_calendario = '/tabbarcalendario';
   static const String tabbar_dadospessoais = '/tabbardadospessoais';
+  static const String login = '/login';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case RoutePrincipal:
+        return MaterialPageRoute(
+            builder: (_) => Routeprincipal(
+                  title: 'Route Principal',
+                ));
+      case login:
+        return MaterialPageRoute(
+            builder: (_) => LoginPage(
+                  title: [],
+                ));
+      default:
+        return MaterialPageRoute(
+            builder: (_) => LoginPage(
+                  title: [],
+                ));
+    }
+  }
+  /* switch (settings.name) {
       /*case login:
       return MaterialPageRoute(
           builder: (_) => LoginPage(title: 'Olisipo Manager'),
@@ -92,6 +111,5 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => Routeprincipal(title: 'Olisipo Manager'),
         );
-    }
-  }
+    } */
 }

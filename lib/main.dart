@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: Color.fromRGBO(33, 150, 243, 1)),
         useMaterial3: true,
       ),
-      initialRoute: AppRoutes.RoutePrincipal, // Defina a rota inicial
+      //initialRoute: AppRoutes.RoutePrincipal,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }
