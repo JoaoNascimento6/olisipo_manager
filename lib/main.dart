@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/routes/routes.dart';
 import './servidor/basededados.dart';
+import './servidor/servidor.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +14,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bd = Basededados();
+    var se = Servidor();
 
     void criaTabela() {
-      bd.CriarTabelaTipoParcerias();
-      bd.CriarTabelaParcerias();
+      //bd.apagatabelaParcerias();
+      //bd.CriarTabelaTipoParcerias();
+      //bd.CriarTabelaParcerias();
+      se.getDadosServidor();
     }
 
-    //criaTabela();
+    criaTabela();
     return MaterialApp(
       title: 'Portal do Colabordor - Olisipo',
       theme: ThemeData(
