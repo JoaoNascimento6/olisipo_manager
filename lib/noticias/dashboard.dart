@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
@@ -17,7 +15,6 @@ class _DashboardPageState extends State<DashboardPage> {
   var bd = Basededados();
   String tipoSelecionado =
       'Todos'; // Inicializa com 'Todos' para mostrar todas as notícias
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +70,14 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
 
                   // Utiliza o CarrosselNoticias aqui
+/*                   CarrosselNoticias(
                   /* CarrosselNoticias(
                     noticias: tipoSelecionado == 'Todos'
                         ? noticias
                         : noticias
                             .where((noticia) => noticia.$5 == tipoSelecionado)
                             .toList(),
+                  ), */
                   ), */
 
                   // 3ª secção

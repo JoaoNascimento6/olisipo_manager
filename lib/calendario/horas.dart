@@ -255,6 +255,7 @@ class _HorasPageState extends State<HorasPage> {
                           int anoInsercao = dataAtual.year;
 
                           se.inserirHoras(
+                            await se.obterTokenLocalmente(),
                             1,
                             '${dataAtual.year}-${dataAtual.month}-${dataAtual.day}',
                             nomeMes,
@@ -416,6 +417,7 @@ void _showModalInfoProfissional(BuildContext context) {
                     horasFaltasValue = int.tryParse(horasController.text) ?? 0;
 
                     se.inserirFaltas(
+                      await se.obterTokenLocalmente(),
                       1,
                       dataController.text,
                       horasFaltasValue,

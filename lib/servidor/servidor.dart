@@ -33,7 +33,11 @@ class Servidor {
     List<(int, String, String, String)> recibos = [];
     var bd = Basededados();
 
-    var result = await http.get(Uri.parse(url));
+    String? token = await obterTokenLocalmente();
+    var result = await http.get(
+      Uri.parse(url),
+      headers: {'Authorization': 'Bearer $token'},
+    );
 
     var lista1 = jsonDecode(result.body)['parcerias'];
     lista1.forEach((linha) {
@@ -174,6 +178,7 @@ class Servidor {
   }
 
   Future<void> inserirAjudaCusto(
+      String? token,
       int idPessoa,
       double valorAjuda,
       String descritivoAjuda,
@@ -185,6 +190,7 @@ class Servidor {
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
         'id_pessoa_param': idPessoa,
@@ -194,9 +200,17 @@ class Servidor {
         'confirmacao_despesas_param': confirmacaoAjudas,
       }),
     );
+
+    if (response.statusCode == 200) {
+      print('Ajudas de Custo inseridas com sucesso!');
+    } else {
+      print('Erro em Ajudas de Custo inseridas: ${response.statusCode}');
+      throw Exception('Falha ao inserir Ajudas de Custo inseridas');
+    }
   }
 
   Future<void> inserirHoras(
+    String? token,
     int idPessoa,
     String dataRelatorio,
     String mes,
@@ -210,6 +224,7 @@ class Servidor {
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
         'id_pessoa_param': idPessoa,
@@ -222,14 +237,15 @@ class Servidor {
     );
   }
 
-  Future<void> inserirFaltas(int idPessoa, String dataFalta, int horasFalta,
-      String justificacao, bool confirmacaoFaltas) async {
+  Future<void> inserirFaltas(String? token, int idPessoa, String dataFalta,
+      int horasFalta, String justificacao, bool confirmacaoFaltas) async {
     var url = '$baseURL/faltas/create';
 
     var response = await http.post(
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
         'id_pessoa': idPessoa,
@@ -242,6 +258,7 @@ class Servidor {
   }
 
   Future<void> inserirFerias(
+    String? token,
     int idPessoa,
     String dataInicio,
     String dataFim,
@@ -254,6 +271,7 @@ class Servidor {
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
         'id_pessoa_param': idPessoa,
@@ -272,14 +290,15 @@ class Servidor {
     }
   }
 
-  Future<void> inserirInformacaoProfissional(int idPessoa, String titulo,
-      String descricao, String documento, String tipo) async {
+  Future<void> inserirInformacaoProfissional(String? token, int idPessoa,
+      String titulo, String descricao, String documento, String tipo) async {
     var url = '$baseURL/informacoesprof/create';
 
     var response = await http.post(
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
         'id_pessoa_param': idPessoa,
@@ -299,6 +318,7 @@ class Servidor {
   }
 
   Future<void> inserirReuniao(
+    String? token,
     String dataReuniao,
     String motivoReuniao,
     String horasReuniao,
@@ -309,6 +329,7 @@ class Servidor {
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
         'data_reuniao_param': dataReuniao,

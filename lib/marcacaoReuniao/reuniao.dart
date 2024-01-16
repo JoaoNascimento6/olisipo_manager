@@ -225,6 +225,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                   onPressed: () async {
                     try {
                       se.inserirReuniao(
+                        await se.obterTokenLocalmente(),
                         diaController.text,
                         motivoController.text,
                         horaController.text,

@@ -154,6 +154,7 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                     onPressed: () async {
                       try {
                         se.inserirAjudaCusto(
+                          await se.obterTokenLocalmente(),
                           1,
                           double.parse(valorController.text),
                           descritivoController.text,
