@@ -297,6 +297,7 @@ class _CurriculumPageState extends State<CurriculumPage> {
                       onPressed: () async {
                         try {
                           se.inserirInformacaoProfissional(
+                            await se.obterTokenLocalmente(),
                             1,
                             tituloController.text,
                             descricaoController.text,
