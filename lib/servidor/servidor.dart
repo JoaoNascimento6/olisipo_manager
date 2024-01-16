@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'basededados.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Servidor {
-  var baseURL = 'http://192.168.1.8:3000';
+  var baseURL = 'https://backend-olisipo-portal.onrender.com';
   var url;
   Future<List<String>> listaProdutos() async {
     List<String> prods = [];
@@ -17,20 +18,7 @@ class Servidor {
     return prods;
   }
 
-  Future<
-      (
-        List<(String, String, String, String, String)>,
-        List<String>,
-        List<(int, String, String, String, String, String)>,
-        List<String>,
-        List<(int, String, String, String, String)>,
-        List<(String, String)>,
-        List<(String, String)>,
-        List<(String, String)>,
-        List<(String, String)>,
-        List<(String, String, String)>,
-        List<(int, String, String, String)>
-      )> getDadosServidor() async {
+  Future<void> getDadosServidor() async {
     url = 'https://backend-olisipo-portal.onrender.com/appmobile';
     List<(String, String, String, String, String)> parcerias = [];
     List<String> TipoParcerias = [];
@@ -140,20 +128,6 @@ class Servidor {
     bd.inserirParceria(parcerias);
     bd.InsertTipoParceria(TipoParcerias);
     //bd.InsertDespesas(despesasViatura);
-
-    return (
-      parcerias,
-      TipoParcerias,
-      noticias,
-      TipoNoticias,
-      informacoesProfissionais,
-      despesasViatura,
-      ferias,
-      horas,
-      ajudas,
-      reunioes,
-      recibos
-    );
   }
 
   Future<List<(String, String)>> listaUsers() async {
@@ -167,21 +141,22 @@ class Servidor {
   }
 
   Future<void> inserirDespesasViaturaPropria(
-      int idPessoa,
+      String? token,
       double quilometros,
       String dataDeslocacao,
       String pontoOrigem,
       String pontoChegada,
       bool confirmacaoDespesas) async {
-    var url = '$baseURL/despesasviatura/create';
+    var url =
+        'https://backend-olisipo-portal.onrender.com/despesasviatura/create';
 
     var response = await http.post(
       Uri.parse(url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
-        'id_pessoa_param': idPessoa,
         'quilometros_param': quilometros,
         'data_deslocacao_param': dataDeslocacao,
         'ponto_origem_param': pontoOrigem,
@@ -189,6 +164,13 @@ class Servidor {
         'confirmacao_despesas_param': confirmacaoDespesas,
       }),
     );
+
+    if (response.statusCode == 200) {
+      print('Despesas de Viatura Própria inseridas com sucesso!');
+    } else {
+      print('Erro em Despesas de Viatura Própria: ${response.statusCode}');
+      throw Exception('Falha ao inserir Despesas de Viatura Própria');
+    }
   }
 
   Future<void> inserirAjudaCusto(
@@ -218,7 +200,7 @@ class Servidor {
     int idPessoa,
     String dataRelatorio,
     String mes,
-    String horasEfetuadas,
+    int horasEfetuadas,
     bool confirmacaoRelatorio,
     int anoRelatorio,
   ) async {
@@ -236,6 +218,25 @@ class Servidor {
         'horas_efetuadas_param': horasEfetuadas,
         'confirmacao_relatorio_param': confirmacaoRelatorio,
         'ano_relatorio_param': anoRelatorio,
+      }),
+    );
+  }
+
+  Future<void> inserirFaltas(int idPessoa, String dataFalta, int horasFalta,
+      String justificacao, bool confirmacaoFaltas) async {
+    var url = '$baseURL/faltas/create';
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'id_pessoa': idPessoa,
+        'data_falta_param': dataFalta,
+        'horas_faltadas_param': horasFalta,
+        'justificacao_param': justificacao,
+        'confirmacao_faltas_param': confirmacaoFaltas,
       }),
     );
   }
@@ -322,5 +323,39 @@ class Servidor {
       print('Erro ao inserir informação profissional: ${response.statusCode}');
       throw Exception('Falha ao inserir informação profissional');
     }
+  }
+
+  Future<String?> login(String emailLogin, String passLogin) async {
+    var url = '$baseURL/pessoas/login';
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email_param': emailLogin,
+        'pass_param': passLogin,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseBody = json.decode(response.body);
+      String? token = responseBody['token'];
+
+      return token;
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> saveToken(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', token);
+  }
+
+  Future<String?> obterTokenLocalmente() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 }

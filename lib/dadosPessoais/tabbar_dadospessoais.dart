@@ -71,7 +71,11 @@ class HeaderDadosPessoais extends StatelessWidget
           right: 8,
           child: ElevatedButton(
             onPressed: () {
-              // Adicione a lógica para o logout aqui
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

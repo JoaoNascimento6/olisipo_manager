@@ -295,11 +295,14 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
   }
 
   void _showModalRecibosVencimento(BuildContext context) {
+    int selectedMonth = DateTime.now().month;
+    int selectedYear = DateTime.now().year;
+
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
         return SizedBox(
-          height: 1000,
+          height: 400,
           child: Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -315,71 +318,90 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                SizedBox(height: 16),
+                Text(
+                  'Escolha o mês:',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Lógica para o botão de documento comprovativo
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Cor de fundo branca
-                        alignment: Alignment
-                            .centerLeft, // Alinhar o conteúdo à esquerda
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            Icon(Icons.upload,
-                                color: Colors.green), // Ícone verde
-                            SizedBox(
-                                width:
-                                    8), // Espaçamento entre o ícone e o texto
-                            Text(
-                              'Documento Comprovativo',
-                              style: TextStyle(
-                                color: Colors.green, // Cor verde para o texto
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    ElevatedButton(
-                      onPressed: () async {
-                        try {} catch (e) {
-                          print(
-                              'Erro ao adicionar uma informação profissional: $e');
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                    'Erro ao adicionar uma informação profissional'),
-                                content: Text(
-                                    'Ocorreu um erro ao adicionar uma informação profissional.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
+                    Expanded(
+                      child: DropdownButton<int>(
+                        value: selectedMonth,
+                        onChanged: (newValue) {
+                          // Atualiza o mês selecionado
+                          if (newValue != null) {
+                            selectedMonth = newValue;
+                          }
+                        },
+                        items: List.generate(12, (index) {
+                          return DropdownMenuItem<int>(
+                            value: index + 1,
+                            child: Text('${index + 1}'),
                           );
-                        }
-                      },
-                      child: Text('Adicionar'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color(0xFF32D700), // Cor de fundo verde
+                        }),
+                        hint: Text('Selecione o mês'),
                       ),
                     ),
                   ],
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Escolha o ano:',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButton<int>(
+                        value: selectedYear,
+                        onChanged: (newValue) {
+                          // Atualiza o ano selecionado
+                          if (newValue != null) {
+                            selectedYear = newValue;
+                          }
+                        },
+                        items: List.generate(10, (index) {
+                          return DropdownMenuItem<int>(
+                            value: DateTime.now().year + index,
+                            child: Text('${DateTime.now().year + index}'),
+                          );
+                        }),
+                        hint: Text('Selecione o ano'),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    // Lógica para o botão de documento comprovativo
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    alignment: Alignment.centerLeft,
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Icon(Icons.upload, color: Colors.green),
+                        SizedBox(width: 8),
+                        Text(
+                          'Download do Comprovativo',
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

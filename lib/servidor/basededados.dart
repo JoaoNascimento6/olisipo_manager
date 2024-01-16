@@ -285,6 +285,7 @@ Drop TABLE tipo_noticia
 ''');
   }
 
+
   //_______________ despesas Viatura propria
 
   Future<void> CriarTabelaDespesas() async {
@@ -293,7 +294,7 @@ Drop TABLE tipo_noticia
     CREATE TABLE despesas (
       id_despesas INTEGER PRIMARY KEY AUTOINCREMENT,
       tipo_estado TEXT,
-      data_deslocacao TEXT,
+      data_deslocacao TEXT
     )
   ''');
   }
@@ -331,7 +332,7 @@ Drop TABLE tipo_noticia
     CREATE TABLE ferias (
       id_ferias INTEGER PRIMARY KEY AUTOINCREMENT,
       tipo_estado TEXT,
-      data_submissao TEXT,
+      data_submissao TEXT
     )
   ''');
   }
@@ -369,7 +370,7 @@ Drop TABLE tipo_noticia
     CREATE TABLE horas (
       id_horas INTEGER PRIMARY KEY AUTOINCREMENT,
       tipo_estado TEXT,
-      data_relatorio_horas TEXT,
+      data_relatorio_horas TEXT
     )
   ''');
   }
@@ -407,7 +408,7 @@ Drop TABLE tipo_noticia
     CREATE TABLE ajudas (
       id_ajuda INTEGER PRIMARY KEY AUTOINCREMENT,
       tipo_estado TEXT,
-      valor_ajuda TEXT,
+      valor_ajuda TEXT
     )
   ''');
   }

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'noticiaIndividual.dart';
 import 'package:olisipo_manager/servidor/servidor.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -81,3 +81,4 @@ class CarrosselNoticias extends StatelessWidget {
     );
   }
 }
+ */

@@ -44,7 +44,13 @@ class TabBarHorasFerias extends StatelessWidget {
         ),
         body: TabBarView(
           children: <Widget>[
-            HorasPage(title: 'Horas'),
+            SingleChildScrollView(
+              child: Container(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height),
+                child: HorasPage(title: 'Horas'),
+              ),
+            ),
             SingleChildScrollView(
               child: Container(
                 constraints: BoxConstraints(
