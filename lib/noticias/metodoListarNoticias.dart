@@ -23,8 +23,6 @@ class ListarNoticias extends StatelessWidget {
               endIndex = endIndex > els.length ? els.length : endIndex;
 
               List<Widget> items = List.generate(endIndex - startIndex, (i) {
-                var (id, img, titulo, subtitulo, corpo, tipo, publicada) =
-                    els[startIndex + i];
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: ElevatedButton(
