@@ -186,7 +186,6 @@ Drop TABLE pessoas
     return uts;
   }
 
-
   // _____________________________________ NOTICIAS ____________________________________
 
   Future<List<List<dynamic>>> MostrarNoticias() async {
@@ -280,5 +279,4 @@ Drop TABLE pessoas
     });
     return uts;
   }
-
 }

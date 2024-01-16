@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     void criaTabela() {
       bd.CriarTabelaTipoParcerias();
       bd.CriarTabelaParcerias();
+      bd.CriarTabelaNoticias();
     }
 
     //criaTabela();

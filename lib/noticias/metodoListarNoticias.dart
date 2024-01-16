@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'parceriaIndividual.dart';
+import 'noticiaIndividual.dart';
 import 'package:olisipo_manager/servidor/servidor.dart';
 
-class ListarParcerias extends StatelessWidget {
-  ListarParcerias({Key? key, required this.els}) : super(key: key);
+class ListarNoticias extends StatelessWidget {
+  ListarNoticias({Key? key, required this.els}) : super(key: key);
 
-  final List<(int, String, String, String, String, String, bool)> els;
+  final List<(int, String, String, String, String, String, String, bool)> els;
 
   @override
   Widget build(BuildContext context) {
@@ -22,29 +22,29 @@ class ListarParcerias extends StatelessWidget {
               int endIndex = (index + 1) * 3;
               endIndex = endIndex > els.length ? els.length : endIndex;
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(endIndex - startIndex, (i) {
-                  var (id, img, nome, desc, benef, tipo, publ) =
-                      els[startIndex + i];
-                  return ElevatedButton(
+              List<Widget> items = List.generate(endIndex - startIndex, (i) {
+                var (id, img, titulo, subtitulo, corpo, tipo, publicada) =
+                    els[startIndex + i];
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: ElevatedButton(
                     onPressed: () {
-                      // Adicione aqui a lógica que deseja executar ao clicar no botão
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DetalhesParceriaPage(
-                              id: id,
-                              imagem: img,
-                              nome: nome,
-                              descricao: desc,
-                              beneficios: benef,
-                              tipo: tipo,
-                              publicada: publ),
+                          builder: (context) => DetalhesNoticiaPage(
+                            id: id,
+                            imagem: img,
+                            titulo: titulo,
+                            subtitulo: subtitulo,
+                            corpo: corpo,
+                            tipo: tipo,
+                            publicada: publicada,
+                          ),
                         ),
                       );
                       print(
-                          'Botão clicado:  $nome + $tipo + $id + $desc + $benef');
+                          'Botão clicado:  $titulo + $tipo + $id + $subtitulo + $corpo');
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
@@ -79,7 +79,7 @@ class ListarParcerias extends StatelessWidget {
                         Positioned(
                           bottom: 0,
                           child: Text(
-                            '$nome',
+                            '$titulo',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -88,8 +88,12 @@ class ListarParcerias extends StatelessWidget {
                         ),
                       ],
                     ),
-                  );
-                }),
+                  ),
+                );
+              });
+
+              return Column(
+                children: items,
               );
             },
           ),

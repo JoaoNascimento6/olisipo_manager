@@ -6,7 +6,7 @@ import 'calendario/tabbar_calendario.dart';
 import 'ajudasCusto/tabbar_custos.dart';
 import 'dadosPessoais/tabbar_dadospessoais.dart';
 import 'parcerias/parcerias.dart';
-import 'dashboard.dart';
+import 'noticias/dashboard.dart';
 import './servidor/servidor.dart';
 import 'marcacaoReuniao/reuniao.dart';
 

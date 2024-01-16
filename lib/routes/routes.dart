@@ -9,7 +9,7 @@ import 'package:olisipo_manager/calendario/horas.dart';
 import 'package:olisipo_manager/dadosPessoais/tabbar_dadospessoais.dart';
 import 'package:olisipo_manager/dadosPessoais/curriculum.dart';
 import 'package:olisipo_manager/dadosPessoais/dadosPessoais.dart';
-import 'package:olisipo_manager/dashboard.dart';
+import 'package:olisipo_manager/noticias/dashboard.dart';
 import 'package:flutter/material.dart';
 //import 'package:olisipo_manager/login/login.dart';
 import 'package:olisipo_manager/RoutePrincipal.dart';
