@@ -5,7 +5,9 @@ import 'package:olisipo_manager/servidor/servidor.dart';
 class ListarParcerias extends StatelessWidget {
   ListarParcerias({Key? key, required this.els}) : super(key: key);
 
-  final List<(int, String, String, String, String, String, bool)> els;
+
+  final List<( String, String,String,String,String)> els;
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +27,9 @@ class ListarParcerias extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(endIndex - startIndex, (i) {
-                  var (id, img, nome, desc, benef, tipo, publ) =
-                      els[startIndex + i];
+
+                    var ( img, nome,desc,benef,tipo) = els[startIndex + i];
+
                   return ElevatedButton(
                     onPressed: () {
                       // Adicione aqui a lógica que deseja executar ao clicar no botão
@@ -34,17 +37,18 @@ class ListarParcerias extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => DetalhesParceriaPage(
-                              id: id,
-                              imagem: img,
-                              nome: nome,
-                              descricao: desc,
-                              beneficios: benef,
-                              tipo: tipo,
-                              publicada: publ),
+
+                         
+                            imagem: img,
+                            nome: nome,
+                            descricao:desc,
+                            beneficios:benef,
+                            tipo:tipo
+                          ),
                         ),
                       );
-                      print(
-                          'Botão clicado:  $nome + $tipo + $id + $desc + $benef');
+                      print('Botão clicado:  $nome + $tipo + $desc + $benef');
+
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,

@@ -8,6 +8,7 @@ import 'dadosPessoais/tabbar_dadospessoais.dart';
 import 'parcerias/parcerias.dart';
 import 'noticias/dashboard.dart';
 import './servidor/servidor.dart';
+import './servidor/basededados.dart';
 import 'marcacaoReuniao/reuniao.dart';
 
 class Routeprincipal extends StatefulWidget {
@@ -27,13 +28,14 @@ class _MyHomePageState extends State<Routeprincipal> {
     }
   */
   var se = Servidor();
+  var bd = Basededados();
 
   @override
   void initState() {
     super.initState();
-    se.listarParceriasServer();
+
+    //se.getDadosServidor();
     _selectedIndex = 0;
-    //_currentPage = DashboardPage(title: 'Home');
   }
 
   Widget _currentPage = Center(child: Text('Placeholder'));

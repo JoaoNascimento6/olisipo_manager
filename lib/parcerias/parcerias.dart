@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:olisipo_manager/servidor/servidor.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
 import 'metodoListarParcerias.dart';
 import 'listarTiposParcerias.dart';
 
+
 class ParceriasPage extends StatelessWidget {
-  var se = Servidor();
+  var bd = Basededados();
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,12 @@ class ParceriasPage extends StatelessWidget {
         title: Text('Parcerias'),
       ),
       body: FutureBuilder<
-          (List<(int, String, String, String, String, String,bool)>, List<String>)>(
-        future: se.listarParceriasServer(),
+          (List<(String, String, String, String, String)>, List<String>)>(
+        future: bd.MostrarParcerias(),
         builder: (BuildContext context,
             AsyncSnapshot<
                     (
-                      List<(int, String, String, String, String, String,bool)>,
+                      List<(String, String, String, String, String)>,
                       List<String>
                     )>
                 snapshot) {

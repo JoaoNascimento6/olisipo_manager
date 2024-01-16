@@ -8,7 +8,7 @@ import 'package:path/path.dart'; // É necessário adicionar a respetiva depende
 // _____________________________________ Base de dados SQlite ____________________________________
 class Basededados {
   static const nomebd = "bdadm.db";
-  final int versao = 1;
+  final int versao = 2;
   static Database? _basededados;
 //---------------------------------------
   Future<Database> get basededados async {
@@ -42,33 +42,19 @@ nacionalidade text
   }
 
 //---------------------------------------
-  Future<void> apagatabela() async {
+  Future<void> apagatabelaParcerias() async {
+    Database db = await basededados;
+    await db.execute('Delete from tipo_parceria');
+  }
+
+  Future<void> apagatabelaTipoParcerias() async {
     Database db = await basededados;
     await db.execute('''
-Drop TABLE pessoas
+Drop TABLE tipo_parceria
 ''');
   }
 
-//---------------------------------------
-  Future<void> inserirvalor(nom, pass, email) async {
-    Database db = await basededados;
-    await db.rawInsert(
-        'insert into pessoas(nome,password,email,datanasci,naturalidade,nacionalidade) values("$nom","$pass","$email"');
-  }
-
-  Future<void> deletePessoa(id) async {
-    Database db = await basededados;
-    await db.rawDelete('DELETE FROM pessoas WHERE id = $id');
-  }
-
-//---------------------------------------
-  Future<void> consulta1() async {
-    Database db = await basededados;
-    List<Map> resultado = await db.rawQuery('select id, nome from pessoas');
-    resultado.forEach((linha) {
-      print(linha);
-    });
-  }
+//__________________________
 
   Future<List<Map<String, String>>> Login() async {
     List<Map<String, String>> users = [];
@@ -84,22 +70,11 @@ Drop TABLE pessoas
     return users;
   }
 
-  Future<List<String>> consulta() async {
-    List<String> uts = [];
-    Database db = await basededados;
-    List<Map<String, Object?>> resultado =
-        await db.rawQuery('select nome from pessoas');
-    resultado.forEach((linha) {
-      uts.add(linha['nome'].toString());
-    });
-    return uts;
-  }
-
-// _____________________________________ PARCERIAS ____________________________________
+// _____________________________________ TIPO PARCERIAS ____________________________________
   Future<void> CriarTabelaTipoParcerias() async {
     Database db = await basededados;
     await db.execute('''
-    CREATE TABLE tipo_parceria (
+    CREATE TABLE IF NOT EXISTS tipo_parceria (
       id_tipo_parceria INTEGER PRIMARY KEY AUTOINCREMENT,
       tipo_parceria TEXT
     )
@@ -110,7 +85,7 @@ Drop TABLE pessoas
     Database db = await basededados;
     for (final tiposParcerias in tipoParc) {
       await db.rawInsert(
-          'insert into tipo_parceria(tipo_parceria) values("$tipoParc")');
+          'insert into tipo_parceria(tipo_parceria) values("$tiposParcerias")');
       print(tiposParcerias);
     }
   }
@@ -119,141 +94,160 @@ Drop TABLE pessoas
     List<String> uts = [];
     Database db = await basededados;
     List<Map<String, Object?>> resultado = await db
-        .rawQuery('select id_tipo_parceria, tipo_parceria from tipo_parceria');
+        .rawQuery('select tipo_parceria from tipo_parceria');
     resultado.forEach((linha) {
       uts.add(linha['tipo_parceria'].toString());
     });
     return uts;
   }
 
+//____________________parcerias
   Future<void> CriarTabelaParcerias() async {
     Database db = await basededados;
     await db.execute('''
-    CREATE TABLE parcerias (
+    CREATE TABLE IF NOT EXISTS parcerias (
       id_parceria INTEGER PRIMARY KEY AUTOINCREMENT,
-      id_tipo_parceria INTEGER,
       nome_parceria TEXT,
       descricao_parceria TEXT,
       beneficios_parceria TEXT,
       imagem_parceria TEXT,
-      parceria_publicada BOOL,
-      FOREIGN KEY (id_tipo_parceria) REFERENCES tipo_parceria(id_tipo_parceria)
+      tipo_parceria TEXT
     )
   ''');
   }
 
-  Future<void> inserirParceria(List<dynamic> parceriaData) async {
+  Future<void> inserirParceria(
+      List<(String, String, String, String, String)> parceriaData) async {
     Database db = await basededados;
 
-    for (final data in parceriaData) {
-      await db.rawInsert('''
-      INSERT INTO parcerias (
-        nome_parceria,
-        id_tipo_parceria,
-        descricao_parceria,
-        beneficios_parceria,
-        imagem_parceria,
-        parceria_publicada
-      ) VALUES (
-        "${data['nomeParceria']}",
-        ${data['idTipoParceria']},
-        "${data['descricaoParceria']}",
-        "${data['beneficiosParceria']}",
-        "${data['imagemParceria']}",
-        ${data['parceriaPublicada'] ? 1 : 0}
-      )
-    ''');
-      print(data['nomeParceria']);
+    await db.delete('parcerias');
+
+    for (final (
+          imagem_parceria,
+          nome_parceria,
+          descricao_parceria,
+          beneficios_parceria,
+          tipo_parceria
+        ) in parceriaData) {
+      await db.rawInsert(
+          ' INSERT INTO parcerias ( imagem_parceria, nome_parceria,descricao_parceria,beneficios_parceria,tipo_parceria) VALUES (?,?,?,?,?)',
+          [
+            imagem_parceria,
+            nome_parceria,
+            descricao_parceria,
+            beneficios_parceria,
+            tipo_parceria
+          ]);
+      print(nome_parceria);
     }
   }
 
-  Future<List<List<dynamic>>> MostrarParcerias() async {
-    List<List<dynamic>> uts = [];
+  Future<
+      (
+        List<(String, String, String, String, String)>,
+        List<String>,
+      )> MostrarParcerias() async {
+    List<(String, String, String, String, String)> parcerias = [];
+    List<String> tipos = [];
+
     Database db = await basededados;
     List<Map<String, Object?>> resultado = await db.rawQuery(
-        'select nome_parceria, id_tipo_parceria, descricao_parceria, beneficios_parceria, imagem_parceria, parceria_publicada from parcerias');
+        'select imagem_parceria, nome_parceria, descricao_parceria, beneficios_parceria, tipo_parceria from parcerias');
     resultado.forEach((linha) {
-      List<dynamic> parceria = [
+      parcerias.add((
+        linha['imagem_parceria'].toString(),
         linha['nome_parceria'].toString(),
-        linha['id_tipo_parceria'],
         linha['descricao_parceria'].toString(),
         linha['beneficios_parceria'].toString(),
-        linha['imagem_parceria'].toString(),
-        linha['parceria_publicada'],
-      ];
-      uts.add(parceria);
+        linha['tipo_parceria'].toString()
+      ));
     });
-    return uts;
+
+
+    List<Map<String, Object?>> resultadoTipo =
+        await db.rawQuery('select tipo_parceria from tipo_parceria');
+    resultadoTipo.forEach((linha) {
+      tipos.add((linha['tipo_parceria'].toString()));
+    });
+
+    return (parcerias, tipos);
   }
+
 
   // _____________________________________ NOTICIAS ____________________________________
 
-  Future<List<List<dynamic>>> MostrarNoticias() async {
-    List<List<dynamic>> nts = [];
+  Future<
+      (
+        List<(String, String, String, String, String, String)>,
+        List<String>,
+      )> MostrarNoticias() async {
+    List<(String, String, String, String, String, String)> noticias = [];
+    List<String> tipos = [];
     Database db = await basededados;
     List<Map<String, Object?>> resultado = await db.rawQuery(
-        'select id_noticia, id_tipo_noticia, titulo_noticia, subtitulo_noticia, corpo_noticia, imagem_noticia,tipo_noticia,noticia_publicada from noticias');
+        'select id_noticia, titulo_noticia, subtitulo_noticia, corpo_noticia, imagem_noticia,tipo_noticia from noticias');
     resultado.forEach((linha) {
-      List<dynamic> noticia = [
+      noticias.add((
         linha['id_noticia'].toString(),
-        linha['id_tipo_noticia'],
         linha['titulo_noticia'].toString(),
         linha['subtitulo_noticia'].toString(),
         linha['corpo_noticia'].toString(),
-        linha['imagem_noticia'],
-        linha['tipo_noticia'].toString(),
-        linha['noticia_publicada'],
-      ];
-      nts.add(noticia);
+        linha['imagem_noticia'].toString(),
+        linha['tipo_noticia'].toString()
+      ));
     });
-    return nts;
+
+    List<Map<String, Object?>> resultadoTipo =
+        await db.rawQuery('select tipo_noticia from tipo_noticia');
+    resultadoTipo.forEach((linha) {
+      tipos.add((linha['tipo_noticia'].toString()));
+    });
+    return (noticias, tipos);
   }
 
   Future<void> CriarTabelaNoticias() async {
     Database db = await basededados;
     await db.execute('''
-    CREATE TABLE parcerias (
+    CREATE TABLE noticias (
       id_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
-      id_tipo_noticia INTEGER,
       titulo_noticia TEXT,
       subtitulo_noticia TEXT,
       corpo_noticia TEXT,
       imagem_noticia TEXT,
-      noticia_publicada BOOL,
-      FOREIGN KEY (id_tipo_noticia) REFERENCES tipo_noticia(id_tipo_noticia)
+      tipo_noticia TEXT
     )
   ''');
   }
 
-  Future<void> inserirNoticias(List<dynamic> noticiaData) async {
+  Future<void> inserirNoticias(
+      List<( String, String, String, String, String)>
+          noticiaData) async {
     Database db = await basededados;
 
-    for (final data in noticiaData) {
-      await db.rawInsert('''
-      INSERT INTO noticias (
-        titulo_noticia,
-        id_tipo_noticia,
-        subtitulo_noticia,
-        corpo_noticia,
-        imagem_noticia,
-        noticia_publicada
-      ) VALUES (
-        "${data['titulo_noticia']}",
-        ${data['id_tipo_noticia']},
-        "${data['subtitulo_noticia']}",
-        "${data['corpo_noticia']}",
-        "${data['imagem_noticia']}",
-        ${data['noticia_publicada'] ? 1 : 0}
-      )
-    ''');
-      print(data['titulo_noticia']);
+    for (final (
+          titulo_noticia,
+          subtitulo_noticia,
+          corpo_noticia,
+          imagem_noticia,
+          tipo_noticia
+        ) in noticiaData) {
+      await db.rawInsert(
+          'INSERT INTO noticias (titulo_noticia,subtitulo_noticia,corpo_noticia,imagem_noticia,tipo_noticia) VALUES (?,?,?,?,?)',
+          [
+            titulo_noticia,
+            subtitulo_noticia,
+            corpo_noticia,
+            imagem_noticia,
+            tipo_noticia
+          ]);
+      print(titulo_noticia);
     }
   }
-
+//______________--TIPO DE NOTICIA
   Future<void> CriarTabelaTipoNoticia() async {
     Database db = await basededados;
     await db.execute('''
-    CREATE TABLE tipo_parceria (
+    CREATE TABLE tipo_noticia(
       id_tipo_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
       tipo_noticia TEXT
     )
@@ -279,4 +273,240 @@ Drop TABLE pessoas
     });
     return uts;
   }
+
+
+  //_______________ despesas Viatura propria
+
+  Future<void> CriarTabelaDespesas() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE despesas (
+      id_despesas INTEGER PRIMARY KEY AUTOINCREMENT,
+      tipo_estado TEXT,
+      data_deslocacao TEXT,
+    )
+  ''');
+  }
+
+  Future<void> InsertDespesas(List<(String, String)> despesasData) async {
+    Database db = await basededados;
+    for (final (tipo_estado, data_deslocacao) in despesasData) {
+      await db.rawInsert(
+        'insert into despesas(tipo_estado, data_deslocacao) values(?, ?)',
+        [tipo_estado, data_deslocacao],
+      );
+      //print(data['data_deslocacao']);
+    }
+  }
+
+  Future<List<(String, String)>> MostrarDespesas() async {
+    List<(String, String)> despesas = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select tipo_estado, data_deslocacao from despesas');
+    resultado.forEach((linha) {
+      despesas.add((
+        linha['tipo_estado'].toString(),
+        linha['data_deslocacao'].toString()
+      ));
+    });
+    return despesas;
+  }
+
+//_______________ ferias
+
+  Future<void> CriarTabelaFerias() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE ferias (
+      id_ferias INTEGER PRIMARY KEY AUTOINCREMENT,
+      tipo_estado TEXT,
+      data_submissao TEXT,
+    )
+  ''');
+  }
+
+  Future<void> InsertFerias(List<(String, String)> feriasData) async {
+    Database db = await basededados;
+    for (final (tipo_estado, data_submissao) in feriasData) {
+      await db.rawInsert(
+        'insert into ferias(tipo_estado, data_submissao) values(?, ?)',
+        [tipo_estado, data_submissao],
+      );
+      //print(data['data_deslocacao']);
+    }
+  }
+
+  Future<List<(String, String)>> MostrarFerias() async {
+    List<(String, String)> ferias = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select tipo_estado, data_submissao from ferias');
+    resultado.forEach((linha) {
+      ferias.add((
+        linha['tipo_estado'].toString(),
+        linha['data_submissao'].toString()
+      ));
+    });
+    return ferias;
+  }
+
+
+  //_______________ horas
+
+  Future<void> CriarTabelaHoras() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE horas (
+      id_horas INTEGER PRIMARY KEY AUTOINCREMENT,
+      tipo_estado TEXT,
+      data_relatorio_horas TEXT,
+    )
+  ''');
+  }
+
+  Future<void> InsertHoras(List<(String, String)> horasData) async {
+    Database db = await basededados;
+    for (final (tipo_estado, data_relatorio_horas) in horasData) {
+      await db.rawInsert(
+        'insert into horas(tipo_estado, data_relatorio_horas) values(?, ?)',
+        [tipo_estado, data_relatorio_horas],
+      );
+      //print(data['data_deslocacao']);
+    }
+  }
+
+  Future<List<(String, String)>> MostrarHoras() async {
+    List<(String, String)> horas = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select tipo_estado, data_relatorio_horas from horas');
+    resultado.forEach((linha) {
+      horas.add((
+        linha['tipo_estado'].toString(),
+        linha['data_relatorio_horas'].toString()
+      ));
+    });
+    return horas;
+  }
+
+  
+  //_______________ ajudas
+
+  Future<void> CriarTabelaAjudas() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE ajudas (
+      id_ajuda INTEGER PRIMARY KEY AUTOINCREMENT,
+      tipo_estado TEXT,
+      valor_ajuda TEXT,
+    )
+  ''');
+  }
+
+  Future<void> InsertAjuda(List<(String, String)> ajudaData) async {
+    Database db = await basededados;
+    for (final (tipo_estado, valor_ajuda) in ajudaData) {
+      await db.rawInsert(
+        'insert into ajudas(tipo_estado, valor_ajuda) values(?, ?)',
+        [tipo_estado, valor_ajuda],
+      );
+      //print(data['data_deslocacao']);
+    }
+  }
+
+  Future<List<(String, String)>> MostrarAjudas() async {
+    List<(String, String)> ajudas = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select tipo_estado, valor_ajuda from ajudas');
+    resultado.forEach((linha) {
+      ajudas.add((
+        linha['tipo_estado'].toString(),
+        linha['valor_ajuda'].toString()
+      ));
+    });
+    return ajudas;
+  }
+
+  //_______________ reunioes
+
+  Future<void> CriarTabelaReunioes() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE reunioes (
+      id_reuniao INTEGER PRIMARY KEY AUTOINCREMENT,
+      confirmar_reuniao TEXT,
+      data_reuniao TEXT,
+      horas TEXT
+    )
+  ''');
+  }
+
+  Future<void> InsertReuniao(List<(String, String,String)> reuniaoData) async {
+    Database db = await basededados;
+    for (final (confirmar_reuniao, data_reuniao,horas) in reuniaoData) {
+      await db.rawInsert(
+        'insert into reunioes(confirmar_reuniao, data_reuniao,horas) values(?, ?,?)',
+        [confirmar_reuniao, data_reuniao,horas],
+      );
+      //print(data['data_deslocacao']);
+    }
+  }
+
+  Future<List<(String, String,String)>> MostrarReunioes() async {
+    List<(String, String,String)> reunioes = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select confirmar_reuniao, data_reuniao,horas from reunioes');
+    resultado.forEach((linha) {
+      reunioes.add((
+        linha['confirmar_reuniao'].toString(),
+        linha['data_reuniao'].toString(),
+        linha['horas'].toString()
+      ));
+    });
+    return reunioes;
+  }
+
+  //_______________ recibos
+
+  Future<void> CriarTabelaRecibos() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE recibos (
+      id_recibos INTEGER PRIMARY KEY AUTOINCREMENT,
+      data_submissao_recibo TEXT,
+      recibo_pdf TEXT,
+      data_recibo TEXT
+    )
+  ''');
+  }
+
+  Future<void> InsertRecibos(List<(String, String,String,String)> reciboData) async {
+    Database db = await basededados;
+    for (final (data_submissao_recibo, recibo_pdf,data_recibo,confirmacao_submissao_recibo) in reciboData) {
+      await db.rawInsert(
+        'insert into recibos(data_submissao_recibo, recibo_pdf,data_recibo) values(?, ?,?)',
+        [data_submissao_recibo, recibo_pdf,data_recibo],
+      );
+      //print(data['data_deslocacao']);
+    }
+  }
+
+  Future<List<(String, String,String)>> MostrarRecibos() async {
+    List<(String, String,String)> recibos = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select data_submissao_recibo, recibo_pdf,horas data_recibo recibos');
+    resultado.forEach((linha) {
+      recibos.add((
+        linha['data_submissao_recibo'].toString(),
+        linha['recibo_pdf'].toString(),
+        linha['data_recibo'].toString()
+      ));
+    });
+    return recibos;
+  }
+
 }

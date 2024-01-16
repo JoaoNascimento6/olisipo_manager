@@ -9,7 +9,7 @@ class Delete extends StatelessWidget {
   TextEditingController numeroController = TextEditingController();
 
   void deletePessoa(id) {
-    bd.deletePessoa(id);
+    //bd.deletePessoa(id);
   }
 
   @override
@@ -44,7 +44,7 @@ class Delete extends StatelessWidget {
             onPressed: () {
               String numeroText = numeroController.text;
               int? numero = int.tryParse(numeroText);
-              bd.deletePessoa(numero);
+              //bd.deletePessoa(numero);
             },
             child: Text("Escolha o id"),
           ),

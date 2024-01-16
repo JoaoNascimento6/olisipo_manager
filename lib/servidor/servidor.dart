@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'basededados.dart';
 
 class Servidor {
   var baseURL = 'http://192.168.1.8:3000';
@@ -18,32 +19,141 @@ class Servidor {
 
   Future<
       (
-        List<(int, String, String, String, String, String, bool)>,
-        List<String>
-      )> listarParceriasServer() async {
-    url = 'https://backend-olisipo-portal.onrender.com/parcerias';
-    List<(int, String, String, String, String, String, bool)> parcerias = [];
+        List<(String, String, String, String, String)>,
+        List<String>,
+        List<(int, String, String, String, String,String)>,
+        List<String>,
+        List<(int, String, String, String, String)>,
+        List<(String, String)>,
+        List<(String, String)>,
+        List<(String, String)>,
+        List<(String, String)>,
+        List<(String, String, String)>,
+        List<(int, String, String, String)>
+      )> getDadosServidor() async {
+    url = 'https://backend-olisipo-portal.onrender.com/appmobile';
+    List<(String, String, String, String, String)> parcerias = [];
     List<String> TipoParcerias = [];
+    List<(int, String, String, String, String,String)> noticias = [];
+    List<String> TipoNoticias = [];
+    List<(int, String, String, String, String)> informacoesProfissionais = [];
+    List<(String, String)> despesasViatura = [];
+    List<(String, String)> ferias = [];
+    List<(String, String)> horas = [];
+    List<(String, String)> ajudas = [];
+    List<(String, String, String)> reunioes = [];
+    List<(int, String, String, String)> recibos = [];
+    var bd = Basededados();
+
     var result = await http.get(Uri.parse(url));
 
-    var lista1 = jsonDecode(result.body)['data'];
+    var lista1 = jsonDecode(result.body)['parcerias'];
     lista1.forEach((linha) {
       parcerias.add((
-        linha['id_parceria'],
         linha['imagem_parceria'].toString(),
         linha['nome_parceria'].toString(),
         linha['descricao_parceria'].toString(),
         linha['beneficios_parceria'].toString(),
-        linha['tipo_parceria'].toString(),
-        linha['parceria_publicada']
+        linha['tipo_parceria'].toString()
       ));
     });
-    var lista2 = jsonDecode(result.body)['data2'];
+    var lista2 = jsonDecode(result.body)['tipoParcerias'];
     lista2.forEach((linha) {
       TipoParcerias.add((linha['tipo_parceria'].toString()));
     });
 
-    return (parcerias, TipoParcerias);
+    var lista3 = jsonDecode(result.body)['noticias'];
+    lista3.forEach((linha) {
+      noticias.add((
+        linha['id_noticia'],
+        linha['titulo_noticia'].toString(),
+        linha['subtitulo_noticia'].toString(),
+        linha['corpo_noticia'].toString(),
+        linha['imagem_noticia'].toString(),
+        linha['tipo_noticia'].toString()
+      ));
+    });
+    var lista4 = jsonDecode(result.body)['tipoNoticias'];
+    lista4.forEach((linha) {
+      TipoNoticias.add((linha['tipo_parceria'].toString()));
+    });
+
+    var lista5 = jsonDecode(result.body)['informacoesProfissionais'];
+    lista5.forEach((linha) {
+      informacoesProfissionais.add((
+        linha['id_informacao'],
+        linha['titulo_informacao'].toString(),
+        linha['descricao_informacao'].toString(),
+        linha['documento_comprovativo'].toString(),
+        linha['tipo_informacao'].toString()
+      ));
+    });
+
+    var lista6 = jsonDecode(result.body)['despesasViatura'];
+    lista6.forEach((linha) {
+      despesasViatura.add((
+        linha['tipo_estado'].toString(),
+        linha['data_deslocacao'].toString()
+      ));
+    });
+
+    var lista7 = jsonDecode(result.body)['ferias'];
+    lista7.forEach((linha) {
+      ferias.add((
+        linha['tipo_estado'].toString(),
+        linha['data_submissao'].toString()
+      ));
+    });
+
+    var lista8 = jsonDecode(result.body)['horas'];
+    lista8.forEach((linha) {
+      horas.add((
+        linha['tipo_estado'].toString(),
+        linha['data_relatorio_horas'].toString()
+      ));
+    });
+
+    var lista9 = jsonDecode(result.body)['ajudas'];
+    lista9.forEach((linha) {
+      ajudas.add(
+          (linha['tipo_estado'].toString(), linha['valor_ajuda'].toString()));
+    });
+    var lista10 = jsonDecode(result.body)['reunioes'];
+    lista10.forEach((linha) {
+      reunioes.add((
+        linha['confirmar_reuniao'].toString(),
+        linha['data_reuniao'].toString(),
+        linha['horas'].toString(),
+      ));
+    });
+
+    var lista11 = jsonDecode(result.body)['recibos'];
+    lista11.forEach((linha) {
+      recibos.add((
+        linha['id_recibo'],
+        linha['data_submissao_recibo'].toString(),
+        linha['recibo_pdf'].toString(),
+        linha['data_recibo'].toString()
+      ));
+    });
+
+    bd.inserirParceria(parcerias);
+    bd.InsertTipoParceria(TipoParcerias);
+    //bd.InsertDespesas(despesasViatura);
+
+    return (
+      parcerias,
+      TipoParcerias,
+      noticias,
+      TipoNoticias,
+      informacoesProfissionais,
+      despesasViatura,
+      ferias,
+      horas,
+      ajudas,
+      reunioes,
+      recibos
+    );
   }
 
   Future<List<(String, String)>> listaUsers() async {
