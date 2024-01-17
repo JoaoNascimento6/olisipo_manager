@@ -179,7 +179,6 @@ class Servidor {
 
   Future<void> inserirAjudaCusto(
       String? token,
-      int idPessoa,
       double valorAjuda,
       String descritivoAjuda,
       String faturaAjuda,
@@ -193,7 +192,6 @@ class Servidor {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
-        'id_pessoa_param': idPessoa,
         'valor_ajuda_param': valorAjuda,
         'descritivo_ajuda_param': descritivoAjuda,
         'fatura_ajuda_param': faturaAjuda,
@@ -211,7 +209,6 @@ class Servidor {
 
   Future<void> inserirHoras(
     String? token,
-    int idPessoa,
     String dataRelatorio,
     String mes,
     int horasEfetuadas,
@@ -227,7 +224,6 @@ class Servidor {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
-        'id_pessoa_param': idPessoa,
         'data_relatorio_param': dataRelatorio,
         'mes_param': mes,
         'horas_efetuadas_param': horasEfetuadas,
@@ -235,10 +231,17 @@ class Servidor {
         'ano_relatorio_param': anoRelatorio,
       }),
     );
+
+    if (response.statusCode == 200) {
+      print('Horas inseridas com sucesso!');
+    } else {
+      print('Erro em Horas inseridas: ${response.statusCode}');
+      throw Exception('Falha ao inserir Horas inseridas');
+    }
   }
 
-  Future<void> inserirFaltas(String? token, int idPessoa, String dataFalta,
-      int horasFalta, String justificacao, bool confirmacaoFaltas) async {
+  Future<void> inserirFaltas(String? token, String dataFalta, int horasFalta,
+      String justificacao, bool confirmacaoFaltas) async {
     var url = '$baseURL/faltas/create';
 
     var response = await http.post(
@@ -248,18 +251,23 @@ class Servidor {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
-        'id_pessoa': idPessoa,
         'data_falta_param': dataFalta,
         'horas_faltadas_param': horasFalta,
         'justificacao_param': justificacao,
         'confirmacao_faltas_param': confirmacaoFaltas,
       }),
     );
+
+    if (response.statusCode == 200) {
+      print('Faltas inseridas com sucesso!');
+    } else {
+      print('Erro em Faltas inseridas: ${response.statusCode}');
+      throw Exception('Falha ao inserir Faltas inseridas');
+    }
   }
 
   Future<void> inserirFerias(
     String? token,
-    int idPessoa,
     String dataInicio,
     String dataFim,
     String dataSubmissao,
@@ -274,7 +282,6 @@ class Servidor {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
-        'id_pessoa_param': idPessoa,
         'data_inicio_param': dataInicio,
         'data_fim_param': dataFim,
         'data_submissao_param': dataSubmissao,
@@ -290,8 +297,8 @@ class Servidor {
     }
   }
 
-  Future<void> inserirInformacaoProfissional(String? token, int idPessoa,
-      String titulo, String descricao, String documento, String tipo) async {
+  Future<void> inserirInformacaoProfissional(String? token, String titulo,
+      String descricao, String documento, String tipo) async {
     var url = '$baseURL/informacoesprof/create';
 
     var response = await http.post(
@@ -301,7 +308,6 @@ class Servidor {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(<String, dynamic>{
-        'id_pessoa_param': idPessoa,
         'titulo_param': titulo,
         'descricao_param': descricao,
         'documento_param': documento,
@@ -339,10 +345,10 @@ class Servidor {
     );
 
     if (response.statusCode == 200) {
-      print('Informação profissional inserida com sucesso!');
+      print('Reunião inserida com sucesso!');
     } else {
-      print('Erro ao inserir informação profissional: ${response.statusCode}');
-      throw Exception('Falha ao inserir informação profissional');
+      print('Erro ao inserir Reunião: ${response.statusCode}');
+      throw Exception('Falha ao inserir Reunião');
     }
   }
 

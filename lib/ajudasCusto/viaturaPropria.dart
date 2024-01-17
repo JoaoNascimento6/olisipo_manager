@@ -103,6 +103,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                           ),
                           child: TextField(
                             controller: kmController,
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               hintText: 'Escreva a quantidade de kilómetro...',
                               hintStyle: TextStyle(
@@ -235,6 +236,18 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                     top: 480,
                     child: ElevatedButton(
                       onPressed: () async {
+                        if (!kmController.text.isNotEmpty ||
+                            !porigemController.text.isNotEmpty ||
+                            !pchegadaController.text.isNotEmpty ||
+                            !dataController.text.isNotEmpty) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                                'Preencha todos os campos antes de enviar.'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          return;
+                        }
+
                         try {
                           await se.inserirDespesasViaturaPropria(
                             await se.obterTokenLocalmente(),
@@ -250,9 +263,12 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Erro ao enviar despesas'),
+                                title: Text(
+                                    'Erro ao enviar Despesas de Viatura Própria!'),
                                 content: Text(
-                                    'Ocorreu um erro ao enviar as despesas de viatura própria.'),
+                                  'Dados inválidos para a submissão de despesas de viatura própria.',
+                                  style: TextStyle(fontSize: 17),
+                                ),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {

@@ -250,23 +250,34 @@ class _FeriasPageState extends State<FeriasPage> {
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () async {
+                        String startDateFormatted;
+                        String endDateFormatted;
+                        String currentDateFormatted;
+
                         try {
                           final DateFormat inputFormat =
                               DateFormat('dd/MM/yyyy');
                           final DateFormat outputFormat =
                               DateFormat('yyyy-MM-dd');
 
-                          // Formatando as datas para o formato desejado
-                          final String startDateFormatted = outputFormat.format(
+                          startDateFormatted = outputFormat.format(
                               inputFormat.parse(_startDateController.text));
-                          final String endDateFormatted = outputFormat.format(
+                          endDateFormatted = outputFormat.format(
                               inputFormat.parse(_endDateController.text));
-                          final String currentDateFormatted =
+                          currentDateFormatted =
                               outputFormat.format(DateTime.now());
-
-                          se.inserirFerias(
+                        } catch (e) {
+                          print('Erro ao formatar as datas: $e');
+                          final snackBar = SnackBar(
+                            content:
+                                Text('Selecione as datas antes de enviar.'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          return;
+                        }
+                        try {
+                          await se.inserirFerias(
                             await se.obterTokenLocalmente(),
-                            1,
                             startDateFormatted,
                             endDateFormatted,
                             currentDateFormatted,
@@ -278,9 +289,11 @@ class _FeriasPageState extends State<FeriasPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Erro ao enviar férias'),
+                                title: Text('Erro ao enviar férias!'),
                                 content: Text(
-                                    'Ocorreu um erro ao enviar a submissão de férias.'),
+                                  'Dados inválidos para a submissão de férias.',
+                                  style: TextStyle(fontSize: 17),
+                                ),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {

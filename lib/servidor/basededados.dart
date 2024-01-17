@@ -285,7 +285,6 @@ Drop TABLE tipo_noticia
 ''');
   }
 
-
   //_______________ despesas Viatura propria
 
   Future<void> CriarTabelaDespesas() async {
@@ -511,7 +510,7 @@ Drop TABLE tipo_noticia
     List<(String, String, String)> recibos = [];
     Database db = await basededados;
     List<Map<String, Object?>> resultado = await db.rawQuery(
-        'select data_submissao_recibo, recibo_pdf,horas data_recibo recibos');
+        'select data_submissao_recibo, recibo_pdf,horas data_recibo from recibos');
     resultado.forEach((linha) {
       recibos.add((
         linha['data_submissao_recibo'].toString(),

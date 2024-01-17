@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../servidor/servidor.dart';
+import './informacaoprofissional.dart';
 
 class CurriculumPage extends StatefulWidget {
   const CurriculumPage({Key? key, required this.title}) : super(key: key);
@@ -103,7 +104,8 @@ class _CurriculumPageState extends State<CurriculumPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            _showModalInfoProfissional(context);
+                            InformacaoProfissionalPage()
+                                .showModalInfoProfissional(context);
                           },
                           child:
                               Icon(Icons.add, color: const Color(0xFF32D700)),
@@ -190,157 +192,6 @@ class _CurriculumPageState extends State<CurriculumPage> {
           ),
         ),
       ),
-    );
-  }
-
-  void _showModalInfoProfissional(BuildContext context) {
-    TextEditingController tituloController = TextEditingController();
-    TextEditingController descricaoController = TextEditingController();
-    TextEditingController tipoController = TextEditingController();
-
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 1000,
-          child: Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    'Adicionar Informações',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: tituloController,
-                  onTap: () {
-                    if (tituloController.text == 'Insira o título') {
-                      tituloController.clear();
-                    }
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Insira o título',
-                    labelText: 'Título',
-                  ),
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: descricaoController,
-                  onTap: () {
-                    if (descricaoController.text == 'Insira a descrição') {
-                      descricaoController.clear();
-                    }
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Insira a descrição',
-                    labelText: 'Descrição',
-                  ),
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: tipoController,
-                  onTap: () {
-                    if (tipoController.text == 'Insira o tipo') {
-                      tipoController.clear();
-                    }
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Insira o tipo',
-                    labelText: 'Tipo',
-                  ),
-                ),
-                SizedBox(height: 15),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Lógica para o botão de documento comprovativo
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Cor de fundo branca
-                        alignment: Alignment
-                            .centerLeft, // Alinhar o conteúdo à esquerda
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            Icon(Icons.upload,
-                                color: Colors.green), // Ícone verde
-                            SizedBox(
-                                width:
-                                    8), // Espaçamento entre o ícone e o texto
-                            Text(
-                              'Documento Comprovativo',
-                              style: TextStyle(
-                                color: Colors.green, // Cor verde para o texto
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          se.inserirInformacaoProfissional(
-                            await se.obterTokenLocalmente(),
-                            1,
-                            tituloController.text,
-                            descricaoController.text,
-                            'diploma.pdf',
-                            tipoController.text,
-                          );
-                        } catch (e) {
-                          print(
-                              'Erro ao adicionar uma informação profissional: $e');
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                    'Erro ao adicionar uma informação profissional'),
-                                content: Text(
-                                    'Ocorreu um erro ao adicionar uma informação profissional.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      },
-                      child: Text('Adicionar'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color(0xFF32D700), // Cor de fundo verde
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

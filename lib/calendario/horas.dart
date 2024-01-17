@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../servidor/servidor.dart';
+import './faltas.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class HorasPage extends StatefulWidget {
   const HorasPage({Key? key, required this.title}) : super(key: key);
@@ -220,7 +222,8 @@ class _HorasPageState extends State<HorasPage> {
                           SizedBox(height: 10),
                           InkWell(
                             onTap: () {
-                              _showModalInfoProfissional(context);
+                              FaltasPage().showModalInfoProfissional(context);
+                              ;
                             },
                             child: Row(
                               children: [
@@ -237,52 +240,57 @@ class _HorasPageState extends State<HorasPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        try {
-                          horasInseridasValue =
-                              int.tryParse(_horasController.text) ?? 0;
+                        if (_horasController.text.isNotEmpty) {
+                          try {
+                            await initializeDateFormatting('pt_BR', null);
 
-                          if (horasInseridasValue != horasUteis) {
-                            setState(() {});
-                            return;
+                            DateTime now = DateTime.now();
+                            String dataAtual =
+                                DateFormat('yyyy-MM-dd').format(now);
+                            String mesCalendario = DateFormat('MMMM', 'pt_PT')
+                                .format(_selectedDay);
+                            int anoCalendario = _selectedDay.year;
+
+                            se.inserirHoras(
+                              await se.obterTokenLocalmente(),
+                              dataAtual,
+                              mesCalendario,
+                              horasInseridasValue,
+                              false,
+                              anoCalendario,
+                            );
+                          } catch (e) {
+                            print('Erro ao enviar horas: $e');
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Erro ao enviar horas'),
+                                  content: Text(
+                                      'Ocorreu um erro ao enviar a submissão de horas.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           }
-                          DateTime dataAtual = DateTime.now();
-                          String nomeMes =
-                              DateFormat('MMMM', 'pt_BR').format(dataAtual);
-                          int anoInsercao = dataAtual.year;
-
-                          se.inserirHoras(
-                            await se.obterTokenLocalmente(),
-                            1,
-                            '${dataAtual.year}-${dataAtual.month}-${dataAtual.day}',
-                            nomeMes,
-                            horasInseridasValue,
-                            false,
-                            anoInsercao,
+                        } else {
+                          final snackBar = SnackBar(
+                            content: Text(
+                                'Preencha o campo com as horas trabalhadas deste.'),
                           );
-                        } catch (e) {
-                          print('Erro ao enviar horas: $e');
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Erro ao enviar horas'),
-                                content: Text(
-                                    'Ocorreu um erro ao enviar a submissão de horas.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          return;
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -321,162 +329,4 @@ class _HorasPageState extends State<HorasPage> {
       ),
     );
   }
-}
-
-Future<DateTime?> _selectDate(BuildContext context) async {
-  DateTime currentDate = DateTime.now();
-  DateTime? selectedDate = await showDatePicker(
-    context: context,
-    initialDate: currentDate,
-    firstDate: DateTime(currentDate.year - 1),
-    lastDate: DateTime(currentDate.year + 1),
-  );
-  return selectedDate;
-}
-
-void _showModalInfoProfissional(BuildContext context) {
-  TextEditingController dataController = TextEditingController();
-  TextEditingController horasController = TextEditingController();
-  TextEditingController justificacaoController = TextEditingController();
-  int horasFaltasValue = 0;
-
-  var se = Servidor();
-
-  showModalBottomSheet<void>(
-    context: context,
-    builder: (BuildContext context) {
-      final screenWidth = MediaQuery.of(context).size.width;
-      return SizedBox(
-        height: 420,
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Center(
-                child: Text(
-                  'Adicionar Faltas',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: dataController,
-                readOnly: true,
-                onTap: () async {
-                  DateTime? selectedDate = await _selectDate(context);
-                  if (selectedDate != null) {
-                    dataController.text =
-                        DateFormat('yyyy-MM-dd').format(selectedDate);
-                  }
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Selecione a data',
-                  labelText: 'Selecione a Data',
-                ),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: horasController,
-                keyboardType: TextInputType.number,
-                onTap: () {
-                  if (horasController.text == 'Insira as horas da falta') {
-                    horasController.clear();
-                  }
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Insira as horas faltadas',
-                  labelText: 'Horas Faltadas',
-                ),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: justificacaoController,
-                onTap: () {
-                  if (justificacaoController.text ==
-                      'Insira a justificação da falta') {
-                    justificacaoController.clear();
-                  }
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Insira a justificação da falta',
-                  labelText: 'Justificação',
-                ),
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    horasFaltasValue = int.tryParse(horasController.text) ?? 0;
-
-                    se.inserirFaltas(
-                      await se.obterTokenLocalmente(),
-                      1,
-                      dataController.text,
-                      horasFaltasValue,
-                      justificacaoController.text,
-                      false,
-                    );
-                  } catch (e) {
-                    print('Erro ao enviar horas: $e');
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Erro ao enviar horas'),
-                          content: Text(
-                              'Ocorreu um erro ao enviar a submissão de horas.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-                child: Ink(
-                  width: screenWidth - 60,
-                  height: 52,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: const Color(0xFF32D700),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Enviar',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    },
-  );
 }

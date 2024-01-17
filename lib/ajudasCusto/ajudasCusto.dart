@@ -60,7 +60,7 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Valor',
+                      'Valor (€)',
                       style: TextStyle(
                         color: Color.fromARGB(255, 101, 101, 101),
                         fontSize: 16,
@@ -78,6 +78,7 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                         ),
                         child: TextField(
                           controller: valorController,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             hintText: 'Escreva o valor gasto...',
                             hintStyle: TextStyle(
@@ -152,10 +153,19 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                   top: 480,
                   child: ElevatedButton(
                     onPressed: () async {
+                      if (!valorController.text.isNotEmpty ||
+                          !descritivoController.text.isNotEmpty) {
+                        final snackBar = SnackBar(
+                          content:
+                              Text('Preencha todos os campos antes de enviar.'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        return;
+                      }
+
                       try {
-                        se.inserirAjudaCusto(
+                        await se.inserirAjudaCusto(
                           await se.obterTokenLocalmente(),
-                          1,
                           double.parse(valorController.text),
                           descritivoController.text,
                           //faturaController.text, meter a fatura a ir buscar um ficheiro ou a tirar foto
@@ -168,9 +178,11 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Erro ao enviar ajudas de custo'),
+                              title: Text('Erro ao enviar Ajudas de Custo!'),
                               content: Text(
-                                  'Ocorreu um erro ao enviar a ajuda de custo.'),
+                                'Dados inválidos para a submissão de ajudas de custo.',
+                                style: TextStyle(fontSize: 17),
+                              ),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
