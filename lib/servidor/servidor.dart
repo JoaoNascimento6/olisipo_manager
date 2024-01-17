@@ -24,13 +24,14 @@ class Servidor {
     List<String> TipoParcerias = [];
     List<(int, String, String, String, String, String)> noticias = [];
     List<String> TipoNoticias = [];
-    List<(int, String, String, String, String)> informacoesProfissionais = [];
+    List<(String, String, String, String)> informacoesProfissionais = [];
     List<(String, String)> despesasViatura = [];
     List<(String, String)> ferias = [];
     List<(String, String)> horas = [];
     List<(String, String)> ajudas = [];
     List<(String, String, String)> reunioes = [];
     List<(int, String, String, String)> recibos = [];
+    List<(String, String, String,String)> pessoas = [];
     var bd = Basededados();
 
     String? token = await obterTokenLocalmente();
@@ -73,7 +74,6 @@ class Servidor {
     var lista5 = jsonDecode(result.body)['informacoesProfissionais'];
     lista5.forEach((linha) {
       informacoesProfissionais.add((
-        linha['id_informacao'],
         linha['titulo_informacao'].toString(),
         linha['descricao_informacao'].toString(),
         linha['documento_comprovativo'].toString(),
@@ -126,11 +126,25 @@ class Servidor {
         linha['data_submissao_recibo'].toString(),
         linha['recibo_pdf'].toString(),
         linha['data_recibo'].toString()
+      
       ));
+      print("1 $recibos");
     });
+
+    var lista12 = jsonDecode(result.body)['dadosPessoais'];
+    lista12.forEach((linha) {
+      pessoas.add((
+        linha['nome_pessoa'].toString(),
+        linha['email'].toString(),
+        linha['contribuinte'].toString(),
+        linha['password'].toString()
+      ));
+    }); 
 
     bd.inserirParceria(parcerias);
     bd.InsertTipoParceria(TipoParcerias);
+    bd.InsertPessoas(pessoas);
+    bd.InsertInfos(informacoesProfissionais);
     //bd.InsertDespesas(despesasViatura);
   }
 

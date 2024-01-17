@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import '../servidor/servidor.dart';
 
 class CurriculumPage extends StatefulWidget {
-  const CurriculumPage({Key? key, required this.title}) : super(key: key);
+  const CurriculumPage({Key? key, required this.title, required this.dados})
+      : super(key: key);
 
   final String title;
+  final (
+    String,
+    String,
+    String,
+    String,
+    List<(String, String, String, String)>
+  ) dados;
 
   @override
   State<CurriculumPage> createState() => _CurriculumPageState();
@@ -123,63 +131,70 @@ class _CurriculumPageState extends State<CurriculumPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Estágio na Olisipo',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                const SizedBox(height: 3),
-                                Text(
-                                  'Desenvolvimento de websites na\nOlisipo',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                const SizedBox(height: 3),
-                                Text(
-                                  'Estágio',
-                                  style: TextStyle(
-                                    color: Color(0xFF727272),
-                                    fontSize: 16,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const SizedBox(height: 3),
-                                TextButton.icon(
-                                  onPressed: () {
-                                    // Adicione a lógica para o botão de download
-                                  },
-                                  icon: Icon(
-                                    Icons.download,
-                                    color: Color(0xFF32D700),
-                                  ),
-                                  label: Text(
-                                    'Comprovativo',
-                                    style: TextStyle(
-                                      color: Color(0xFF32D700),
-                                      fontSize: 16,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w300,
+                          for (var infoProfissional in widget.dados.$5)
+                            Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: screenWidth - 50,child:
+                                    Text(
+                                      infoProfissional.$1,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 3),
+                                  SizedBox(
+                                    width: screenWidth - 50,
+                                    child: Text(
+                                      infoProfissional.$2,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    infoProfissional.$4,
+                                    style: TextStyle(
+                                      color: Color(0xFF727272),
+                                      fontSize: 16,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      // Adicione a lógica para o botão de download
+                                    },
+                                    icon: Icon(
+                                      Icons.download,
+                                      color: Color(0xFF32D700),
+                                    ),
+                                    label: Text(
+                                      infoProfissional.$3,
+                                      style: TextStyle(
+                                        color: Color(0xFF32D700),
+                                        fontSize: 16,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),

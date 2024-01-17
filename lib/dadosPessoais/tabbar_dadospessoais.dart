@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
 import 'curriculum.dart';
 import 'dadosPessoais.dart';
 
 class HeaderDadosPessoais extends StatelessWidget
     implements PreferredSizeWidget {
+       final (String, String, String, String, List<(String, String, String, String)>) dados;
+        HeaderDadosPessoais({required this.dados});
   @override
   Size get preferredSize => const Size.fromHeight(200);
 
+  var bd = Basededados();
+  
+
   @override
   Widget build(BuildContext context) {
+   
     return Stack(
       alignment: Alignment.topRight,
       children: [
@@ -46,7 +53,7 @@ class HeaderDadosPessoais extends StatelessWidget
                   ],
                   image: const DecorationImage(
                     image: NetworkImage(
-                      'https://via.placeholder.com/129x129',
+                      'https://olisipo.pt/wp-content/uploads/rabbit-signup-100x100.png',
                     ),
                     fit: BoxFit.fill,
                   ),
@@ -54,7 +61,7 @@ class HeaderDadosPessoais extends StatelessWidget
               ),
               const SizedBox(height: 8),
               Text(
-                'Carlos',
+                dados.$1,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 25,
@@ -98,8 +105,10 @@ class HeaderDadosPessoais extends StatelessWidget
 }
 
 class TabBarDadosPessoais extends StatelessWidget {
-  const TabBarDadosPessoais({Key? key, required String title})
+  const TabBarDadosPessoais({Key? key, required String title, required this.dados})
       : super(key: key);
+
+  final (String,String,String,String, List<(String, String, String, String)>) dados;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +120,7 @@ class TabBarDadosPessoais extends StatelessWidget {
           preferredSize: const Size.fromHeight(240),
           child: AppBar(
             backgroundColor: const Color(0xFF32D700),
-            flexibleSpace: HeaderDadosPessoais(),
+            flexibleSpace: HeaderDadosPessoais(dados: dados),
             bottom: TabBar(
               indicatorColor: Colors.white,
               tabs: const <Widget>[
@@ -137,14 +146,14 @@ class TabBarDadosPessoais extends StatelessWidget {
               child: Container(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height),
-                child: DadosPessoaisPage(title: 'Dados Pessoais'),
+                child: DadosPessoaisPage(title: 'Dados Pessoais', dados:dados),
               ),
             ),
             SingleChildScrollView(
               child: Container(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height),
-                child: CurriculumPage(title: 'Informações Profissionais'),
+                child: CurriculumPage(title: 'Informações Profissionais', dados:dados),
               ),
             ),
           ],

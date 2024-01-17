@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       //bd.CriarTabelaParcerias();
       //bd.CriarTabelaRecibos();
       //bd.CriarTabelaReunioes();
+      //bd.CriarTabelaPessoas();
       se.getDadosServidor();
     }
 

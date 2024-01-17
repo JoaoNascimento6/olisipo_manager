@@ -23,6 +23,7 @@ class _MyHomePageState extends State<Routeprincipal> {
   var se = Servidor();
   var bd = Basededados();
 
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,8 @@ class _MyHomePageState extends State<Routeprincipal> {
   Widget _currentPage = DashboardPage();
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async{
+    var x = await bd.MostrarPessoas();
     setState(() {
       _selectedIndex = index;
       switch (_selectedIndex) {
@@ -53,7 +55,7 @@ class _MyHomePageState extends State<Routeprincipal> {
           _currentPage = ReuniaoPage(title: 'Reunião');
           break;
         case 5:
-          _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais');
+          _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais', dados : x);
           break;
       }
     });
@@ -61,6 +63,7 @@ class _MyHomePageState extends State<Routeprincipal> {
 
   @override
   Widget build(BuildContext context) {
+
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       /*appBar: AppBar(

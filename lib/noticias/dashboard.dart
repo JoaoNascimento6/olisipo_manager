@@ -71,11 +71,13 @@ class _DashboardPageState extends State<DashboardPage> {
 
                   // Utiliza o CarrosselNoticias aqui
 /*                   CarrosselNoticias(
+                  /* CarrosselNoticias(
                     noticias: tipoSelecionado == 'Todos'
                         ? noticias
                         : noticias
                             .where((noticia) => noticia.$5 == tipoSelecionado)
                             .toList(),
+                  ), */
                   ), */
 
                   // 3ª secção

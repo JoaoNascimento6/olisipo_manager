@@ -83,6 +83,7 @@ Drop TABLE tipo_parceria
 
   Future<void> InsertTipoParceria(tipoParc) async {
     Database db = await basededados;
+    await db.delete('tipo_parceria');
     for (final tiposParcerias in tipoParc) {
       await db.rawInsert(
           'insert into tipo_parceria(tipo_parceria) values("$tiposParcerias")');
@@ -284,7 +285,6 @@ Drop TABLE tipo_parceria
 Drop TABLE tipo_noticia
 ''');
   }
-
 
   //_______________ despesas Viatura propria
 
@@ -511,7 +511,7 @@ Drop TABLE tipo_noticia
     List<(String, String, String)> recibos = [];
     Database db = await basededados;
     List<Map<String, Object?>> resultado = await db.rawQuery(
-        'select data_submissao_recibo, recibo_pdf,horas data_recibo recibos');
+        'select data_submissao_recibo, recibo_pdf,horas data_recibo from recibos');
     resultado.forEach((linha) {
       recibos.add((
         linha['data_submissao_recibo'].toString(),
@@ -520,5 +520,112 @@ Drop TABLE tipo_noticia
       ));
     });
     return recibos;
+  }
+
+  //_______________ informacoes
+
+  Future<void> CriarTabelaInfos() async {
+    Database db = await basededados;
+
+    await db.execute('''
+    CREATE TABLE informacoes (
+      id_recibos INTEGER PRIMARY KEY AUTOINCREMENT,
+      titulo_informacao TEXT,
+      descricao_informacao TEXT,
+      documento_comprovativo TEXT,
+      tipo_informacao TEXT
+    )
+  ''');
+  }
+
+  Future<void> InsertInfos(
+      List<(String, String, String, String)> infosData) async {
+    Database db = await basededados;
+    await db.delete('informacoes');
+    for (final (
+          titulo_informacao,
+          descricao_informacao,
+          documento_comprovativo,
+          tipo_informacao
+        ) in infosData) {
+      await db.rawInsert(
+        'insert into informacoes(titulo_informacao, descricao_informacao,documento_comprovativo,tipo_informacao) values(?, ?,?,?)',
+        [
+          titulo_informacao,
+          descricao_informacao,
+          documento_comprovativo,
+          tipo_informacao
+        ],
+      );
+      print("1 + $titulo_informacao");
+    }
+  }
+
+  //_____________ pessoas
+
+  Future<void> CriarTabelaPessoas() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE pessoas (
+      id_pessoa INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome_pessoa TEXT,
+      email TEXT,
+      contribuinte TEXT,
+      password TEXT
+    )
+  ''');
+  }
+
+  Future<void> InsertPessoas(
+      List<(String, String, String, String)> pessoasData) async {
+    Database db = await basededados;
+    await db.delete('pessoas');
+    for (final (nome_pessoa, email, contribuinte, password) in pessoasData) {
+      await db.rawInsert(
+        'insert into pessoas(nome_pessoa, email,contribuinte,password) values(?, ?,?,?)',
+        [nome_pessoa, email, contribuinte, password],
+      );
+      //print(data['data_deslocacao']);
+    }
+  }
+
+  Future<
+      (
+        String,
+        String,
+        String,
+        String,
+        List<(String, String, String, String)>
+      )> MostrarPessoas() async {
+    String nome = "";
+    String email = "";
+    String contribuinte = "";
+    String password = "";
+    List<(String, String, String, String)> informacoes = [];
+
+    Database db = await basededados;
+    
+
+    List<Map<String, Object?>> resultado = await db.rawQuery(
+        'select nome_pessoa, email,contribuinte,password from pessoas');
+    resultado.forEach((linha) {
+      nome = linha['nome_pessoa'].toString();
+      email = linha['email'].toString();
+      contribuinte = linha['contribuinte'].toString();
+      password = ['password'].toString();
+    });
+
+    List<Map<String, Object?>> resultado1 =
+        await db.rawQuery('select * from informacoes');
+    resultado1.forEach((linha) {
+      informacoes.add((
+        linha['titulo_informacao'].toString(),
+        linha['descricao_informacao'].toString(),
+        linha['documento_comprovativo'].toString(),
+        linha['tipo_informacao'].toString()
+      ));
+    });
+
+    return (nome, email, contribuinte, password, informacoes);
   }
 }
