@@ -1,37 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:olisipo_manager/servidor/basededados.dart';
+import '../servidor/basededados.dart';
 
 class DadosPessoaisPage extends StatefulWidget {
-  const DadosPessoaisPage({Key? key, required this.title}) : super(key: key);
+  const DadosPessoaisPage({Key? key, required this.title,required this.dados} ) : super(key: key);
 
   final String title;
+  final (String,String,String,String, List<(String, String, String, String)>) dados;
+  
 
   @override
   _DadosPessoaisPageState createState() => _DadosPessoaisPageState();
 }
 
 class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
+  var bd = Basededados();
+
+
+   @override
+  void initState() {
+    super.initState();
+
+    // Atribuir valores iniciais aos controladores
+    nameController.text = widget.dados.$1;
+    emailController.text = widget.dados.$2;
+    contrController.text = widget.dados.$3;
+  }
   bool isEditingName = false;
   bool isEditingEmail = false;
   bool isEditingPassword = false;
   bool isEditingTaxNumber = false;
 
   TextEditingController nameController =
-      TextEditingController(text: 'Carlos Medeiros');
+      TextEditingController();
   TextEditingController emailController =
-      TextEditingController(text: 'carlosmed_olisipo@olisipo.pt');
+      TextEditingController();
+       TextEditingController contrController =
+      TextEditingController();
   TextEditingController passwordController =
-      TextEditingController(text: '*****');
+      TextEditingController(text: '**********');
 
   @override
   void dispose() {
     nameController.dispose();
     emailController.dispose();
+
     passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    bd.MostrarPessoas();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -83,7 +104,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '282929203',
+                          contrController.text,
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
