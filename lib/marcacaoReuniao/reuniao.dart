@@ -223,6 +223,17 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () async {
+                    if (!diaController.text.isNotEmpty ||
+                        !motivoController.text.isNotEmpty ||
+                        !horaController.text.isNotEmpty) {
+                      final snackBar = SnackBar(
+                        content:
+                            Text('Preencha todos os campos antes de enviar.'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      return;
+                    }
+
                     try {
                       se.inserirReuniao(
                         await se.obterTokenLocalmente(),
@@ -236,9 +247,10 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('Erro ao criar reunião'),
-                            content:
-                                Text('Ocorreu um erro ao uma criar reunião.'),
+                            title: Text('Erro ao criar Reunião!'),
+                            content: Text(
+                                'Dados inválidos para a criação de uma reunião.',
+                                style: TextStyle(fontSize: 17)),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
