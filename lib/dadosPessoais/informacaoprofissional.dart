@@ -13,6 +13,8 @@ class InformacaoProfissionalPage extends StatelessWidget {
     TextEditingController tipoController = TextEditingController();
     TextEditingController documentoController = TextEditingController();
 
+    final screenWidth = MediaQuery.of(context).size.width;
+
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -117,7 +119,7 @@ class InformacaoProfissionalPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Container(
-                                margin: EdgeInsets.only(bottom: 370.0),
+                                margin: EdgeInsets.only(bottom: 375.0),
                                 child: Center(
                                   child: Text(
                                     'Preencha todos os campos antes de enviar.',
@@ -136,6 +138,8 @@ class InformacaoProfissionalPage extends StatelessWidget {
                             'diploma.pdf',
                             tipoController.text,
                           );
+
+                          se.getDadosServidor();
                         } catch (e) {
                           print(
                               'Erro ao adicionar uma informação profissional: $e');
@@ -161,10 +165,31 @@ class InformacaoProfissionalPage extends StatelessWidget {
                           );
                         }
                       },
-                      child: Text('Adicionar'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color(0xFF32D700), // Cor de fundo verde
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                      ),
+                      child: Ink(
+                        width: screenWidth - 60,
+                        height: 52,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: const Color(0xFF32D700),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Adicionar',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],

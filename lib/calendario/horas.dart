@@ -129,7 +129,7 @@ class _HorasPageState extends State<HorasPage> {
                         border: Border(
                           bottom: BorderSide(
                             color: Colors.green,
-                            width: 1.0,
+                            width: 2.0,
                           ),
                         ),
                       ),
