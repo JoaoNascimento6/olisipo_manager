@@ -135,14 +135,23 @@ class _CurriculumPageState extends State<CurriculumPage> {
                         children: [
                           for (var infoProfissional in widget.dados.$5)
                             Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.green,
+                                    width: 1.0,
+                                  ),
+                                ),
+                              ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  const SizedBox(height: 3),
                                   SizedBox(
-                                    width: screenWidth - 50,child:
-                                    Text(
+                                    width: screenWidth - 50,
+                                    child: Text(
                                       infoProfissional.$1,
                                       style: TextStyle(
                                         color: Colors.black,

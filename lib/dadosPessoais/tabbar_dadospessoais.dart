@@ -5,17 +5,21 @@ import 'dadosPessoais.dart';
 
 class HeaderDadosPessoais extends StatelessWidget
     implements PreferredSizeWidget {
-       final (String, String, String, String, List<(String, String, String, String)>) dados;
-        HeaderDadosPessoais({required this.dados});
+  final (
+    String,
+    String,
+    String,
+    String,
+    List<(String, String, String, String)>
+  ) dados;
+  HeaderDadosPessoais({required this.dados});
   @override
   Size get preferredSize => const Size.fromHeight(200);
 
   var bd = Basededados();
-  
 
   @override
   Widget build(BuildContext context) {
-   
     return Stack(
       alignment: Alignment.topRight,
       children: [
@@ -105,10 +109,17 @@ class HeaderDadosPessoais extends StatelessWidget
 }
 
 class TabBarDadosPessoais extends StatelessWidget {
-  const TabBarDadosPessoais({Key? key, required String title, required this.dados})
+  const TabBarDadosPessoais(
+      {Key? key, required String title, required this.dados})
       : super(key: key);
 
-  final (String,String,String,String, List<(String, String, String, String)>) dados;
+  final (
+    String,
+    String,
+    String,
+    String,
+    List<(String, String, String, String)>
+  ) dados;
 
   @override
   Widget build(BuildContext context) {
@@ -146,14 +157,15 @@ class TabBarDadosPessoais extends StatelessWidget {
               child: Container(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height),
-                child: DadosPessoaisPage(title: 'Dados Pessoais', dados:dados),
+                child: DadosPessoaisPage(title: 'Dados Pessoais', dados: dados),
               ),
             ),
             SingleChildScrollView(
               child: Container(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height),
-                child: CurriculumPage(title: 'Informações Profissionais', dados:dados),
+                child: CurriculumPage(
+                    title: 'Informações Profissionais', dados: dados),
               ),
             ),
           ],
