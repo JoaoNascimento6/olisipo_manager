@@ -17,7 +17,7 @@ dependencies:
   intl: ^0.18.1
   shared_preferences: ^2.0.8
   carousel_slider:
-
+  url_launcher: ^6.0.10
 
 dev_dependencies:
   flutter_test:

@@ -5,9 +5,11 @@ import 'metodoListarParcerias.dart';
 
 class ListarTipoParcerias extends StatelessWidget {
   final List<String> tiposDeParceria;
+  final Function(String) onTipoSelecionado;
 
   ListarTipoParcerias({
     required this.tiposDeParceria,
+    required this.onTipoSelecionado,
   });
 
   @override
@@ -34,8 +36,13 @@ class ListarTipoParcerias extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
+                      if (tipo == 'Todas') {
+                        onTipoSelecionado(''); // Seleciona "Todas"
+                      } else {
+                        onTipoSelecionado(tipo);
+                      }
                       // Adicione a lógica desejada ao selecionar um tipo de parceria
-                      print('Tipo de Parceria selecionado: $tipo');
+                      
                     },
                     child: Text(tipo),
                   ),
