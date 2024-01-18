@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../servidor/servidor.dart';
+import '../servidor/basededados.dart';
 import './informacaoprofissional.dart';
 
 class CurriculumPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class CurriculumPage extends StatefulWidget {
 
 class _CurriculumPageState extends State<CurriculumPage> {
   var se = Servidor();
+  var bd = Basededados();
 
   @override
   Widget build(BuildContext context) {
@@ -185,22 +187,46 @@ class _CurriculumPageState extends State<CurriculumPage> {
                                     ),
                                   ),
                                   const SizedBox(height: 3),
-                                  TextButton.icon(
-                                    onPressed: () {
-                                      // Adicione a lógica para o botão de download
-                                    },
-                                    icon: Icon(
-                                      Icons.download,
-                                      color: Color(0xFF32D700),
-                                    ),
-                                    label: Text(
-                                      infoProfissional.$3,
-                                      style: TextStyle(
-                                        color: Color(0xFF32D700),
-                                        fontSize: 16,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w300,
-                                      ),
+                                  Container(
+                                    width: screenWidth - 50,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextButton.icon(
+                                          onPressed: () {
+                                            // Adicione a lógica para o botão de download
+                                          },
+                                          icon: Icon(
+                                            Icons.download,
+                                            color: Color(0xFF32D700),
+                                          ),
+                                          label: Text(
+                                            infoProfissional.$3,
+                                            style: TextStyle(
+                                              color: Color(0xFF32D700),
+                                              fontSize: 16,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton.icon(
+                                          onPressed: () async {
+                                            bd.apagarInformacaoProfissional(
+                                                infoProfissional.$1);
+                                            se.eliminarInformacaoProfissional(
+                                                await se.obterTokenLocalmente(),
+                                                infoProfissional.$1);
+                                            setState(() {});
+                                          },
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                          label: Text(''),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],

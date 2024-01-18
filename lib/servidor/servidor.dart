@@ -31,7 +31,7 @@ class Servidor {
     List<(String, String)> ajudas = [];
     List<(String, String, String)> reunioes = [];
     List<(int, String, String, String)> recibos = [];
-    List<(String, String, String,String)> pessoas = [];
+    List<(String, String, String, String)> pessoas = [];
     var bd = Basededados();
 
     String? token = await obterTokenLocalmente();
@@ -126,7 +126,6 @@ class Servidor {
         linha['data_submissao_recibo'].toString(),
         linha['recibo_pdf'].toString(),
         linha['data_recibo'].toString()
-      
       ));
       print("1 $recibos");
     });
@@ -139,7 +138,7 @@ class Servidor {
         linha['contribuinte'].toString(),
         linha['password'].toString()
       ));
-    }); 
+    });
 
     bd.inserirParceria(parcerias);
     bd.InsertTipoParceria(TipoParcerias);
@@ -390,6 +389,103 @@ class Servidor {
     }
   }
 
+  Future<void> inserirDadosAuxiliares(
+    String? token,
+    String nomeAuxiliar,
+    String emailAuxiliar,
+  ) async {
+    var url = '$baseURL/pessoasauxiliar/create';
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'nome_auxiliar_param': nomeAuxiliar,
+        'email_auxiliar_param': emailAuxiliar,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Dados Auxiliares inseridos com sucesso!');
+    } else {
+      print('Erro ao inserir Dados Auxiliares: ${response.statusCode}');
+      throw Exception('Falha ao inserir Dados Auxiliares');
+    }
+  }
+
+  Future<void> updatePassword(
+    String? token,
+    String password,
+  ) async {
+    var url = '$baseURL/pessoas/update';
+
+    var response = await http.put(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'pass_pessoa_param': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Password atualizada com sucesso!');
+    } else {
+      print('Erro ao atualizar a password: ${response.statusCode}');
+      throw Exception('Falha ao atualizar a Password');
+    }
+  }
+
+  Future<void> logout(
+    String? token,
+  ) async {
+    var url = '$baseURL/pessoas/logout';
+
+    try {
+      var response = await http.post(Uri.parse(url), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+      if (response.statusCode == 200) {
+        await removeToken();
+        print('Logout com sucesso!');
+      } else {
+        print(
+            'Erro ao fazer logout. Código de resposta: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro ao fazer logout: $e');
+    }
+  }
+
+  Future<void> eliminarInformacaoProfissional(
+      String? token, String tituloInformacao) async {
+    var url = '$baseURL/informacoesprof/delete';
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(
+          <String, dynamic>{'titulo_informacao_param': tituloInformacao}),
+    );
+
+    if (response.statusCode == 200) {
+      print('Informação Profissional eliminada com sucesso!');
+    } else {
+      print(
+          'Erro ao eliminar a Informação Profissional: ${response.statusCode}');
+      throw Exception('Falha ao eliminar a Informação Profissional');
+    }
+  }
+
   Future<void> saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
@@ -398,5 +494,10 @@ class Servidor {
   Future<String?> obterTokenLocalmente() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
+  }
+
+  Future<void> removeToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
   }
 }

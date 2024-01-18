@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/basededados.dart';
 import '../servidor/basededados.dart';
+import '../servidor/servidor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -24,20 +25,11 @@ class DadosPessoaisPage extends StatefulWidget {
 
 class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
   var bd = Basededados();
-
-  /* Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url, forceSafariVC: false, forceWebView: false);
-    } else {
-      throw 'Não foi possível lançar $url';
-    }
-  } */
+  var se = Servidor();
 
   @override
   void initState() {
     super.initState();
-
-    // Atribuir valores iniciais aos controladores
     nameController.text = widget.dados.$1;
     emailController.text = widget.dados.$2;
     contrController.text = widget.dados.$3;
@@ -46,7 +38,6 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
   bool isEditingName = false;
   bool isEditingEmail = false;
   bool isEditingPassword = false;
-  bool isEditingTaxNumber = false;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -70,11 +61,13 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     bd.MostrarPessoas();
 
     return Scaffold(
+      appBar: AppBar(
+        actions: [],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 23),
               child: Container(
@@ -86,19 +79,19 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    edicaoText(
+                    edicaoDados(
                       'Nome',
                       nameController,
                       isEditingName,
                       () => setState(() => isEditingName = !isEditingName),
                     ),
-                    edicaoText(
+                    edicaoDados(
                       'E-mail',
                       emailController,
                       isEditingEmail,
                       () => setState(() => isEditingEmail = !isEditingEmail),
                     ),
-                    edicaoText(
+                    updatePassword(
                       'Password',
                       passwordController,
                       isEditingPassword,
@@ -272,7 +265,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     );
   }
 
-  Widget edicaoText(
+  Widget edicaoDados(
     String title,
     TextEditingController controller,
     bool isEditing,
@@ -293,18 +286,41 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            isEditing
-                ? IconButton(
-                    icon: const Icon(Icons.check),
+            Row(
+              children: [
+                if (!isEditing)
+                  IconButton(
+                    icon: Icon(Icons.edit),
                     onPressed: () {
-                      setState(() => isEditing = false);
-                      // Aqui você pode salvar as alterações no campo
+                      setState(() {
+                        isEditingName = true;
+                        isEditingEmail = true;
+                      });
                     },
-                  )
-                : IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: onTap,
                   ),
+                if (isEditing)
+                  IconButton(
+                    icon: Icon(Icons.check),
+                    onPressed: () async {
+                      bool confirm = await showConfirmationDialog(context);
+                      if (confirm) {
+                        await se.inserirDadosAuxiliares(
+                          await se.obterTokenLocalmente(),
+                          nameController.text,
+                          emailController.text,
+                        );
+
+                        setState(() {
+                          nameController.text = widget.dados.$1;
+                          emailController.text = widget.dados.$2;
+                          isEditingName = false;
+                          isEditingEmail = false;
+                        });
+                      }
+                    },
+                  ),
+              ],
+            ),
           ],
         ),
         isEditing
@@ -331,6 +347,148 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     );
   }
 
+  Widget updatePassword(
+    String title,
+    TextEditingController controller,
+    bool isEditing,
+    VoidCallback onTap,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                color: Color(0xFF727272),
+                fontSize: 16,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            Row(
+              children: [
+                if (!isEditing)
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      setState(() {
+                        isEditingPassword = true;
+                        passwordController.text = '';
+                      });
+                    },
+                  ),
+                if (isEditing)
+                  IconButton(
+                    icon: Icon(Icons.check),
+                    onPressed: () async {
+                      bool confirm = await showConfirmationDialogPass(context);
+                      if (confirm) {
+                        await se.updatePassword(await se.obterTokenLocalmente(),
+                            passwordController.text);
+                        setState(() {
+                          passwordController.text = '**********';
+                          isEditingPassword = false;
+                        });
+                      }
+                    },
+                  ),
+              ],
+            ),
+          ],
+        ),
+        isEditing
+            ? TextFormField(
+                controller: controller,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                ),
+              )
+            : Text(
+                controller.text,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+        const SizedBox(height: 5),
+      ],
+    );
+  }
+
+  Future<bool> showConfirmationDialog(BuildContext context) async {
+    return await showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Confirmar Alterações'),
+              content: Text(
+                'Deseja confirmar as alterações nos dados pessoais? Terá de aguardar por confirmação pelo administrador para ver as suas novas alterações.',
+                style: TextStyle(fontSize: 16),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    setState(() => isEditingEmail = false);
+                    setState(() => isEditingName = false);
+                    nameController.text = widget.dados.$1;
+                    emailController.text = widget.dados.$2;
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text('Cancelar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('Confirmar'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
+  }
+
+  Future<bool> showConfirmationDialogPass(BuildContext context) async {
+    return await showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Confirmar Alteração'),
+              content: Text(
+                'Deseja confirmar a alteração da password?',
+                style: TextStyle(fontSize: 16),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    setState(() => isEditingPassword = false);
+                    passwordController.text = '**********';
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text('Cancelar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('Confirmar'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
+  }
+
   void _showModalRecibosVencimento(BuildContext context) {
     int selectedMonth = DateTime.now().month;
     int selectedYear = DateTime.now().year;
@@ -347,120 +505,109 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return SizedBox(
-              height: 400,
-              child: Container(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Center(
-                      child: Text(
-                        'Recibos de Vencimento',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+        return SizedBox(
+          height: 400,
+          child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    'Recibos de Vencimento',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(height: 16),
-                    Text(
-                      'Escolha o mês:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: DropdownButton<int>(
-                            value: selectedMonth,
-                            onChanged: (newValue) {
-                              setState(() {
-                                // Atualiza o mês selecionado
-                                if (newValue != null) {
-                                  selectedMonth = newValue;
-                                }
-                              });
-                            },
-                            items: List.generate(12, (index) {
-                              return DropdownMenuItem<int>(
-                                value: index + 1,
-                                child: Text('${index + 1}'),
-                              );
-                            }),
-                            hint: Text('Selecione o mês'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      'Escolha o ano:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: DropdownButton<int>(
-                            value: selectedYear,
-                            onChanged: (newValue) {
-                              setState(() {
-                                // Atualiza o ano selecionado
-                                if (newValue != null) {
-                                  selectedYear = newValue;
-                                }
-                              });
-                            },
-                            items: List.generate(7, (index) {
-                              return DropdownMenuItem<int>(
-                                value: DateTime.now().year - index,
-                                child: Text('${DateTime.now().year - index}'),
-                              );
-                            }),
-                            hint: Text('Selecione o ano'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        _downloadComprovativo(selectedMonth, selectedYear);
-                        // Lógica para o botão de documento comprovativo
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        alignment: Alignment.centerLeft,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            Icon(Icons.upload, color: Colors.green),
-                            SizedBox(width: 8),
-                            Text(
-                              'Download do Comprovativo',
-                              style: TextStyle(
-                                color: Colors.green,
-                              ),
-                            ),
-                          ],
-                        ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Escolha o mês:',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButton<int>(
+                        value: selectedMonth,
+                        onChanged: (newValue) {
+                          if (newValue != null) {
+                            selectedMonth = newValue;
+                          }
+                        },
+                        items: List.generate(12, (index) {
+                          return DropdownMenuItem<int>(
+                            value: index + 1,
+                            child: Text('${index + 1}'),
+                          );
+                        }),
+                        hint: Text('Selecione o mês'),
                       ),
                     ),
                   ],
                 ),
-              ),
-            );
-          },
+                SizedBox(height: 16),
+                Text(
+                  'Escolha o ano:',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButton<int>(
+                        value: selectedYear,
+                        onChanged: (newValue) {
+                          if (newValue != null) {
+                            selectedYear = newValue;
+                          }
+                        },
+                        items: List.generate(10, (index) {
+                          return DropdownMenuItem<int>(
+                            value: DateTime.now().year + index,
+                            child: Text('${DateTime.now().year + index}'),
+                          );
+                        }),
+                        hint: Text('Selecione o ano'),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    // Lógica para o botão de documento comprovativo
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    alignment: Alignment.centerLeft,
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Icon(Icons.upload, color: Colors.green),
+                        SizedBox(width: 8),
+                        Text(
+                          'Download do Comprovativo',
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );

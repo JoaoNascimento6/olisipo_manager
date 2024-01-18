@@ -618,7 +618,6 @@ Drop TABLE tipo_noticia
     List<(String, String, String, String)> informacoes = [];
 
     Database db = await basededados;
-    
 
     List<Map<String, Object?>> resultado = await db.rawQuery(
         'select nome_pessoa, email,contribuinte,password from pessoas');
@@ -641,5 +640,11 @@ Drop TABLE tipo_noticia
     });
 
     return (nome, email, contribuinte, password, informacoes);
+  }
+
+  Future<void> apagarInformacaoProfissional(String tituloParam) async {
+    Database db = await basededados;
+    await db.rawDelete(
+        'DELETE FROM informacoes WHERE titulo_informacao = ?', [tituloParam]);
   }
 }
