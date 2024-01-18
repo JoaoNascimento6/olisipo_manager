@@ -19,7 +19,6 @@ import 'package:olisipo_manager/parcerias/metodoListarParcerias.dart';
 import 'package:olisipo_manager/parcerias/parceriaIndividual.dart';
 
 class AppRoutes {
-  //static const String login = '/login';
   static const String RoutePrincipal = '/RoutePrincipal';
   static const String registo = '/registo';
   static const String dashboard = '/dashboard';
@@ -56,60 +55,4 @@ class AppRoutes {
                 ));
     }
   }
-  /* switch (settings.name) {
-      /*case login:
-      return MaterialPageRoute(
-          builder: (_) => LoginPage(title: 'Olisipo Manager'),
-        );*/
-      /*case dashboard:
-        return MaterialPageRoute(
-          builder: (_) => DashboardPage(),
-        );
-        */
-      case ajudasCusto:
-        return MaterialPageRoute(
-          builder: (_) => AjudasCustoPage(title: 'Ajudas de Custo'),
-        );
-      case viaturaPropria:
-        return MaterialPageRoute(
-          builder: (_) => ViaturaPropriaPage(title: 'Ajudas Viatura Propria'),
-        );
-      case tabbar_custos:
-        return MaterialPageRoute(
-          builder: (_) => TabBarGestaoCustos(title: 'Tabbar Custos'),
-        );
-      case tabbar_calendario:
-        return MaterialPageRoute(
-          builder: (_) => TabBarHorasFerias(title: 'Tabbar Calendario'),
-        );
-      case ferias:
-        return MaterialPageRoute(
-          builder: (_) => FeriasPage(title: 'Marcação de Ferias'),
-        );
-      case horas:
-        return MaterialPageRoute(
-          builder: (_) => HorasPage(title: 'Marcação de Horas'),
-        );
-      case tabbar_dadospessoais:
-        return MaterialPageRoute(
-          builder: (_) => TabBarDadosPessoais(title: 'TabBar DadosPessoais'),
-        );
-      case curriculum:
-        return MaterialPageRoute(
-          builder: (_) => CurriculumPage(title: 'Curriculum'),
-        );
-      case dadosPessoais:
-        return MaterialPageRoute(
-          builder: (_) => DadosPessoaisPage(title: 'Dados Pessoais'),
-        );
-
-      case reuniao:
-        return MaterialPageRoute(
-          builder: (_) => ReuniaoPage(title: 'Olisipo Manager'),
-        );
-      default:
-        return MaterialPageRoute(
-          builder: (_) => Routeprincipal(title: 'Olisipo Manager'),
-        );
-    } */
 }

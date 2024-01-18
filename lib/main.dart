@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     var bd = Basededados();
     var se = Servidor();
 
-    void dadosServidor() {
+    void servidor_basedados() {
       //bd.apagatabelaParcerias();
       //bd.CriarTabelaAjudas();
       //bd.CriarTabelaDespesas();
@@ -31,10 +31,9 @@ class MyApp extends StatelessWidget {
       //bd.CriarTabelaPessoas();
       //bd.CriarTabelaPessoas();
       //bd.CriarTabelaInfos();
-      se.getDadosServidor();
+      //se.getDadosServidor();
     }
 
-    dadosServidor();
     return MaterialApp(
       title: 'Portal do Colabordor - Olisipo',
       theme: ThemeData(
