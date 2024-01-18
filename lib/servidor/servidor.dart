@@ -22,7 +22,7 @@ class Servidor {
     url = 'https://backend-olisipo-portal.onrender.com/appmobile';
     List<(String, String, String, String, String)> parcerias = [];
     List<String> TipoParcerias = [];
-    List<(int, String, String, String, String, String)> noticias = [];
+    List<(String, String, String, String, String)> noticias = [];
     List<String> TipoNoticias = [];
     List<(String, String, String, String)> informacoesProfissionais = [];
     List<(String, String)> despesasViatura = [];
@@ -58,7 +58,6 @@ class Servidor {
     var lista3 = jsonDecode(result.body)['noticias'];
     lista3.forEach((linha) {
       noticias.add((
-        linha['id_noticia'],
         linha['titulo_noticia'].toString(),
         linha['subtitulo_noticia'].toString(),
         linha['corpo_noticia'].toString(),
@@ -142,6 +141,8 @@ class Servidor {
 
     bd.inserirParceria(parcerias);
     bd.InsertTipoParceria(TipoParcerias);
+    bd.inserirNoticias(noticias);
+    bd.InsertTipoNoticia(TipoNoticias);
     bd.InsertPessoas(pessoas);
     bd.InsertInfos(informacoesProfissionais);
     //bd.InsertDespesas(despesasViatura);

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
@@ -604,7 +604,6 @@ Drop TABLE tipo_noticia
     List<(String, String, String, String)> informacoes = [];
 
     Database db = await basededados;
-    
 
     List<Map<String, Object?>> resultado = await db.rawQuery(
         'select nome_pessoa, email,contribuinte,password from pessoas');
