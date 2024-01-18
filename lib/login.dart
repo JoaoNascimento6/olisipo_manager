@@ -28,6 +28,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              'images/olisipo.png',
+              width: 250,
+            ),
+            SizedBox(height: 40),
             Text(
               'Login',
               textAlign: TextAlign.center,
@@ -39,7 +44,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(height: 30),
-            // Email TextField with rounded border
             Container(
               width: 343,
               height: 60,
@@ -48,8 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(17),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 10), // Move 10 pixels to the right
+                padding: const EdgeInsets.only(left: 10),
                 child: TextField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -124,7 +127,6 @@ class _LoginPageState extends State<LoginPage> {
                 );
 
                 if (token != null) {
-                  // Armazenar o token no SharedPreferences
                   await se.saveToken(token);
                   print(token);
                   Navigator.pushReplacementNamed(context, '/RoutePrincipal');
@@ -163,17 +165,21 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
             SizedBox(height: 20),
-            Text(
-              'Esqueceu a sua password?',
-              style: TextStyle(
-                color: Color(0xFF32D700),
-                fontSize: 16,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w600,
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/esqueceupass');
+              },
+              child: Text(
+                'Esqueceu a sua password?',
+                style: TextStyle(
+                  color: Color(0xFF32D700),
+                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),

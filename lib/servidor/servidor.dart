@@ -463,6 +463,29 @@ class Servidor {
     }
   }
 
+  Future<void> eliminarInformacaoProfissional(
+      String? token, String tituloInformacao) async {
+    var url = '$baseURL/informacoesprof/delete';
+
+    var response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(
+          <String, dynamic>{'titulo_informacao_param': tituloInformacao}),
+    );
+
+    if (response.statusCode == 200) {
+      print('Informação Profissional eliminada com sucesso!');
+    } else {
+      print(
+          'Erro ao eliminar a Informação Profissional: ${response.statusCode}');
+      throw Exception('Falha ao eliminar a Informação Profissional');
+    }
+  }
+
   Future<void> saveToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
