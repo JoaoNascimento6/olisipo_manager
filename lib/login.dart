@@ -165,13 +165,19 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             SizedBox(height: 20),
-            Text(
-              'Esqueceu a sua password?',
-              style: TextStyle(
-                color: Color(0xFF32D700),
-                fontSize: 16,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w600,
+            TextButton(
+              onPressed: () {
+                // Add your logic to handle the "Esqueceu a sua password?" click event
+                // For example, you can navigate to a password recovery page.
+              },
+              child: Text(
+                'Esqueceu a sua password?',
+                style: TextStyle(
+                  color: Color(0xFF32D700),
+                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],

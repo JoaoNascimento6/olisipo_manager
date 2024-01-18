@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/basededados.dart';
 import '../servidor/basededados.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
 
 class DadosPessoaisPage extends StatefulWidget {
-  const DadosPessoaisPage({Key? key, required this.title,required this.dados} ) : super(key: key);
+  const DadosPessoaisPage({Key? key, required this.title, required this.dados})
+      : super(key: key);
 
   final String title;
-  final (String,String,String,String, List<(String, String, String, String)>) dados;
-  
+  final (
+    String,
+    String,
+    String,
+    String,
+    List<(String, String, String, String)>
+  ) dados;
 
   @override
   _DadosPessoaisPageState createState() => _DadosPessoaisPageState();
@@ -16,8 +25,15 @@ class DadosPessoaisPage extends StatefulWidget {
 class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
   var bd = Basededados();
 
+  /* Future<void> _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false, forceWebView: false);
+    } else {
+      throw 'Não foi possível lançar $url';
+    }
+  } */
 
-   @override
+  @override
   void initState() {
     super.initState();
 
@@ -26,17 +42,15 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     emailController.text = widget.dados.$2;
     contrController.text = widget.dados.$3;
   }
+
   bool isEditingName = false;
   bool isEditingEmail = false;
   bool isEditingPassword = false;
   bool isEditingTaxNumber = false;
 
-  TextEditingController nameController =
-      TextEditingController();
-  TextEditingController emailController =
-      TextEditingController();
-       TextEditingController contrController =
-      TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController contrController = TextEditingController();
   TextEditingController passwordController =
       TextEditingController(text: '**********');
 
@@ -48,6 +62,8 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     passwordController.dispose();
     super.dispose();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -319,114 +335,132 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     int selectedMonth = DateTime.now().month;
     int selectedYear = DateTime.now().year;
 
+    Future<void> _downloadComprovativo(
+        int selectedMonth, int selectedYear) async {
+      // Lógica para construir a URL do comprovativo
+      String url = await bd.MostrarRecibo(selectedMonth, selectedYear);
+
+      // Lógica para iniciar o download
+      //_launchURL(url);
+    }
+
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
-        return SizedBox(
-          height: 400,
-          child: Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    'Recibos de Vencimento',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Escolha o mês:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: DropdownButton<int>(
-                        value: selectedMonth,
-                        onChanged: (newValue) {
-                          // Atualiza o mês selecionado
-                          if (newValue != null) {
-                            selectedMonth = newValue;
-                          }
-                        },
-                        items: List.generate(12, (index) {
-                          return DropdownMenuItem<int>(
-                            value: index + 1,
-                            child: Text('${index + 1}'),
-                          );
-                        }),
-                        hint: Text('Selecione o mês'),
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SizedBox(
+              height: 400,
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        'Recibos de Vencimento',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Escolha o ano:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: DropdownButton<int>(
-                        value: selectedYear,
-                        onChanged: (newValue) {
-                          // Atualiza o ano selecionado
-                          if (newValue != null) {
-                            selectedYear = newValue;
-                          }
-                        },
-                        items: List.generate(10, (index) {
-                          return DropdownMenuItem<int>(
-                            value: DateTime.now().year + index,
-                            child: Text('${DateTime.now().year + index}'),
-                          );
-                        }),
-                        hint: Text('Selecione o ano'),
+                    SizedBox(height: 16),
+                    Text(
+                      'Escolha o mês:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    // Lógica para o botão de documento comprovativo
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    alignment: Alignment.centerLeft,
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
+                    Row(
                       children: [
-                        Icon(Icons.upload, color: Colors.green),
-                        SizedBox(width: 8),
-                        Text(
-                          'Download do Comprovativo',
-                          style: TextStyle(
-                            color: Colors.green,
+                        Expanded(
+                          child: DropdownButton<int>(
+                            value: selectedMonth,
+                            onChanged: (newValue) {
+                              setState(() {
+                                // Atualiza o mês selecionado
+                                if (newValue != null) {
+                                  selectedMonth = newValue;
+                                }
+                              });
+                            },
+                            items: List.generate(12, (index) {
+                              return DropdownMenuItem<int>(
+                                value: index + 1,
+                                child: Text('${index + 1}'),
+                              );
+                            }),
+                            hint: Text('Selecione o mês'),
                           ),
                         ),
                       ],
                     ),
-                  ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Escolha o ano:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButton<int>(
+                            value: selectedYear,
+                            onChanged: (newValue) {
+                              setState(() {
+                                // Atualiza o ano selecionado
+                                if (newValue != null) {
+                                  selectedYear = newValue;
+                                }
+                              });
+                            },
+                            items: List.generate(7, (index) {
+                              return DropdownMenuItem<int>(
+                                value: DateTime.now().year - index,
+                                child: Text('${DateTime.now().year - index}'),
+                              );
+                            }),
+                            hint: Text('Selecione o ano'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        _downloadComprovativo(selectedMonth, selectedYear);
+                        // Lógica para o botão de documento comprovativo
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        alignment: Alignment.centerLeft,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            Icon(Icons.upload, color: Colors.green),
+                            SizedBox(width: 8),
+                            Text(
+                              'Download do Comprovativo',
+                              style: TextStyle(
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );

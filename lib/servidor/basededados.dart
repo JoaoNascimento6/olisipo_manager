@@ -522,6 +522,20 @@ Drop TABLE tipo_noticia
     return recibos;
   }
 
+   Future<String> MostrarRecibo(int mes, int ano) async {
+    String linkDoc = "";
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado = await db.rawQuery(
+        "SELECT recibo_pdf FROM recibos WHERE strftime('%Y', data_recibo) = '$ano' AND strftime('%m', data_recibo) = '$mes';");
+    resultado.forEach((linha) {
+        linkDoc = linha['recibo_pdf'].toString();
+    });
+    print("Número de resultados: ${resultado.length}");
+    linkDoc = "https://www.google.com";
+    print("linkzaoo $linkDoc");
+    return linkDoc;
+  }
+
   //_______________ informacoes
 
   Future<void> CriarTabelaInfos() async {
