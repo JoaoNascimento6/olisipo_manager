@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/basededados.dart';
 import 'curriculum.dart';
 import 'dadosPessoais.dart';
+import '../servidor/servidor.dart';
 
 class HeaderDadosPessoais extends StatelessWidget
     implements PreferredSizeWidget {
@@ -17,6 +18,7 @@ class HeaderDadosPessoais extends StatelessWidget
   Size get preferredSize => const Size.fromHeight(200);
 
   var bd = Basededados();
+  var se = Servidor();
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,10 @@ class HeaderDadosPessoais extends StatelessWidget
           top: 20,
           right: 8,
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              await se.logout(
+                await se.obterTokenLocalmente(),
+              );
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 '/login',

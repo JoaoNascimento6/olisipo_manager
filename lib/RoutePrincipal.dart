@@ -23,17 +23,28 @@ class _MyHomePageState extends State<Routeprincipal> {
   var se = Servidor();
   var bd = Basededados();
 
+  bool _dataLoaded = false;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = 0;
+    //condição para apenas permitir carregar os dados do servidor e do colaborador apenas uma vez, se já carregoua a primeira vez, não permite carregar novamente
+    if (!_dataLoaded) {
+      _loadData();
+      _dataLoaded = true;
+    }
+  }
+
+//função para carregar os dados do servidor
+  void _loadData() async {
+    await se.getDadosServidor();
   }
 
   Widget _currentPage = DashboardPage();
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) async{
+  void _onItemTapped(int index) async {
     var x = await bd.MostrarPessoas();
     setState(() {
       _selectedIndex = index;
@@ -55,7 +66,8 @@ class _MyHomePageState extends State<Routeprincipal> {
           _currentPage = ReuniaoPage(title: 'Reunião');
           break;
         case 5:
-          _currentPage = TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais', dados : x);
+          _currentPage =
+              TabBarDadosPessoais(title: 'Tabbar Dados/Pessoais', dados: x);
           break;
       }
     });
@@ -63,7 +75,6 @@ class _MyHomePageState extends State<Routeprincipal> {
 
   @override
   Widget build(BuildContext context) {
-
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       /*appBar: AppBar(
