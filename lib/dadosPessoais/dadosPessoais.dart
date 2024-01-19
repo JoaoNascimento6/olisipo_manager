@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/basededados.dart';
-import '../servidor/basededados.dart';
 import '../servidor/servidor.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-
+import 'package:flutter/services.dart';
+import 'pdf_banco.dart';
+import 'pdf_academico.dart';
 
 class DadosPessoaisPage extends StatefulWidget {
   const DadosPessoaisPage({Key? key, required this.title, required this.dados})
@@ -54,7 +53,6 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     super.dispose();
   }
 
-  
 
   @override
   Widget build(BuildContext context) {
@@ -185,6 +183,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
+                        createPDF(nameController.text,contrController.text);
                         // Adicione aqui a lógica para lidar com o clique no botão
                       },
                       style: ElevatedButton.styleFrom(
@@ -223,6 +222,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
+                        createPDFA(nameController.text,contrController.text);
                         // Adicione aqui a lógica para lidar com o clique no botão
                       },
                       style: ElevatedButton.styleFrom(
