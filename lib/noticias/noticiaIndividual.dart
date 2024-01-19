@@ -40,46 +40,37 @@ class DetalhesNoticiaPage extends StatelessWidget {
         elevation: 4.0,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.network(
-                      imagem,
-                      height: 250,
-                      width: 350,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ],
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  imagem,
+                  height: 250,
+                  width: 350,
+                  fit: BoxFit.cover,
+                ),
               ),
               SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Text(
-                      subtitulo,
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Text(
-                      corpo,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ],
+              Container(
+                margin: EdgeInsets.only(bottom: 15),
+                child: Text(
+                  subtitulo,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 15),
+                child: Text(
+                  corpo,
+                  style: TextStyle(fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

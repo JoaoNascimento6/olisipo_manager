@@ -1,17 +1,17 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'noticiaIndividual.dart';
-import 'package:olisipo_manager/servidor/servidor.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class CarrosselNoticias extends StatelessWidget {
   CarrosselNoticias({Key? key, required this.noticias}) : super(key: key);
+
   final List<(String, String, String, String, String)> noticias;
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       options: CarouselOptions(
-        height: 200.0,
+        height: 300,
         enlargeCenterPage: true,
       ),
       itemCount: noticias.length,
@@ -44,14 +44,14 @@ class CarrosselNoticias extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.network(
                   img,
-                  height: 110,
-                  width: 110,
+                  height: 297,
+                  width: 211,
                   fit: BoxFit.cover,
                 ),
               ),
               Container(
-                height: 110, // Ajuste conforme necessário
-                width: 110, // Ajuste conforme necessário
+                height: 297, // Ajuste conforme necessário
+                width: 211, // Ajuste conforme necessário
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
                   gradient: LinearGradient(
@@ -81,4 +81,3 @@ class CarrosselNoticias extends StatelessWidget {
     );
   }
 }
- */

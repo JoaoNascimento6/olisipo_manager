@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/basededados.dart';
 import 'metodoListarNoticias.dart';
+import 'estados.dart'; // Importa o arquivo com o widget EstadosPage
+import 'listarTiposNoticias.dart'; // Importa o arquivo com o widget ListarTipoNoticias
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -13,8 +13,20 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   var bd = Basededados();
-  String tipoSelecionado =
-      'Todos'; // Inicializa com 'Todos' para mostrar todas as notícias
+  String? tipoSelecionado;
+
+  void onTipoSelecionado(String tipo) {
+    setState(() {
+      tipoSelecionado = tipo;
+    });
+    print('Tipo de Noticia atualizado para: $tipoSelecionado');
+  }
+
+  void mostrarTodasNoticias() {
+    setState(() {
+      tipoSelecionado = '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +49,15 @@ class _DashboardPageState extends State<DashboardPage> {
                   snapshot) {
             if (snapshot.hasData) {
               var (noticias, tipos) = snapshot.data!;
+              tipos.add('Todas');
+              print("chegou aqui");
+              print(noticias);
+              if (tipoSelecionado != '') {
+                // Filtra as parcerias com base no tipoSelecionado
+                noticias = noticias
+                    .where((parceria) => parceria.$5 == tipoSelecionado)
+                    .toList();
+              }
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,52 +69,36 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   Center(
                     child: Text(
-                      "Olisipo",
+                      "",
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
                   ),
                   // 2ª secção
+                  ListarTipoNoticias(
+                    tiposDeNoticia: tipos,
+                    onTipoSelected: (tipo) {},
+                  ),
+                  // 3ª secção
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Column(
                       children: [
                         Text(
-                          "Notícias",
+                          "Estado das Submissões",
                           style: TextStyle(
                               fontSize: 20.0, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
-                        _buildTipoButtons(tipos),
+                        // Adiciona o widget EstadosPage aqui
+                        EstadosPage(
+                          ferias: "Direita 1",
+                          ajudasDeCusto: "Direita 2",
+                          viaturaPropria: "Direita 3",
+                          reuniao: "Direita 4",
+                        ),
                       ],
                     ),
                   ),
-
-                  // Utiliza o CarrosselNoticias aqui
-/*                   CarrosselNoticias(
-                  /* CarrosselNoticias(
-                    noticias: tipoSelecionado == 'Todos'
-                        ? noticias
-                        : noticias
-                            .where((noticia) => noticia.$5 == tipoSelecionado)
-                            .toList(),
-                  ), */
-                  ), */
-
-                  // 3ª secção
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Text(
-                      "Estado das Submissões",
-                      style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  _buildRow("Texto 1", "Direita 1"),
-                  _buildRow("Texto 2", "Direita 2"),
-                  _buildRow("Texto 3", "Direita 3"),
-                  _buildRow("Texto 4", "Direita 4"),
-                  _buildRow("Texto 5", "Direita 5"),
                 ],
               );
             } else if (snapshot.hasError) {
@@ -108,41 +113,6 @@ class _DashboardPageState extends State<DashboardPage> {
           },
         ),
       ),
-    );
-  }
-
-  Widget _buildTipoButtons(List<String> tipos) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              tipoSelecionado = 'Todos';
-            });
-          },
-          child: Text('Todos'),
-        ),
-        for (var tipo in tipos)
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                tipoSelecionado = tipo;
-              });
-            },
-            child: Text(tipo),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildRow(String leftText, String rightText) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(leftText),
-        Text(rightText),
-      ],
     );
   }
 }

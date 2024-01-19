@@ -17,22 +17,24 @@ class MyApp extends StatelessWidget {
     var se = Servidor();
 
     void servidor_basedados() {
-      //bd.apagatabelaParcerias();
-      //bd.CriarTabelaAjudas();
-      //bd.CriarTabelaDespesas();
-      //bd.CriarTabelaFerias();
-      //bd.CriarTabelaHoras();
-      //bd.CriarTabelaNoticias();
-      //bd.CriarTabelaTipoNoticia();
-      //bd.CriarTabelaTipoParcerias();
-      //bd.CriarTabelaParcerias();
-      //bd.CriarTabelaRecibos();
-      //bd.CriarTabelaReunioes();
-      //bd.CriarTabelaPessoas();
-      //bd.CriarTabelaPessoas();
-      //bd.CriarTabelaInfos();
+      /*bd.apagatabelaParcerias();
+      bd.CriarTabelaAjudas();
+      bd.CriarTabelaDespesas();
+      bd.CriarTabelaFerias();
+      bd.CriarTabelaHoras();
+      bd.CriarTabelaNoticias();
+      bd.CriarTabelaTipoNoticia();
+      bd.CriarTabelaTipoParcerias();
+      bd.CriarTabelaParcerias();
+      bd.CriarTabelaRecibos();
+      bd.CriarTabelaReunioes();
+      bd.CriarTabelaPessoas();
+      bd.CriarTabelaPessoas();
+      bd.CriarTabelaInfos();*/
       //se.getDadosServidor();
     }
+
+    servidor_basedados();
 
     return MaterialApp(
       title: 'Portal do Colabordor - Olisipo',
