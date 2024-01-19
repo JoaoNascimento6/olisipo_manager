@@ -5,9 +5,11 @@ import 'metodoListarNoticias.dart';
 
 class ListarTipoNoticias extends StatelessWidget {
   final List<String> tiposDeNoticia;
+  final Function(String) onTipoSelecionado;
 
   ListarTipoNoticias({
     required this.tiposDeNoticia,
+    required this.onTipoSelecionado,
   });
 
   @override
@@ -19,7 +21,7 @@ class ListarTipoNoticias extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Selecione um Tipo de Notícia:',
+              '',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -34,8 +36,12 @@ class ListarTipoNoticias extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Adicione a lógica desejada ao selecionar um tipo de notícia
-                      print('Tipo de Notícia selecionado: $tipo');
+                      if (tipo == 'Todas') {
+                        onTipoSelecionado(''); // Seleciona "Todas"
+                      } else {
+                        onTipoSelecionado(tipo);
+                      }
+                      // Adicione a lógica desejada ao selecionar um tipo de parceria
                     },
                     child: Text(tipo),
                   ),
