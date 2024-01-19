@@ -59,7 +59,7 @@ class HeaderDadosPessoais extends StatelessWidget
                   ],
                   image: const DecorationImage(
                     image: NetworkImage(
-                      'https://olisipo.pt/wp-content/uploads/rabbit-signup-100x100.png',
+                      'https://avatars.githubusercontent.com/u/111023508?v=4',
                     ),
                     fit: BoxFit.fill,
                   ),
