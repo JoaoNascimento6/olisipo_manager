@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/basededados.dart';
 import '../servidor/basededados.dart';
 import '../servidor/servidor.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
 
 class DadosPessoaisPage extends StatefulWidget {
   const DadosPessoaisPage({Key? key, required this.title, required this.dados})
@@ -50,6 +53,8 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     passwordController.dispose();
     super.dispose();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -487,6 +492,15 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
   void _showModalRecibosVencimento(BuildContext context) {
     int selectedMonth = DateTime.now().month;
     int selectedYear = DateTime.now().year;
+
+    Future<void> _downloadComprovativo(
+        int selectedMonth, int selectedYear) async {
+      // Lógica para construir a URL do comprovativo
+      String url = await bd.MostrarRecibo(selectedMonth, selectedYear);
+
+      // Lógica para iniciar o download
+      //_launchURL(url);
+    }
 
     showModalBottomSheet<void>(
       context: context,
