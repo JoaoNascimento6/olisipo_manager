@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:olisipo_manager/login.dart';
+import 'servidor/servidor.dart';
+import 'login.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   final String email;
@@ -14,6 +17,7 @@ class ResetPasswordPage extends StatefulWidget {
 }
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  var se = Servidor();
   final TextEditingController _codeController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -47,9 +51,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
                 // Atualiza a senha no servidor.
                 // ...
+                se.updatePasswordporEmail(widget.email, _passwordController.text);
+                print(_passwordController.text);
 
                 // Redireciona o usuário para a página de login.
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(title: []), // Substitua LoginPage pela sua página de login
+                  ),
+                );
               },
               child: Text("Redefinir Senha"),
             ),
