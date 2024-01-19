@@ -3,7 +3,6 @@ import './redifinir_pass.dart';
 import 'dart:math';
 import 'servidor/servidor.dart';
 
-
 class ForgotPasswordPage extends StatefulWidget {
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
@@ -27,44 +26,131 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Esqueceu a Senha?"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/login');
+          },
+        ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Insira seu e-mail:"),
-            TextField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Envia um e-mail com um código de confirmação para o e-mail especificado.
-                String email = _emailController.text;
-                String code = generateConfirmationCode();
-
-                print(code);
-                // Envia um e-mail com o código de confirmação.
-                // ...
-                se.enviarEmail(email, code);
-
-                // Redireciona o usuário para a página de redefinição de senha.
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ResetPasswordPage(
-                      email: email,
-                      code: code,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start, // Mudei para start
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 70),
+              Image.asset(
+                'images/olisipo.png',
+                width: 250,
+              ),
+              SizedBox(height: 70),
+              Text(
+                'Esqueceu a sua Password?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: screenWidth - 150,
+                child: Text(
+                  'Insira o seu e-mail para receber um código de segurança.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              Container(
+                width: 343,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 230, 230, 230),
+                  borderRadius: BorderRadius.circular(17),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: TextField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'E-mail',
+                      labelStyle: TextStyle(
+                        color: Color.fromARGB(255, 125, 125, 125),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                      border: InputBorder.none,
                     ),
                   ),
-                );
-              },
-              child: Text("Enviar"),
-            ),
-          ],
+                ),
+              ),
+              SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  String email = _emailController.text;
+                  if (email.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Por favor, preencha o campo de e-mail.'),
+                      ),
+                    );
+                  } else {
+                    String code = generateConfirmationCode();
+                    print(code);
+                    se.enviarEmail(email, code);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResetPasswordPage(
+                          email: email,
+                          code: code,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                child: Ink(
+                  width: screenWidth - 140,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: const Color(0xFF32D700),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Enviar Código',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

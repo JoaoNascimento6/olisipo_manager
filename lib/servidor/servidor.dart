@@ -442,59 +442,59 @@ class Servidor {
   }
 
   Future<void> updatePasswordporEmail(String email, String password) async {
-  var url = '$baseURL/pessoas/updatepormail'; // Use a URL correta conforme sua API
+    var url =
+        '$baseURL/pessoas/updatepormail'; // Use a URL correta conforme sua API
 
-  try {
-    var response = await http.put(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'email_param': email,
-        'pass_pessoa_param': password,
-      }),
-    );
+    try {
+      var response = await http.put(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'email_param': email,
+          'pass_pessoa_param': password,
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      print('Password atualizada com sucesso!');
-    } else {
-      print('Erro ao atualizar a password: ${response.statusCode}');
-      throw Exception('Falha ao atualizar a Password');
+      if (response.statusCode == 200) {
+        print('Password atualizada com sucesso!');
+      } else {
+        print('Erro ao atualizar a password: ${response.statusCode}');
+        throw Exception('Falha ao atualizar a Password');
+      }
+    } catch (error) {
+      print('Erro na chamada da API: $error');
+      throw Exception('Erro na chamada da API');
     }
-  } catch (error) {
-    print('Erro na chamada da API: $error');
-    throw Exception('Erro na chamada da API');
   }
-}
 
+  Future<void> enviarEmail(String email, String code) async {
+    var url =
+        '$baseURL/pessoas/enviarmail'; // Use a URL correta conforme sua API
 
-Future<void> enviarEmail(String email, String code) async {
-  var url = '$baseURL/pessoas/enviarmail'; // Use a URL correta conforme sua API
+    try {
+      var response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'email_param': email,
+          'code': code,
+        }),
+      );
 
-  try {
-    var response = await http.post(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'email_param': email,
-        'code': code,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      print('Código enviado!');
-    } else {
-      print('Erro ao enviar codigo: ${response.statusCode}');
-      throw Exception('Falha ao enviar o código');
+      if (response.statusCode == 200) {
+        print('Código enviado!');
+      } else {
+        print('Erro ao enviar codigo: ${response.statusCode}');
+        throw Exception('Falha ao enviar o código');
+      }
+    } catch (error) {
+      print('Erro na chamada da API: $error');
     }
-  } catch (error) {
-    print('Erro na chamada da API: $error');
-    throw Exception('Erro na chamada da API');
   }
-}
 
   Future<void> logout(
     String? token,
@@ -555,5 +555,4 @@ Future<void> enviarEmail(String email, String code) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
   }
-  
 }
