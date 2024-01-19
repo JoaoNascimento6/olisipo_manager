@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './redifinir_pass.dart';
 import 'dart:math';
+import 'servidor/servidor.dart';
+
 
 class ForgotPasswordPage extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
 
   late Random random;
+  var se = Servidor();
 
   @override
   void initState() {
@@ -46,6 +49,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 print(code);
                 // Envia um e-mail com o código de confirmação.
                 // ...
+                se.enviarEmail(email, code);
 
                 // Redireciona o usuário para a página de redefinição de senha.
                 Navigator.push(
