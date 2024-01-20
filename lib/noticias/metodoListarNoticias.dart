@@ -11,7 +11,7 @@ class CarrosselNoticias extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       options: CarouselOptions(
-        height: 300,
+        height: 250,
         enlargeCenterPage: true,
       ),
       itemCount: noticias.length,

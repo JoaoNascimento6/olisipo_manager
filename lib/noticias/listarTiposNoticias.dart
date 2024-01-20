@@ -18,16 +18,7 @@ class ListarTipoNoticias extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-          ),
+          
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -49,7 +40,7 @@ class ListarTipoNoticias extends StatelessWidget {
               }).toList(),
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 5),
         ],
       ),
     );

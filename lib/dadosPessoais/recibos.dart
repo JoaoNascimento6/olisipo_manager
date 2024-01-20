@@ -15,6 +15,7 @@ class ReciboPage extends StatelessWidget {
     int selectedYear = DateTime.now().year;
     initializeDateFormatting('pt_BR');
 
+
     showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -52,6 +53,7 @@ class ReciboPage extends StatelessWidget {
                             value: selectedMonth,
                             onChanged: (newValue) {
                               setState(() {
+
                                 if (newValue != null) {
                                   selectedMonth = newValue;
                                 }
@@ -60,8 +62,10 @@ class ReciboPage extends StatelessWidget {
                             items: List.generate(12, (index) {
                               return DropdownMenuItem<int>(
                                 value: index + 1,
+
                                 child: Text(DateFormat('MMMM', 'pt_BR')
                                     .format(DateTime(2022, index + 1))),
+
                               );
                             }),
                             hint: Text('Selecione o mês'),
@@ -84,12 +88,15 @@ class ReciboPage extends StatelessWidget {
                             value: selectedYear,
                             onChanged: (newValue) {
                               setState(() {
+
                                 if (newValue != null) {
                                   selectedYear = newValue;
                                 }
                               });
                             },
+
                             items: List.generate(14, (index) {
+
                               return DropdownMenuItem<int>(
                                 value: DateTime.now().year - index,
                                 child: Text('${DateTime.now().year - index}'),
@@ -103,12 +110,14 @@ class ReciboPage extends StatelessWidget {
                     SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
+
                         PDFrecibos(
                             name,
                             contribuinte,
                             DateFormat('MMMM', 'pt_BR')
                                 .format(DateTime(selectedYear, selectedMonth)),
                             selectedYear);
+
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -118,7 +127,9 @@ class ReciboPage extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: Row(
                           children: [
+
                             Icon(Icons.download, color: Color(0xFF32D700)),
+
                             SizedBox(width: 8),
                             Text(
                               'Download do Comprovativo',
