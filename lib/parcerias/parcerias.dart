@@ -12,7 +12,7 @@ class ParceriasPage extends StatefulWidget {
 
 class _ParceriasPageState extends State<ParceriasPage> {
   var bd = Basededados();
-  String? tipoSelecionado;
+  String tipoSelecionado = '';
 
   // Adicione a função onTipoSelecionado
   void onTipoSelecionado(String tipo) {
@@ -35,8 +35,9 @@ class _ParceriasPageState extends State<ParceriasPage> {
         backgroundColor: Color(0xFF32D700),
         title: Text('Parcerias'),
       ),
-      body: FutureBuilder<
-          (List<(String, String, String, String, String)>, List<String>)>(
+      body: FutureBuilder<(
+        List<(String, String, String, String, String)>, List<String>
+        )>(
         future: bd.MostrarParcerias(),
         builder: (BuildContext context,
             AsyncSnapshot<
@@ -48,11 +49,13 @@ class _ParceriasPageState extends State<ParceriasPage> {
           List<Widget> children;
           if (snapshot.hasData) {
             var (parcerias, tipos) = snapshot.data!;
-            tipos.add('Todas');
+
             // List<(int, String, String, String, String, String)> parcerias =
             //     snapshot.data!;
             print("chegou aqui");
             print(parcerias);
+            tipos.insert(0, 'Todas');
+
             if (tipoSelecionado != '') {
               // Filtra as parcerias com base no tipoSelecionado
               parcerias = parcerias

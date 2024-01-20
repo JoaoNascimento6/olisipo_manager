@@ -18,27 +18,19 @@ class Servidor {
     return prods;
   }
 
-  Future<void> getDadosServidor() async {
-    url = 'https://backend-olisipo-portal.onrender.com/appmobile';
+  Future<void> getNoticiasEParcerias() async {
+    url =
+        'https://backend-olisipo-portal.onrender.com/appmobile/noticiasparcerias';
     List<(String, String, String, String, String)> parcerias = [];
     List<String> TipoParcerias = [];
     List<(String, String, String, String, String)> noticias = [];
     List<String> TipoNoticias = [];
-    List<(String, String, String, String)> informacoesProfissionais = [];
-    List<(String, String)> despesasViatura = [];
-    List<(String, String)> ferias = [];
-    List<(String, String)> horas = [];
-    List<(String, String)> ajudas = [];
-    List<(String, String, String)> reunioes = [];
-    List<(int, String, String, String)> recibos = [];
-    List<(String, String, String, String)> pessoas = [];
     var bd = Basededados();
 
-    String? token = await obterTokenLocalmente();
     var result = await http.get(
       Uri.parse(url),
-      headers: {'Authorization': 'Bearer $token'},
     );
+
 
     var lista1 = jsonDecode(result.body)['parcerias'];
     lista1.forEach((linha) {
@@ -54,7 +46,6 @@ class Servidor {
     lista2.forEach((linha) {
       TipoParcerias.add((linha['tipo_parceria'].toString()));
     });
-
     var lista3 = jsonDecode(result.body)['noticias'];
     lista3.forEach((linha) {
       noticias.add((
@@ -65,10 +56,35 @@ class Servidor {
         linha['tipo_noticia'].toString()
       ));
     });
+
     var lista4 = jsonDecode(result.body)['tipoNoticias'];
     lista4.forEach((linha) {
-      TipoNoticias.add((linha['tipo_parceria'].toString()));
+      TipoNoticias.add((linha['tipo_noticia'].toString()));
     });
+    bd.inserirParceria(parcerias);
+    bd.InsertTipoParceria(TipoParcerias);
+    bd.InsertTipoNoticia(TipoNoticias);
+    bd.inserirNoticias(noticias);
+  }
+
+  Future<void> getDadosServidor() async {
+    url = 'https://backend-olisipo-portal.onrender.com/appmobile';
+
+    List<(String, String, String, String)> informacoesProfissionais = [];
+    List<(String, String)> despesasViatura = [];
+    List<(String, String)> ferias = [];
+    List<(String, String)> horas = [];
+    List<(String, String)> ajudas = [];
+    List<(String, String, String)> reunioes = [];
+    List<(int, String, String, String)> recibos = [];
+    List<(String, String, String, String)> pessoas = [];
+    var bd = Basededados();
+
+    String? token = await obterTokenLocalmente();
+    var result = await http.get(
+      Uri.parse(url),
+      headers: {'Authorization': 'Bearer $token'},
+    );
 
     var lista5 = jsonDecode(result.body)['informacoesProfissionais'];
     lista5.forEach((linha) {
@@ -139,13 +155,15 @@ class Servidor {
       ));
     });
 
-    bd.inserirParceria(parcerias);
-    bd.InsertTipoParceria(TipoParcerias);
-    bd.inserirNoticias(noticias);
-    bd.InsertTipoNoticia(TipoNoticias);
     bd.InsertPessoas(pessoas);
     bd.InsertInfos(informacoesProfissionais);
-    //bd.InsertDespesas(despesasViatura);
+
+    bd.InsertAjuda(ajudas);
+    bd.InsertDespesas(despesasViatura);
+    bd.InsertFerias(ferias);
+    bd.InsertHoras(horas);
+    bd.InsertReuniao(reunioes);
+
   }
 
   Future<List<(String, String)>> listaUsers() async {
