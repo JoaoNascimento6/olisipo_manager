@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import '../servidor/basededados.dart';
+import 'pdf_recibos.dart';
 
-class ReciboPage extends StatelessWidget {
-  final bd = Basededados();
-
+class ReciboPage extends StatefulWidget {
   ReciboPage({Key? key}) : super(key: key);
 
-  void showModalRecibosVencimento(BuildContext context) {
-    int selectedMonth = DateTime.now().month;
-    int selectedYear = DateTime.now().year;
+  @override
+  ReciboPageState createState() => ReciboPageState();
+}
 
+class ReciboPageState extends State<ReciboPage> {
+  final bd = Basededados();
+  int selectedMonth = DateTime.now().month;
+  int selectedYear = DateTime.now().year;
+
+  void showModalRecibosVencimento(
+    BuildContext context,
+    String name,
+    String email,
+  ) {
     Future<void> _downloadComprovativo(
         int selectedMonth, int selectedYear) async {
       // Lógica para construir a URL do comprovativo
@@ -55,7 +65,9 @@ class ReciboPage extends StatelessWidget {
                         value: selectedMonth,
                         onChanged: (newValue) {
                           if (newValue != null) {
-                            selectedMonth = newValue;
+                            setState(() {
+                              selectedMonth = newValue;
+                            });
                           }
                         },
                         items: List.generate(12, (index) {
@@ -84,7 +96,9 @@ class ReciboPage extends StatelessWidget {
                         value: selectedYear,
                         onChanged: (newValue) {
                           if (newValue != null) {
-                            selectedYear = newValue;
+                            setState(() {
+                              selectedYear = newValue;
+                            });
                           }
                         },
                         items: List.generate(10, (index) {
@@ -101,7 +115,9 @@ class ReciboPage extends StatelessWidget {
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    // Lógica para o botão de documento comprovativo
+                    String monthName = DateFormat('MMMM', 'pt_BR')
+                        .format(DateTime(selectedYear, selectedMonth));
+                    PDFrecibos(name, email, monthName, selectedYear);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
