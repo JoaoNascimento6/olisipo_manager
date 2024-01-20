@@ -14,6 +14,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   var bd = Basededados();
   String tipoSelecionado = '';
+  String nome = '';
 
   void onTipoSelecionado(String tipo) {
     setState(() {
@@ -22,19 +23,26 @@ class _DashboardPageState extends State<DashboardPage> {
     print('Tipo de Noticia atualizado para: $tipoSelecionado');
   }
 
-  void mostrarTodasNoticias() {
-    setState(() {
-      tipoSelecionado = '';
-    });
+  void dados() async {
+    var dados = await bd.MostrarPessoas();
+    nome = dados.$1;
   }
-  
 
   @override
   Widget build(BuildContext context) {
+    dados();
     return Scaffold(
-        /* appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Olisipo"),
+        title: Text(
+          "Olisipo",
+          style: TextStyle(
+            fontSize: 30.0,
+            color: Color(0xFF32D700),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -76,19 +84,24 @@ class _DashboardPageState extends State<DashboardPage> {
                         children: [
                           // 1ª secção
                           Text(
-                            "Olá Carlos!",
-                            style: TextStyle(fontSize: 18.0),
+                            "Olá $nome!", // Use the 'nome' value here
+                            style: TextStyle(fontSize: 18),
                           ),
-                          Center(
-                            child: Text(
-                              "",
-                              style: TextStyle(
-                                  fontSize: 24.0, fontWeight: FontWeight.bold),
-                            ),
+                          Divider(
+                            height: 30,
+                            thickness: 3,
+                            color: Color.fromARGB(255, 10, 220, 49),
                           ),
+
+                          Text(
+                            "Notícias",
+                            style: TextStyle(
+                                fontSize: 28.0, fontWeight: FontWeight.bold),
+                          ),
+
                           // 2ª secção
                           SizedBox(
-                            height: 160,
+                            height: 120,
                             child: ListarTipoNoticias(
                               tiposDeNoticia: tipos,
                               onTipoSelecionado: onTipoSelecionado,
@@ -96,7 +109,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                           CarrosselNoticias(noticias: noticias),
                           // 3ª secção
-                         /*  Padding(
+                          /*  Padding(
                             padding: EdgeInsets.symmetric(vertical: 16.0),
                             child: Column(
                               children: [
@@ -133,7 +146,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ],
           ),
         ),
-      ), */
-        );
+      ),
+    );
   }
 }
