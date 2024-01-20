@@ -49,7 +49,7 @@ class _ParceriasPageState extends State<ParceriasPage> {
           List<Widget> children;
           if (snapshot.hasData) {
             var (parcerias, tipos) = snapshot.data!;
-            //tipos.add('Todas');
+
             // List<(int, String, String, String, String, String)> parcerias =
             //     snapshot.data!;
             print("chegou aqui");

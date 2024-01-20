@@ -32,7 +32,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+        /* appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Olisipo"),
       ),
@@ -133,7 +133,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ],
           ),
         ),
-      ),
-    );
+      ), */
+        );
   }
 }

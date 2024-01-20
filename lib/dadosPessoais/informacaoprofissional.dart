@@ -86,23 +86,19 @@ class InformacaoProfissionalPage extends StatelessWidget {
                         // Lógica para o botão de documento comprovativo
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Cor de fundo branca
-                        alignment: Alignment
-                            .centerLeft, // Alinhar o conteúdo à esquerda
+                        backgroundColor: Colors.white,
+                        alignment: Alignment.centerLeft,
                       ),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Row(
                           children: [
-                            Icon(Icons.upload,
-                                color: Colors.green), // Ícone verde
-                            SizedBox(
-                                width:
-                                    8), // Espaçamento entre o ícone e o texto
+                            Icon(Icons.upload, color: Colors.green),
+                            SizedBox(width: 8),
                             Text(
                               'Documento Comprovativo',
                               style: TextStyle(
-                                color: Colors.green, // Cor verde para o texto
+                                color: Colors.green,
                               ),
                             ),
                           ],
@@ -131,7 +127,7 @@ class InformacaoProfissionalPage extends StatelessWidget {
                           return;
                         }
                         try {
-                          se.inserirInformacaoProfissional(
+                          await se.inserirInformacaoProfissional(
                             await se.obterTokenLocalmente(),
                             tituloController.text,
                             descricaoController.text,
@@ -140,6 +136,18 @@ class InformacaoProfissionalPage extends StatelessWidget {
                           );
 
                           se.getDadosServidor();
+
+                          tituloController.clear();
+                          descricaoController.clear();
+                          tipoController.clear();
+
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Informação Profissional adicionada com sucesso!'),
+                            ),
+                          );
                         } catch (e) {
                           print(
                               'Erro ao adicionar uma informação profissional: $e');
