@@ -16,8 +16,7 @@ class CarrosselNoticias extends StatelessWidget {
       ),
       itemCount: noticias.length,
       itemBuilder: (BuildContext context, int index, int realIndex) {
-        var (img, tit, subt, corpo, tipo) = noticias[index];
-
+        var (tit, subt, corpo, img, tipo) = noticias[index];
         return ElevatedButton(
           onPressed: () {
             Navigator.push(
@@ -36,24 +35,32 @@ class CarrosselNoticias extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,
+            elevation: 0, // Remover a sombra
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  10.0), // Ajuste o valor conforme necessário
+            ),
           ),
           child: Stack(
             alignment: Alignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(
+                    15), // Ajuste o valor conforme necessário
                 child: Image.network(
                   img,
-                  height: 297,
-                  width: 211,
+                  height: 250,
+                  width: 350,
                   fit: BoxFit.cover,
                 ),
               ),
               Container(
-                height: 297, // Ajuste conforme necessário
-                width: 211, // Ajuste conforme necessário
+                
+                height: 250,
+                width: 350,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(
+                    15),
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

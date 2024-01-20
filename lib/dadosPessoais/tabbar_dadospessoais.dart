@@ -59,7 +59,7 @@ class HeaderDadosPessoais extends StatelessWidget
                   ],
                   image: const DecorationImage(
                     image: NetworkImage(
-                      'https://avatars.githubusercontent.com/u/111023508?v=4',
+                      'https://avatars.githubusercontent.com/u/150026377?v=4',
                     ),
                     fit: BoxFit.fill,
                   ),

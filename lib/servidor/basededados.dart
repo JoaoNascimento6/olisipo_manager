@@ -44,7 +44,7 @@ nacionalidade text
 //---------------------------------------
   Future<void> apagatabelaParcerias() async {
     Database db = await basededados;
-    await db.execute('Delete from tipo_parceria');
+    await db.execute('Delete from noticias');
   }
 
   Future<void> apagatabelaTipoParcerias() async {
@@ -172,6 +172,38 @@ Drop TABLE tipo_parceria
 
     return (parcerias, tipos);
   }
+  //______________--TIPO DE NOTICIA
+  Future<void> CriarTabelaTipoNoticia() async {
+    Database db = await basededados;
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS tipo_noticia (
+      id_tipo_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
+      tipo_noticia TEXT
+    )
+  ''');
+  }
+
+  Future<void> InsertTipoNoticia(tipoNot) async {
+    Database db = await basededados;
+    await db.delete('tipo_noticia');
+    for (final tiposnoticia in tipoNot) {
+      await db.rawInsert(
+          'insert into tipo_noticia(tipo_noticia) values("$tiposnoticia")');
+      print("2 $tiposnoticia");
+    }
+  }
+
+  Future<List<String>> MostrarTipoNoticia() async {
+    List<String> uts = [];
+    Database db = await basededados;
+    List<Map<String, Object?>> resultado =
+        await db.rawQuery('select tipo_noticia from tipo_noticia');
+    resultado.forEach((linha) {
+      uts.add(linha['tipo_noticia'].toString());
+    });
+    return uts;
+  }
+
 
   // _____________________________________ NOTICIAS ____________________________________
 
@@ -184,7 +216,7 @@ Drop TABLE tipo_parceria
     List<String> tipos = [];
     Database db = await basededados;
     List<Map<String, Object?>> resultado = await db.rawQuery(
-        'select id_noticia, titulo_noticia, subtitulo_noticia, corpo_noticia, imagem_noticia,tipo_noticia from noticias');
+        'select titulo_noticia, subtitulo_noticia, corpo_noticia, imagem_noticia,tipo_noticia from noticias');
     resultado.forEach((linha) {
       noticias.add((
         linha['titulo_noticia'].toString(),
@@ -200,6 +232,7 @@ Drop TABLE tipo_parceria
     resultadoTipo.forEach((linha) {
       tipos.add((linha['tipo_noticia'].toString()));
     });
+    print(tipos);
     return (noticias, tipos);
   }
 
@@ -243,36 +276,6 @@ Drop TABLE tipo_parceria
     }
   }
 
-//______________--TIPO DE NOTICIA
-  Future<void> CriarTabelaTipoNoticia() async {
-    Database db = await basededados;
-    await db.execute('''
-    CREATE TABLE IF NOT EXISTS tipo_noticia(
-      id_tipo_noticia INTEGER PRIMARY KEY AUTOINCREMENT,
-      tipo_noticia TEXT
-    )
-  ''');
-  }
-
-  Future<void> InsertTipoNoticia(tipo_noticia) async {
-    Database db = await basededados;
-    for (final tiposnoticia in tipo_noticia) {
-      await db.rawInsert(
-          'insert into tipo_noticia(tipo_noticia) values("$tiposnoticia")');
-      print(tiposnoticia);
-    }
-  }
-
-  Future<List<String>> MostrarTipoNoticia() async {
-    List<String> uts = [];
-    Database db = await basededados;
-    List<Map<String, Object?>> resultado =
-        await db.rawQuery('select tipo_noticia from tipo_noticia');
-    resultado.forEach((linha) {
-      uts.add(linha['tipo_noticia'].toString());
-    });
-    return uts;
-  }
 
   Future<void> apagatabelaNoticias() async {
     Database db = await basededados;
