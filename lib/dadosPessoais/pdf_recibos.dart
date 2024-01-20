@@ -33,12 +33,10 @@ Future<void> PDFrecibos(
 
   // Text content
   String texto1 =
-      'A empresa Olisipo declara que efetuou o pagamento ao colaborador $name,';
+      'A empresa Olisipo declara que efetuou o pagamento ao colaborador $name, portador do número de contribuinte $contribuinte, relativo ao mês de $mes de $ano.';
   String texto2 =
-      'portador do número de contribuinte $contribuinte, relativo ao mês de $mes de $ano.';
-  String texto3 =
       'Este recibo serve como comprovativo do pagamento mencionado acima.';
-  String texto4 = 'Atenciosamente, Olisipo.';
+  String texto3 = 'Atenciosamente, Olisipo.';
 
   page.graphics.drawImage(
     image,
@@ -80,7 +78,7 @@ Future<void> PDFrecibos(
       alignment: PdfTextAlignment.center,
       lineAlignment: PdfVerticalAlignment.middle,
     ),
-    bounds: Rect.fromLTWH(centerX - 250, centerY - 60, 500, 200),
+    bounds: Rect.fromLTWH(centerX - 250, centerY - 100, 500, 200),
   );
 
 // Draw texto3 abaixo de texto2
@@ -92,14 +90,7 @@ Future<void> PDFrecibos(
       alignment: PdfTextAlignment.center,
       lineAlignment: PdfVerticalAlignment.middle,
     ),
-    bounds: Rect.fromLTWH(centerX - 250, centerY, 500, 200),
-  );
-
-// Draw line abaixo de texto3
-  page.graphics.drawLine(
-    PdfPen(PdfColor(0, 0, 0), width: 1),
-    Offset(centerX - 250, centerY + 160), // Ajuste de altura
-    Offset(centerX + 250, centerY + 160), // Ajuste de altura
+    bounds: Rect.fromLTWH(centerX - 250, centerY - 80, 500, 200),
   );
 
   // Save the document
