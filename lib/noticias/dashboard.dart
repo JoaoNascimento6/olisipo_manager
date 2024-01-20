@@ -27,12 +27,11 @@ class _DashboardPageState extends State<DashboardPage> {
       tipoSelecionado = '';
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        /* appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Olisipo"),
       ),
@@ -96,7 +95,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                           CarrosselNoticias(noticias: noticias),
                           // 3ª secção
-                         /*  Padding(
+                          /*  Padding(
                             padding: EdgeInsets.symmetric(vertical: 16.0),
                             child: Column(
                               children: [
@@ -133,7 +132,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ],
           ),
         ),
-      ), */
-        );
+      ),
+    );
   }
 }

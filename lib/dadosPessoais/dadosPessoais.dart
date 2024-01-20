@@ -145,10 +145,10 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        ReciboPageState().showModalRecibosVencimento(
+                        ReciboPage().showModalRecibosVencimento(
                           context,
                           nameController.text,
-                          emailController.text,
+                          contrController.text,
                         );
                       },
                       style: ElevatedButton.styleFrom(
