@@ -5,9 +5,7 @@ import 'package:olisipo_manager/servidor/servidor.dart';
 class ListarParcerias extends StatelessWidget {
   ListarParcerias({Key? key, required this.els}) : super(key: key);
 
-
-  final List<( String, String,String,String,String)> els;
-
+  final List<(String, String, String, String, String)> els;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +25,7 @@ class ListarParcerias extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(endIndex - startIndex, (i) {
-
-                    var ( img, nome,desc,benef,tipo) = els[startIndex + i];
+                  var (img, nome, desc, benef, tipo) = els[startIndex + i];
 
                   return ElevatedButton(
                     onPressed: () {
@@ -37,18 +34,14 @@ class ListarParcerias extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => DetalhesParceriaPage(
-
-                         
-                            imagem: img,
-                            nome: nome,
-                            descricao:desc,
-                            beneficios:benef,
-                            tipo:tipo
-                          ),
+                              imagem: img,
+                              nome: nome,
+                              descricao: desc,
+                              beneficios: benef,
+                              tipo: tipo),
                         ),
                       );
                       print('Botão clicado:  $nome + $tipo + $desc + $benef');
-
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,

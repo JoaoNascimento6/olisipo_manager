@@ -235,11 +235,25 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                     }
 
                     try {
-                      se.inserirReuniao(
+                      await se.inserirReuniao(
                         await se.obterTokenLocalmente(),
                         diaController.text,
                         motivoController.text,
                         horaController.text,
+                      );
+
+                      setState(() {
+                        diaController.clear();
+                        motivoController.clear();
+                        horaController.clear();
+                        _selectedDay = DateTime.now().add(Duration(days: 1));
+                        selectedTime = 'Selecione';
+                      });
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Reunião marcada com sucesso!'),
+                        ),
                       );
                     } catch (e) {
                       print('Erro ao criar reunião: $e');

@@ -42,7 +42,6 @@ class ListarTipoParcerias extends StatelessWidget {
                         onTipoSelecionado(tipo);
                       }
                       // Adicione a lógica desejada ao selecionar um tipo de parceria
-                      
                     },
                     child: Text(tipo),
                   ),

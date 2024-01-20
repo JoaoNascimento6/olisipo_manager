@@ -129,6 +129,12 @@ class FaltasPage extends StatelessWidget {
                             false,
                           );
                           print('Faltas inseridas com sucesso!');
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Faltas enviadas com sucesso!'),
+                            ),
+                          );
                         } else {
                           print('O campo de horas não é um valor válido.');
                         }

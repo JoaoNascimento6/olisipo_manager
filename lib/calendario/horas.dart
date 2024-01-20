@@ -186,7 +186,8 @@ class _HorasPageState extends State<HorasPage> {
                                 });
                               },
                               decoration: InputDecoration(
-                                hintText: 'Insira as horas mensais efetuadas',
+                                hintText:
+                                    'Insira as suas horas mensais efetuadas',
                                 hintStyle: TextStyle(
                                   color: const Color(0xFFBDBDBD),
                                   fontSize: 16,
@@ -263,6 +264,15 @@ class _HorasPageState extends State<HorasPage> {
                               false,
                               anoCalendario,
                             );
+                            setState(() {
+                              _horasController.clear();
+                              horasInseridasValue = 0;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Horas enviadas com sucesso!'),
+                              ),
+                            );
                           } catch (e) {
                             print('Erro ao enviar horas: $e');
                             showDialog(
@@ -287,7 +297,7 @@ class _HorasPageState extends State<HorasPage> {
                         } else {
                           final snackBar = SnackBar(
                             content: Text(
-                                'Preencha o campo com as horas trabalhadas deste.'),
+                                'Preencha o campo com as horas trabalhadas.'),
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           return;

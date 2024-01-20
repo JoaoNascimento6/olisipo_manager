@@ -215,10 +215,19 @@ class _CurriculumPageState extends State<CurriculumPage> {
                                           onPressed: () async {
                                             bd.apagarInformacaoProfissional(
                                                 infoProfissional.$1);
-                                            se.eliminarInformacaoProfissional(
-                                                await se.obterTokenLocalmente(),
-                                                infoProfissional.$1);
+                                            await se
+                                                .eliminarInformacaoProfissional(
+                                                    await se
+                                                        .obterTokenLocalmente(),
+                                                    infoProfissional.$1);
                                             setState(() {});
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    'Informação Profissional eliminada com sucesso!'),
+                                              ),
+                                            );
                                           },
                                           icon: Icon(
                                             Icons.delete,

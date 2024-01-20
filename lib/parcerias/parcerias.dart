@@ -9,6 +9,7 @@ class ParceriasPage extends StatefulWidget {
   @override
   _ParceriasPageState createState() => _ParceriasPageState();
 }
+
 class _ParceriasPageState extends State<ParceriasPage> {
   var bd = Basededados();
   String? tipoSelecionado;
@@ -33,7 +34,6 @@ class _ParceriasPageState extends State<ParceriasPage> {
       appBar: AppBar(
         backgroundColor: Color(0xFF32D700),
         title: Text('Parcerias'),
-        
       ),
       body: FutureBuilder<
           (List<(String, String, String, String, String)>, List<String>)>(
@@ -48,7 +48,7 @@ class _ParceriasPageState extends State<ParceriasPage> {
           List<Widget> children;
           if (snapshot.hasData) {
             var (parcerias, tipos) = snapshot.data!;
-             tipos.add('Todas');
+            tipos.add('Todas');
             // List<(int, String, String, String, String, String)> parcerias =
             //     snapshot.data!;
             print("chegou aqui");
