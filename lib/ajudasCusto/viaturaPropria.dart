@@ -53,9 +53,8 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false, // Evita que o teclado cause resize
+      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-        // Adiciona SingleChildScrollView
         child: Container(
           width: screenWidth,
           height: MediaQuery.of(context).size.height,
@@ -256,6 +255,21 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                             porigemController.text,
                             pchegadaController.text,
                             false,
+                          );
+
+                          setState(() {
+                            kmController.clear();
+                            porigemController.clear();
+                            pchegadaController.clear();
+                            dataController.clear();
+                            selectedDate = DateTime.now();
+                            dataSelecionada = 'Selecione...';
+                          });
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Despesas enviadas com sucesso!'),
+                            ),
                           );
                         } catch (e) {
                           print('Erro ao enviar despesas: $e');

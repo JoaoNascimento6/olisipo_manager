@@ -275,6 +275,7 @@ class _FeriasPageState extends State<FeriasPage> {
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           return;
                         }
+
                         try {
                           await se.inserirFerias(
                             await se.obterTokenLocalmente(),
@@ -283,6 +284,28 @@ class _FeriasPageState extends State<FeriasPage> {
                             currentDateFormatted,
                             false,
                           );
+
+                          setState(() {
+                            _startDateController.clear();
+                            _endDateController.clear();
+                            _selectedDay = DateTime.now();
+                            _rangeStart = _selectedDay;
+                            _rangeEnd = _selectedDay;
+                          });
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Férias enviadas com sucesso!'),
+                            ),
+                          );
+                        } catch (e) {
+                          print('Erro ao formatar as datas: $e');
+                          final snackBar = SnackBar(
+                            content:
+                                Text('Selecione as datas antes de enviar.'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          return;
                         } catch (e) {
                           print('Erro ao enviar férias: $e');
                           showDialog(

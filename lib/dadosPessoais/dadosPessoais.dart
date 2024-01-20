@@ -4,6 +4,7 @@ import '../servidor/servidor.dart';
 import 'package:flutter/services.dart';
 import 'pdf_banco.dart';
 import 'pdf_academico.dart';
+import 'recibos.dart';
 
 class DadosPessoaisPage extends StatefulWidget {
   const DadosPessoaisPage({Key? key, required this.title, required this.dados})
@@ -52,7 +53,6 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
     passwordController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +145,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        _showModalRecibosVencimento(context);
+                        ReciboPage().showModalRecibosVencimento(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -183,7 +183,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        createPDF(nameController.text,contrController.text);
+                        createPDF(nameController.text, contrController.text);
                         // Adicione aqui a lógica para lidar com o clique no botão
                       },
                       style: ElevatedButton.styleFrom(
@@ -222,7 +222,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        createPDFA(nameController.text,contrController.text);
+                        createPDFA(nameController.text, contrController.text);
                         // Adicione aqui a lógica para lidar com o clique no botão
                       },
                       style: ElevatedButton.styleFrom(
@@ -435,7 +435,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               ),
               actions: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() => isEditingEmail = false);
                     setState(() => isEditingName = false);
                     nameController.text = widget.dados.$1;
@@ -445,8 +445,14 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                   child: Text('Cancelar'),
                 ),
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.of(context).pop(true);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            'Nome e E-mail atualizado com sucesso! Aguarde aprovação.'),
+                      ),
+                    );
                   },
                   child: Text('Confirmar'),
                 ),
@@ -469,7 +475,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               ),
               actions: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() => isEditingPassword = false);
                     passwordController.text = '**********';
                     Navigator.of(context).pop(false);
@@ -477,8 +483,13 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                   child: Text('Cancelar'),
                 ),
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.of(context).pop(true);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Password atualizada com sucesso!'),
+                      ),
+                    );
                   },
                   child: Text('Confirmar'),
                 ),
@@ -487,129 +498,5 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           },
         ) ??
         false;
-  }
-
-  void _showModalRecibosVencimento(BuildContext context) {
-    int selectedMonth = DateTime.now().month;
-    int selectedYear = DateTime.now().year;
-
-    Future<void> _downloadComprovativo(
-        int selectedMonth, int selectedYear) async {
-      // Lógica para construir a URL do comprovativo
-      String url = await bd.MostrarRecibo(selectedMonth, selectedYear);
-
-      // Lógica para iniciar o download
-      //_launchURL(url);
-    }
-
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 400,
-          child: Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    'Recibos de Vencimento',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Escolha o mês:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: DropdownButton<int>(
-                        value: selectedMonth,
-                        onChanged: (newValue) {
-                          if (newValue != null) {
-                            selectedMonth = newValue;
-                          }
-                        },
-                        items: List.generate(12, (index) {
-                          return DropdownMenuItem<int>(
-                            value: index + 1,
-                            child: Text('${index + 1}'),
-                          );
-                        }),
-                        hint: Text('Selecione o mês'),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                Text(
-                  'Escolha o ano:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: DropdownButton<int>(
-                        value: selectedYear,
-                        onChanged: (newValue) {
-                          if (newValue != null) {
-                            selectedYear = newValue;
-                          }
-                        },
-                        items: List.generate(10, (index) {
-                          return DropdownMenuItem<int>(
-                            value: DateTime.now().year + index,
-                            child: Text('${DateTime.now().year + index}'),
-                          );
-                        }),
-                        hint: Text('Selecione o ano'),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    // Lógica para o botão de documento comprovativo
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    alignment: Alignment.centerLeft,
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Icon(Icons.upload, color: Colors.green),
-                        SizedBox(width: 8),
-                        Text(
-                          'Download do Comprovativo',
-                          style: TextStyle(
-                            color: Colors.green,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 }

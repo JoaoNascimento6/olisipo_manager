@@ -168,9 +168,22 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                           await se.obterTokenLocalmente(),
                           double.parse(valorController.text),
                           descritivoController.text,
-                          //faturaController.text, meter a fatura a ir buscar um ficheiro ou a tirar foto
+                          // faturaController.text, // Aqui você pode usar filePath ou lógica para lidar com faturas
                           'fatura.pdf',
                           false,
+                        );
+
+                        setState(() {
+                          valorController.clear();
+                          descritivoController.clear();
+                          faturaController.clear();
+                        });
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text('Ajudas de Custo enviadas com sucesso!'),
+                          ),
                         );
                       } catch (e) {
                         print('Erro ao enviar ajudas de custo: $e');
