@@ -21,7 +21,7 @@ class DetalhesNoticiaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           titulo,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -62,7 +62,7 @@ class DetalhesNoticiaPage extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: 15),
                 child: Text(
                   subtitulo,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -70,7 +70,7 @@ class DetalhesNoticiaPage extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: 15),
                 child: Text(
                   corpo,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ),
