@@ -145,7 +145,11 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        ReciboPage().showModalRecibosVencimento(context);
+                        ReciboPage().showModalRecibosVencimento(
+                          context,
+                          nameController.text,
+                          contrController.text,
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -184,7 +188,6 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     child: ElevatedButton(
                       onPressed: () {
                         createPDF(nameController.text, contrController.text);
-                        // Adicione aqui a lógica para lidar com o clique no botão
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -223,7 +226,6 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
                     child: ElevatedButton(
                       onPressed: () {
                         createPDFA(nameController.text, contrController.text);
-                        // Adicione aqui a lógica para lidar com o clique no botão
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
