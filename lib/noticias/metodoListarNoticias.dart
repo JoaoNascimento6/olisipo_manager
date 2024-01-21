@@ -11,7 +11,6 @@ class CarrosselNoticias extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       options: CarouselOptions(
-        height: 250,
         enlargeCenterPage: true,
       ),
       itemCount: noticias.length,
@@ -55,12 +54,10 @@ class CarrosselNoticias extends StatelessWidget {
                 ),
               ),
               Container(
-                
                 height: 250,
                 width: 350,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    15),
+                  borderRadius: BorderRadius.circular(15),
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

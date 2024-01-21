@@ -44,13 +44,13 @@ nacionalidade text
 //---------------------------------------
   Future<void> apagatabelaParcerias() async {
     Database db = await basededados;
-    await db.execute('Delete from noticias');
+    await db.execute('Delete from ferias');
   }
 
   Future<void> apagatabelaTipoParcerias() async {
     Database db = await basededados;
     await db.execute('''
-Drop TABLE tipo_parceria
+Drop TABLE ferias
 ''');
   }
 
@@ -304,6 +304,7 @@ Drop TABLE tipo_noticia
 
   Future<void> InsertDespesas(List<(String, String)> despesasData) async {
     Database db = await basededados;
+     await db.delete('despesas');
     for (final (tipo_estado, data_deslocacao) in despesasData) {
       await db.rawInsert(
         'insert into despesas(tipo_estado, data_deslocacao) values(?, ?)',
@@ -335,31 +336,34 @@ Drop TABLE tipo_noticia
     CREATE TABLE ferias (
       id_ferias INTEGER PRIMARY KEY AUTOINCREMENT,
       tipo_estado TEXT,
-      data_submissao TEXT
+      data_comeco TEXT,
+      data_fim TEXT
     )
   ''');
   }
 
-  Future<void> InsertFerias(List<(String, String)> feriasData) async {
+  Future<void> InsertFerias(List<(String, String,String)> feriasData) async {
     Database db = await basededados;
-    for (final (tipo_estado, data_submissao) in feriasData) {
+    await db.delete('ferias');
+    for (final (tipo_estado, data_comeco,data_fim) in feriasData) {
       await db.rawInsert(
-        'insert into ferias(tipo_estado, data_submissao) values(?, ?)',
-        [tipo_estado, data_submissao],
+        'insert into ferias(tipo_estado, data_comeco,data_fim) values(?, ?,?)',
+        [tipo_estado, data_comeco,data_fim],
       );
       //print(data['data_deslocacao']);
     }
   }
 
-  Future<List<(String, String)>> MostrarFerias() async {
-    List<(String, String)> ferias = [];
+  Future<List<(String, String,String)>> MostrarFerias() async {
+    List<(String, String,String)> ferias = [];
     Database db = await basededados;
     List<Map<String, Object?>> resultado =
-        await db.rawQuery('select tipo_estado, data_submissao from ferias');
+        await db.rawQuery('select tipo_estado, data_comeco, data_fim from ferias');
     resultado.forEach((linha) {
       ferias.add((
         linha['tipo_estado'].toString(),
-        linha['data_submissao'].toString()
+        linha['data_comeco'].toString(),
+        linha['data_fim'].toString()
       ));
     });
     return ferias;
@@ -380,6 +384,7 @@ Drop TABLE tipo_noticia
 
   Future<void> InsertHoras(List<(String, String)> horasData) async {
     Database db = await basededados;
+    await db.delete('horas');
     for (final (tipo_estado, data_relatorio_horas) in horasData) {
       await db.rawInsert(
         'insert into horas(tipo_estado, data_relatorio_horas) values(?, ?)',
@@ -418,6 +423,7 @@ Drop TABLE tipo_noticia
 
   Future<void> InsertAjuda(List<(String, String)> ajudaData) async {
     Database db = await basededados;
+    await db.delete('ajudas');
     for (final (tipo_estado, valor_ajuda) in ajudaData) {
       await db.rawInsert(
         'insert into ajudas(tipo_estado, valor_ajuda) values(?, ?)',
@@ -455,6 +461,7 @@ Drop TABLE tipo_noticia
 
   Future<void> InsertReuniao(List<(String, String, String)> reuniaoData) async {
     Database db = await basededados;
+    await db.delete('reunioes');
     for (final (confirmar_reuniao, data_reuniao, horas) in reuniaoData) {
       await db.rawInsert(
         'insert into reunioes(confirmar_reuniao, data_reuniao,horas) values(?, ?,?)',

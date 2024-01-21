@@ -57,7 +57,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF32D700),
-        title: Text('Reunião'),
+        title: Text('Reunião',style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
       ),
       body: SingleChildScrollView(
         child: Center(
