@@ -40,6 +40,8 @@ class DetalhesNoticiaPage extends StatelessWidget {
         elevation: 4.0,
       ),
       body: SingleChildScrollView(
+        child:Padding(padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -75,6 +77,7 @@ class DetalhesNoticiaPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

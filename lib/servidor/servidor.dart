@@ -72,7 +72,7 @@ class Servidor {
 
     List<(String, String, String, String)> informacoesProfissionais = [];
     List<(String, String)> despesasViatura = [];
-    List<(String, String)> ferias = [];
+    List<(String, String,String)> ferias = [];
     List<(String, String)> horas = [];
     List<(String, String)> ajudas = [];
     List<(String, String, String)> reunioes = [];
@@ -108,7 +108,8 @@ class Servidor {
     lista7.forEach((linha) {
       ferias.add((
         linha['tipo_estado'].toString(),
-        linha['data_submissao'].toString()
+        linha['data_comeco'].toString(),
+        linha['data_fim'].toString()
       ));
     });
 
@@ -116,7 +117,7 @@ class Servidor {
     lista8.forEach((linha) {
       horas.add((
         linha['tipo_estado'].toString(),
-        linha['data_relatorio_horas'].toString()
+        linha['mes'].toString()
       ));
     });
 

@@ -33,7 +33,7 @@ class _ParceriasPageState extends State<ParceriasPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF32D700),
-        title: Text('Parcerias'),
+        title: Text('Parcerias',style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
       ),
       body: FutureBuilder<(
         List<(String, String, String, String, String)>, List<String>
@@ -64,7 +64,7 @@ class _ParceriasPageState extends State<ParceriasPage> {
             }
             children = <Widget>[
               SizedBox(
-                height: 160,
+                height: 100,
                 child: ListarTipoParcerias(
                   tiposDeParceria: tipos,
                   onTipoSelecionado: onTipoSelecionado,

@@ -18,7 +18,6 @@ class ListarTipoNoticias extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -34,7 +33,8 @@ class ListarTipoNoticias extends StatelessWidget {
                       }
                       // Adicione a lógica desejada ao selecionar um tipo de parceria
                     },
-                    child: Text(tipo),
+                    
+                    child: Text(tipo,style: TextStyle(color: Color(0xFF32D700)),),
                   ),
                 );
               }).toList(),

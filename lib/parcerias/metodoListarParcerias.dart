@@ -11,9 +11,9 @@ class ListarParcerias extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 10),
         Expanded(
           child: ListView.builder(
+            padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: (els.length / 3).ceil(),

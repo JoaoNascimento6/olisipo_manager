@@ -19,21 +19,15 @@ class ListarTipoParcerias extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
+            padding: const EdgeInsets.all(5.0),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: tiposDeParceria.map((tipo) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:EdgeInsets.all(8.0),
+                  
                   child: ElevatedButton(
                     onPressed: () {
                       if (tipo == 'Todas') {
@@ -43,13 +37,16 @@ class ListarTipoParcerias extends StatelessWidget {
                       }
                       // Adicione a lógica desejada ao selecionar um tipo de parceria
                     },
-                    child: Text(tipo),
+                    child: Text(
+                      tipo,
+                      style: TextStyle(color: Color(0xFF32D700)),
+                    ),
                   ),
                 );
               }).toList(),
+
             ),
           ),
-          SizedBox(height: 10),
         ],
       ),
     );
