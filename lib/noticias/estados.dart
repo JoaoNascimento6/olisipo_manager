@@ -12,19 +12,19 @@ class EstadosPage extends StatelessWidget {
     required this.horas,
   }) : super(key: key);
 
-  final List<(String, String,String)> ferias;
+  final List<(String, String, String)> ferias;
   final List<(String, String)> ajudasDeCusto;
   final List<(String, String)> viaturaPropria;
   final List<(String, String)> horas;
   final List<(String, String, String)> reuniao;
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         children: [
           SizedBox(height: 5),
-          _buildListTextWithThreeItems('Férias', ferias),
+          _buildListTextFerias('Férias', ferias),
           _buildDivider(),
           _buildListText('Ajudas de Custo', ajudasDeCusto),
           _buildDivider(),
@@ -37,7 +37,8 @@ class EstadosPage extends StatelessWidget {
       ),
     );
   }
-   Widget _buildDivider() {
+
+  Widget _buildDivider() {
     return Divider(
       height: 30,
       thickness: 1,
@@ -119,6 +120,48 @@ class EstadosPage extends StatelessWidget {
                   ),
                   Text(
                     '$status',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildListTextFerias(
+      String title, List<(String, String, String)> items) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 1.0),
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '$title - ${item.$2} ${item.$3}',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  Text(
+                    '${item.$1}',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18.0,
