@@ -59,8 +59,8 @@ class ListarParcerias extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          height: 110, // Ajuste conforme necessário
-                          width: 110, // Ajuste conforme necessário
+                          height: 110,
+                          width: 110,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             gradient: LinearGradient(
@@ -91,7 +91,7 @@ class ListarParcerias extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 10), // Adicione espaçamento na parte inferior
+        SizedBox(height: 10),
       ],
     );
   }

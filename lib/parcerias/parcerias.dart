@@ -70,8 +70,6 @@ class _ParceriasPageState extends State<ParceriasPage> {
                   onTipoSelecionado: onTipoSelecionado,
                 ),
               ),
-
-              //--------------------------
               for (int i = 0; i < parcerias.length; i += 3)
                 SizedBox(
                   height: 160,

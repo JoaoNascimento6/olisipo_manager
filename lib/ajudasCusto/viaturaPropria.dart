@@ -84,7 +84,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Kilómetros',
+                        'Quilómetros',
                         style: TextStyle(
                           color: Color.fromARGB(255, 101, 101, 101),
                           fontSize: 16,
