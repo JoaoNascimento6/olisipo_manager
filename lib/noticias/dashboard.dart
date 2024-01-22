@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:olisipo_manager/servidor/basededados.dart';
 import 'metodoListarNoticias.dart';
-import 'estados.dart'; // Importa o arquivo com o widget EstadosPage
-import 'listarTiposNoticias.dart'; // Importa o arquivo com o widget ListarTipoNoticias
+import 'estados.dart';
+import 'listarTiposNoticias.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _DashboardPageState extends State<DashboardPage> {
   var bd = Basededados();
   String tipoSelecionado = '';
   String nome = '';
-  List<(String, String,String)> ferias = [];
+  List<(String, String, String)> ferias = [];
   List<(String, String)> ajudas = [];
   List<(String, String)> despesas = [];
   List<(String, String)> horas = [];
@@ -50,9 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   void _loadData() async {
     await infosSubmissoes();
-    setState(() {
-      // Update the state here if necessary
-    });
+    setState(() {});
   }
 
   @override
@@ -72,7 +70,7 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start, // Mudei para start
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
@@ -107,9 +105,8 @@ class _DashboardPageState extends State<DashboardPage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // 1ª secção
                         Text(
-                          "Olá $nome!", // Use the 'nome' value here
+                          "Olá $nome!",
                           style: TextStyle(fontSize: 18),
                         ),
                         Divider(
@@ -117,14 +114,11 @@ class _DashboardPageState extends State<DashboardPage> {
                           thickness: 3,
                           color: Color(0xFF32D700),
                         ),
-
                         Text(
                           "Notícias",
                           style: TextStyle(
                               fontSize: 28.0, fontWeight: FontWeight.bold),
                         ),
-
-                        // 2ª secção
                         SizedBox(
                           height: 70,
                           child: ListarTipoNoticias(
@@ -174,7 +168,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
             ),
             Container(
-              height: 320,
+              height: 309,
               child: EstadosPage(
                   ferias: ferias,
                   ajudasDeCusto: ajudas,
@@ -182,7 +176,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   reuniao: reunioes,
                   horas: horas),
             ),
-
           ],
         ),
       ),

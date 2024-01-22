@@ -29,7 +29,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start, // Mudei para start
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 70),
@@ -39,7 +39,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               ),
               SizedBox(height: 70),
               Text(
-                'Redifinir a sua Password',
+                'Redefinir a sua Password',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -118,35 +118,26 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 onPressed: () {
                   String code = _codeController.text;
                   String newPassword = _passwordController.text;
-
-                  // Verifica se algum dos campos está vazio
                   if (code.isEmpty || newPassword.isEmpty) {
-                    // Exibe um SnackBar informando que os campos devem ser preenchidos
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Por favor, preencha todos os campos.'),
                       ),
                     );
-                    return; // Retorna para evitar a execução do restante do código
+                    return;
                   }
-
-                  // Verifica se o código de confirmação está correto.
                   if (code != widget.code) {
-                    // O código de confirmação está incorreto.
-                    // Exibe um SnackBar informando que o código está incorreto
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Código de confirmação incorreto.'),
                       ),
                     );
-                    return; // Retorna para evitar a execução do restante do código
+                    return;
                   }
 
-                  // Atualiza a senha no servidor.
                   se.updatePasswordporEmail(widget.email, newPassword);
                   print(newPassword);
 
-                  // Redireciona o usuário para a página de login.
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -169,7 +160,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   ),
                   child: Center(
                     child: Text(
-                      'Redifinir Password',
+                      'Redefinir Password',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,

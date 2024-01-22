@@ -491,7 +491,7 @@ class Servidor {
 
   Future<void> enviarEmail(String email, String code) async {
     var url =
-        '$baseURL/pessoas/enviarmail'; // Use a URL correta conforme sua API
+        '$baseURL/pessoas/enviarmail';
 
     try {
       var response = await http.post(

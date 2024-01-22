@@ -2,8 +2,8 @@
 
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-//import 'package:collection/collection.dart'; // ´Enecess´ario adicionar a respetiva dependencia
-import 'package:path/path.dart'; // É necessário adicionar a respetiva dependencia
+//import 'package:collection/collection.dart';
+import 'package:path/path.dart';
 
 // _____________________________________ Base de dados SQlite ____________________________________
 class Basededados {
@@ -513,7 +513,6 @@ Drop TABLE tipo_noticia
         'insert into recibos(data_submissao_recibo, recibo_pdf,data_recibo) values(?, ?,?)',
         [data_submissao_recibo, recibo_pdf, data_recibo],
       );
-      //print(data['data_deslocacao']);
     }
   }
 
@@ -609,7 +608,6 @@ Drop TABLE tipo_noticia
         'insert into pessoas(nome_pessoa, email,contribuinte,password) values(?, ?,?,?)',
         [nome_pessoa, email, contribuinte, password],
       );
-      //print(data['data_deslocacao']);
     }
   }
 
