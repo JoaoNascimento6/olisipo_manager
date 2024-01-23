@@ -31,7 +31,7 @@ class ListarTipoParcerias extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       if (tipo == 'Todas') {
-                        onTipoSelecionado(''); // Seleciona "Todas"
+                        onTipoSelecionado('');
                       } else {
                         onTipoSelecionado(tipo);
                       }

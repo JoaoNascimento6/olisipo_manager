@@ -17,10 +17,8 @@ class MyApp extends StatelessWidget {
     var se = Servidor();
 
     void servidor_basedados() {
-
       se.getNoticiasEParcerias();
-      /*bd.apagatabelaParcerias();
-      bd.CriarTabelaAjudas();
+      /*bd.CriarTabelaAjudas();
       bd.CriarTabelaDespesas();
       bd.CriarTabelaFerias();
       bd.CriarTabelaHoras();

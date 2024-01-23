@@ -34,18 +34,16 @@ class CarrosselNoticias extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,
-            elevation: 0, // Remover a sombra
+            elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  10.0), // Ajuste o valor conforme necessário
+              borderRadius: BorderRadius.circular(10.0),
             ),
           ),
           child: Stack(
             alignment: Alignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(
-                    15), // Ajuste o valor conforme necessário
+                borderRadius: BorderRadius.circular(15),
                 child: Image.network(
                   img,
                   height: 250,

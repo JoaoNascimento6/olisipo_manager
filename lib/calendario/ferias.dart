@@ -123,7 +123,7 @@ class _FeriasPageState extends State<FeriasPage> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color:
-                            Colors.green, // Cor de fundo para data selecionada
+                            Colors.green,
                         shape: BoxShape.circle,
                       ),
                       child: Text(
@@ -189,8 +189,6 @@ class _FeriasPageState extends State<FeriasPage> {
                               controller: _startDateController,
                               readOnly: true,
                               onTap: () {
-                                // Lógica para abrir o calendário ou selecionar a data
-                                // Isso pode variar dependendo da sua implementação
                               },
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -235,8 +233,6 @@ class _FeriasPageState extends State<FeriasPage> {
                               controller: _endDateController,
                               readOnly: true,
                               onTap: () {
-                                // Lógica para abrir o calendário ou selecionar a data
-                                // Isso pode variar dependendo da sua implementação
                               },
                               decoration: InputDecoration(
                                 border: InputBorder.none,

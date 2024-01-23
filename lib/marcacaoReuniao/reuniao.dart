@@ -96,7 +96,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: Colors
-                              .green, // Cor de fundo para data selecionada
+                              .green,
                           shape: BoxShape.circle,
                         ),
                         child: Text(

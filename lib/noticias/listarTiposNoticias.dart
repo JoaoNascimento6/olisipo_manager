@@ -27,14 +27,15 @@ class ListarTipoNoticias extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       if (tipo == 'Todas') {
-                        onTipoSelecionado(''); // Seleciona "Todas"
+                        onTipoSelecionado('');
                       } else {
                         onTipoSelecionado(tipo);
                       }
-                      // Adicione a lógica desejada ao selecionar um tipo de parceria
                     },
-                    
-                    child: Text(tipo,style: TextStyle(color: Color(0xFF32D700)),),
+                    child: Text(
+                      tipo,
+                      style: TextStyle(color: Color(0xFF32D700)),
+                    ),
                   ),
                 );
               }).toList(),
