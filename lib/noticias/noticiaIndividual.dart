@@ -21,7 +21,7 @@ class DetalhesNoticiaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           titulo,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -40,44 +40,44 @@ class DetalhesNoticiaPage extends StatelessWidget {
         elevation: 4.0,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 20),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.network(
-                    imagem,
-                    height: 250,
-                    width: 350,
-                    fit: BoxFit.cover,
-                  ),
+        child:Padding(padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  imagem,
+                  height: 250,
+                  width: 350,
+                  fit: BoxFit.cover,
                 ),
-                SizedBox(height: 20),
-                Container(
-                  margin: EdgeInsets.only(bottom: 15),
-                  child: Text(
-                    subtitulo,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                margin: EdgeInsets.only(bottom: 15),
+                child: Text(
+                  subtitulo,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 15),
-                  child: Text(
-                    corpo,
-                    style: TextStyle(fontSize: 16),
-                    textAlign: TextAlign.center,
-                  ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 15),
+                child: Text(
+                  corpo,
+                  style: TextStyle(fontSize: 14),
+                  textAlign: TextAlign.center,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
       ),
     );
   }

@@ -220,7 +220,10 @@ class _CurriculumPageState extends State<CurriculumPage> {
                                                     await se
                                                         .obterTokenLocalmente(),
                                                     infoProfissional.$1);
-                                            setState(() {});
+                                            setState(() {
+                                              widget.dados.$5
+                                                  .remove(infoProfissional);
+                                            });
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(

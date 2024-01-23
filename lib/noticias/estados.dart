@@ -61,11 +61,14 @@ class EstadosPage extends StatelessWidget {
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
+              String item2Text = title == 'Ajudas de Custo'
+                ? '${item.$2}€'
+                : item.$2;
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '$title - ${item.$2}',
+                    '$title - ${item2Text}',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18.0,
