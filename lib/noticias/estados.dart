@@ -12,13 +12,13 @@ class EstadosPage extends StatelessWidget {
     required this.horas,
   }) : super(key: key);
 
-  final List<(String, String,String)> ferias;
+  final List<(String, String, String)> ferias;
   final List<(String, String)> ajudasDeCusto;
   final List<(String, String)> viaturaPropria;
   final List<(String, String)> horas;
   final List<(String, String, String)> reuniao;
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
@@ -37,7 +37,8 @@ class EstadosPage extends StatelessWidget {
       ),
     );
   }
-   Widget _buildDivider() {
+
+  Widget _buildDivider() {
     return Divider(
       height: 30,
       thickness: 1,
@@ -60,11 +61,14 @@ class EstadosPage extends StatelessWidget {
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
+              String item2Text = title == 'Ajudas de Custo'
+                ? '${item.$2}€'
+                : item.$2;
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '$title - ${item.$2}',
+                    '$title - ${item2Text}',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18.0,
