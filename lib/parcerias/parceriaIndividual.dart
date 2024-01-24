@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 
 class DetalhesParceriaPage extends StatelessWidget {
-  
   final String imagem;
   final String descricao;
   final String nome;
   final String beneficios;
   final String tipo;
 
-
   DetalhesParceriaPage({
-   
     required this.imagem,
     required this.nome,
     required this.beneficios,
     required this.descricao,
     required this.tipo,
-   
   });
 
   @override
@@ -60,6 +56,15 @@ class DetalhesParceriaPage extends StatelessWidget {
                       height: 250,
                       width: 350,
                       fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        return Image.asset(
+                          'images/notFound.jpg',
+                          height: 250,
+                          width: 350,
+                          fit: BoxFit.cover,
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -72,7 +77,8 @@ class DetalhesParceriaPage extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 15),
                     child: Text(
                       'Descrição:',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
@@ -86,7 +92,8 @@ class DetalhesParceriaPage extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 15),
                     child: Text(
                       'Benefícios:',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                   // Mapeia cada parágrafo de benefícios
