@@ -56,6 +56,15 @@ class ListarParcerias extends StatelessWidget {
                             height: 110,
                             width: 110,
                             fit: BoxFit.cover,
+                            errorBuilder: (BuildContext context, Object error,
+                                StackTrace? stackTrace) {
+                              return Image.asset(
+                                'images/notFound.jpg',
+                                height: 110,
+                                width: 110,
+                                fit: BoxFit.cover,
+                              );
+                            },
                           ),
                         ),
                         Container(
