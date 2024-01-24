@@ -55,6 +55,15 @@ class DetalhesNoticiaPage extends StatelessWidget {
                   height: 250,
                   width: 350,
                   fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        return Image.asset(
+                          'images/notFound.jpg',
+                          height: 250,
+                          width: 350,
+                          fit: BoxFit.cover,
+                        );
+                      },
                 ),
               ),
               SizedBox(height: 20),

@@ -19,8 +19,7 @@ class Servidor {
   }
 
   Future<void> getNoticiasEParcerias() async {
-    url =
-        'https://backend-olisipo-portal.onrender.com/appmobile/noticiasparcerias';
+    url ='https://backend-olisipo-portal.onrender.com/appmobile/noticiasparcerias';
     List<(String, String, String, String, String)> parcerias = [];
     List<String> TipoParcerias = [];
     List<(String, String, String, String, String)> noticias = [];
@@ -30,7 +29,6 @@ class Servidor {
     var result = await http.get(
       Uri.parse(url),
     );
-
 
     var lista1 = jsonDecode(result.body)['parcerias'];
     lista1.forEach((linha) {
@@ -72,7 +70,7 @@ class Servidor {
 
     List<(String, String, String, String)> informacoesProfissionais = [];
     List<(String, String)> despesasViatura = [];
-    List<(String, String,String)> ferias = [];
+    List<(String, String, String)> ferias = [];
     List<(String, String)> horas = [];
     List<(String, String)> ajudas = [];
     List<(String, String, String)> reunioes = [];
@@ -115,10 +113,7 @@ class Servidor {
 
     var lista8 = jsonDecode(result.body)['horas'];
     lista8.forEach((linha) {
-      horas.add((
-        linha['tipo_estado'].toString(),
-        linha['mes'].toString()
-      ));
+      horas.add((linha['tipo_estado'].toString(), linha['mes'].toString()));
     });
 
     var lista9 = jsonDecode(result.body)['ajudas'];
@@ -164,17 +159,6 @@ class Servidor {
     bd.InsertFerias(ferias);
     bd.InsertHoras(horas);
     bd.InsertReuniao(reunioes);
-
-  }
-
-  Future<List<(String, String)>> listaUsers() async {
-    List<(String, String)> prods = [];
-    var result = await http.get(Uri.parse(url));
-    var lista = jsonDecode(result.body)['users'];
-    lista.forEach((linha) {
-      prods.add((linha['firstName'].toString(), linha['lastName'].toString()));
-    });
-    return prods;
   }
 
   Future<void> inserirDespesasViaturaPropria(
@@ -490,8 +474,7 @@ class Servidor {
   }
 
   Future<void> enviarEmail(String email, String code) async {
-    var url =
-        '$baseURL/pessoas/enviarmail';
+    var url = '$baseURL/pessoas/enviarmail';
 
     try {
       var response = await http.post(

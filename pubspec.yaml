@@ -32,3 +32,4 @@ flutter:
   uses-material-design: true
   assets:
     - images/olisipo.png
+    - images/notFound.jpg
