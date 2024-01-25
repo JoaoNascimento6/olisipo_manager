@@ -4,6 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../servidor/servidor.dart';
 import './faltas.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import '../servidor/basededados.dart';
 
 class HorasPage extends StatefulWidget {
   const HorasPage({Key? key, required this.title}) : super(key: key);
@@ -23,6 +24,7 @@ class _HorasPageState extends State<HorasPage> {
   int horasInseridasValue = 0;
 
   var se = Servidor();
+  var bd = Basededados();
   late TextEditingController _horasController;
 
   @override
@@ -264,6 +266,9 @@ class _HorasPageState extends State<HorasPage> {
                               false,
                               anoCalendario,
                             );
+                            await bd.InsertHoras([
+                              ('Pendente', mesCalendario),
+                            ]);
                             setState(() {
                               _horasController.clear();
                               horasInseridasValue = 0;

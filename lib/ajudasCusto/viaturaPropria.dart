@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../servidor/servidor.dart';
+import '../servidor/basededados.dart';
 
 class ViaturaPropriaPage extends StatefulWidget {
   const ViaturaPropriaPage({Key? key, required this.title}) : super(key: key);
@@ -17,6 +18,7 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
   final TextEditingController dataController = TextEditingController();
 
   var se = Servidor();
+  var bd = Basededados();
 
   @override
   void dispose() {
@@ -251,12 +253,18 @@ class _ViaturaPropriaPageState extends State<ViaturaPropriaPage> {
                           await se.inserirDespesasViaturaPropria(
                             await se.obterTokenLocalmente(),
                             double.parse(kmController.text),
-                            dataController.text,
+                            selectedDate.toLocal().toString().split(' ')[0],
                             porigemController.text,
                             pchegadaController.text,
                             false,
                           );
 
+                          String formattedDate =
+                              DateTime.now().toLocal().toString().split(' ')[0];
+
+                          await bd.InsertDespesas([
+                            ('Pendente', formattedDate),
+                          ]);
                           setState(() {
                             kmController.clear();
                             porigemController.clear();

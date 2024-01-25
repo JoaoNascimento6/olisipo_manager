@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import '../servidor/servidor.dart';
+import '../servidor/basededados.dart';
 
 class FeriasPage extends StatefulWidget {
   const FeriasPage({Key? key, required this.title}) : super(key: key);
@@ -24,6 +25,7 @@ class _FeriasPageState extends State<FeriasPage> {
   TextEditingController _endDateController = TextEditingController();
 
   var se = Servidor();
+  var bd = Basededados();
 
   @override
   void initState() {
@@ -122,8 +124,7 @@ class _FeriasPageState extends State<FeriasPage> {
                       margin: const EdgeInsets.all(4.0),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color:
-                            Colors.green,
+                        color: Colors.green,
                         shape: BoxShape.circle,
                       ),
                       child: Text(
@@ -188,8 +189,7 @@ class _FeriasPageState extends State<FeriasPage> {
                             child: TextFormField(
                               controller: _startDateController,
                               readOnly: true,
-                              onTap: () {
-                              },
+                              onTap: () {},
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'DD/MM/AAAA',
@@ -232,8 +232,7 @@ class _FeriasPageState extends State<FeriasPage> {
                             child: TextFormField(
                               controller: _endDateController,
                               readOnly: true,
-                              onTap: () {
-                              },
+                              onTap: () {},
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: 'DD/MM/AAAA',
@@ -280,7 +279,9 @@ class _FeriasPageState extends State<FeriasPage> {
                             currentDateFormatted,
                             false,
                           );
-
+                          await bd.InsertFerias([
+                            ('Pendente', startDateFormatted, endDateFormatted),
+                          ]);
                           setState(() {
                             _startDateController.clear();
                             _endDateController.clear();

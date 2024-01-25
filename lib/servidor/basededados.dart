@@ -172,6 +172,7 @@ Drop TABLE ferias
 
     return (parcerias, tipos);
   }
+
   //______________--TIPO DE NOTICIA
   Future<void> CriarTabelaTipoNoticia() async {
     Database db = await basededados;
@@ -203,7 +204,6 @@ Drop TABLE ferias
     });
     return uts;
   }
-
 
   // _____________________________________ NOTICIAS ____________________________________
 
@@ -276,7 +276,6 @@ Drop TABLE ferias
     }
   }
 
-
   Future<void> apagatabelaNoticias() async {
     Database db = await basededados;
     await db.execute('Delete from tipo_noticia');
@@ -304,7 +303,7 @@ Drop TABLE tipo_noticia
 
   Future<void> InsertDespesas(List<(String, String)> despesasData) async {
     Database db = await basededados;
-     await db.delete('despesas');
+    await db.delete('despesas');
     for (final (tipo_estado, data_deslocacao) in despesasData) {
       await db.rawInsert(
         'insert into despesas(tipo_estado, data_deslocacao) values(?, ?)',
@@ -342,23 +341,23 @@ Drop TABLE tipo_noticia
   ''');
   }
 
-  Future<void> InsertFerias(List<(String, String,String)> feriasData) async {
+  Future<void> InsertFerias(List<(String, String, String)> feriasData) async {
     Database db = await basededados;
     await db.delete('ferias');
-    for (final (tipo_estado, data_comeco,data_fim) in feriasData) {
+    for (final (tipo_estado, data_comeco, data_fim) in feriasData) {
       await db.rawInsert(
         'insert into ferias(tipo_estado, data_comeco,data_fim) values(?, ?,?)',
-        [tipo_estado, data_comeco,data_fim],
+        [tipo_estado, data_comeco, data_fim],
       );
       //print(data['data_deslocacao']);
     }
   }
 
-  Future<List<(String, String,String)>> MostrarFerias() async {
-    List<(String, String,String)> ferias = [];
+  Future<List<(String, String, String)>> MostrarFerias() async {
+    List<(String, String, String)> ferias = [];
     Database db = await basededados;
-    List<Map<String, Object?>> resultado =
-        await db.rawQuery('select tipo_estado, data_comeco, data_fim from ferias');
+    List<Map<String, Object?>> resultado = await db
+        .rawQuery('select tipo_estado, data_comeco, data_fim from ferias');
     resultado.forEach((linha) {
       ferias.add((
         linha['tipo_estado'].toString(),
@@ -531,13 +530,13 @@ Drop TABLE tipo_noticia
     return recibos;
   }
 
-   Future<String> MostrarRecibo(int mes, int ano) async {
+  Future<String> MostrarRecibo(int mes, int ano) async {
     String linkDoc = "";
     Database db = await basededados;
     List<Map<String, Object?>> resultado = await db.rawQuery(
         "SELECT recibo_pdf FROM recibos WHERE strftime('%Y', data_recibo) = '$ano' AND strftime('%m', data_recibo) = '$mes';");
     resultado.forEach((linha) {
-        linkDoc = linha['recibo_pdf'].toString();
+      linkDoc = linha['recibo_pdf'].toString();
     });
     print("Número de resultados: ${resultado.length}");
     linkDoc = "https://www.google.com";
