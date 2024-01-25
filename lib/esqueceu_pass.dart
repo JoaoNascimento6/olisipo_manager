@@ -107,6 +107,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         content: Text('Por favor, preencha o campo de e-mail.'),
                       ),
                     );
+                  } else if (!RegExp(
+                          r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$")
+                      .hasMatch(email)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Por favor, insira um e-mail válido.'),
+                      ),
+                    );
                   } else {
                     String code = generateConfirmationCode();
                     print(code);
