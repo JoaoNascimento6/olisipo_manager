@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../servidor/servidor.dart';
+import '../servidor/basededados.dart';
+import 'package:intl/intl.dart';
 
 class ReuniaoPage extends StatefulWidget {
   const ReuniaoPage({Key? key, required this.title}) : super(key: key);
@@ -20,6 +22,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
   TextEditingController horaController = TextEditingController();
 
   var se = Servidor();
+  var bd = Basededados();
   late String selectedTime = 'Selecione';
 
   @override
@@ -57,7 +60,10 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF32D700),
-        title: Text('Reunião',style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
+        title: Text(
+          'Reunião',
+          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -95,8 +101,7 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                         margin: const EdgeInsets.all(4.0),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: Colors
-                              .green,
+                          color: Colors.green,
                           shape: BoxShape.circle,
                         ),
                         child: Text(
@@ -241,7 +246,14 @@ class _ReuniaoPageState extends State<ReuniaoPage> {
                         motivoController.text,
                         horaController.text,
                       );
-
+                      String formattedDate = DateTime.parse(diaController.text)
+                          .toLocal()
+                          .toString()
+                          .split(' ')[0];
+                      String formattedTime = horaController.text + ":00";
+                      await bd.InsertReuniao([
+                        ('null', formattedDate, formattedTime),
+                      ]);
                       setState(() {
                         diaController.clear();
                         motivoController.clear();

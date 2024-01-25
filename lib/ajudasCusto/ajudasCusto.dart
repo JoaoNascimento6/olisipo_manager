@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import '../servidor/servidor.dart';
+import '../servidor/basededados.dart';
 
 class AjudasCustoPage extends StatefulWidget {
   const AjudasCustoPage({Key? key, required this.title}) : super(key: key);
@@ -18,6 +19,7 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
   String? filePath;
 
   var se = Servidor();
+  var bd = Basededados();
 
   @override
   void dispose() {
@@ -172,7 +174,9 @@ class _AjudasCustoPageState extends State<AjudasCustoPage> {
                           'fatura.pdf',
                           false,
                         );
-
+                        await bd.InsertAjuda([
+                          ('Pendente', valorController.text),
+                        ]);
                         setState(() {
                           valorController.clear();
                           descritivoController.clear();

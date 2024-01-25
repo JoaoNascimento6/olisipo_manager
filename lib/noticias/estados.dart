@@ -24,7 +24,7 @@ class EstadosPage extends StatelessWidget {
       body: ListView(
         children: [
           SizedBox(height: 5),
-          _buildListTextWithThreeItems('Férias', ferias),
+          _buildListTextFerias('Férias', ferias),
           _buildDivider(),
           _buildListText('Ajudas de Custo', ajudasDeCusto),
           _buildDivider(),
@@ -61,9 +61,8 @@ class EstadosPage extends StatelessWidget {
             itemCount: items.length,
             itemBuilder: (context, index) {
               final item = items[index];
-              String item2Text = title == 'Ajudas de Custo'
-                ? '${item.$2}€'
-                : item.$2;
+              String item2Text =
+                  title == 'Ajudas de Custo' ? '${item.$2}€' : item.$2;
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -123,6 +122,48 @@ class EstadosPage extends StatelessWidget {
                   ),
                   Text(
                     '$status',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildListTextFerias(
+      String title, List<(String, String, String)> items) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 1.0),
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '$title - ${item.$2} ${item.$3}',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  Text(
+                    '${item.$1}',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18.0,

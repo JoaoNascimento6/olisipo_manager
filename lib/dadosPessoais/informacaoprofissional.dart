@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../servidor/servidor.dart';
 import 'curriculum.dart';
+import '../servidor/basededados.dart';
 
 class InformacaoProfissionalPage extends StatelessWidget {
   final Servidor se = Servidor();
+  var bd = Basededados();
 
-
-  InformacaoProfissionalPage({Key? key})
-      : super(key: key);
+  InformacaoProfissionalPage({Key? key}) : super(key: key);
 
   void showModalInfoProfissional(BuildContext context) {
     TextEditingController tituloController = TextEditingController();
@@ -137,7 +137,15 @@ class InformacaoProfissionalPage extends StatelessWidget {
                             'diploma.pdf',
                             tipoController.text,
                           );
-                          
+                          await bd.InsertInfos([
+                            (
+                              tituloController.text,
+                              descricaoController.text,
+                              'diploma.pdf',
+                              tipoController.text
+                            ),
+                          ]);
+
                           se.getDadosServidor();
 
                           tituloController.clear();
